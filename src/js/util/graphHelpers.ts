@@ -1,5 +1,7 @@
 "use strict";
 
+import gHelp from './graphHelpers';
+import help from './genericHelpers';
 import {EdgeImmutPlain} from "../classes/GraphImmut/EdgeImmut";
 import {NodeImmutPlain} from "../classes/GraphImmut/NodeImmut";
 
@@ -7,6 +9,10 @@ interface Degree {
     in: number;
     out: number;
 }
+
+const capitalLetters = help.deepFreeze([
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+]) as string[];
 
 export default {
     findVertexDegreesDirectional: (adjacencyMatrix: Array<Array<number>>): Degree[] => {
@@ -35,10 +41,18 @@ export default {
     interpolateNodesFromEdges: (edges: EdgeImmutPlain[]): NodeImmutPlain[] => {
         const nodes: NodeImmutPlain[] = [];
         edges.forEach((v) => {
-            nodes[v.from] = {id: v.from, label: v.from.toString()};
-            nodes[v.to] = {id: v.to, label: v.to.toString()};
+            nodes[v.from] = {id: v.from, label: gHelp.generateLabelFromNumber(v.from)};
+            nodes[v.to] = {id: v.to, label: gHelp.generateLabelFromNumber(v.to)};
         });
 
         return nodes;
     },
+
+    generateLabelFromNumber : (prelabel: number) : string => {
+        if (typeof prelabel === "number" && (prelabel >= 0 && prelabel <=25)) {
+            return capitalLetters[prelabel];
+        } else {
+            return prelabel.toString();
+        }
+    }
 };

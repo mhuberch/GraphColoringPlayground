@@ -47,7 +47,7 @@ const completeGraph = (V: number): Readonly<GraphPlain> => {
     const nodes = [];
 
     for (let i = 0; i < V; i++) {
-        nodes.push({id: i, label: i.toString()});
+        nodes.push({id: i, label: gHelp.generateLabelFromNumber(i)});
         for (let j = i + 1; j < V; j++) {
             edges.push({from: i, to: j});
         }
@@ -96,7 +96,7 @@ const hypercubeGraph = (D: number): Readonly<GraphPlain> => {
 const newCustomGraph = (V: number, directed = false, weighted = false): Readonly<GraphPlain> => {
     const nodes = [];
     for (let i = 0; i < V; i++) {
-        nodes.push({id: i, label: i.toString()});
+        nodes.push({id: i, label: gHelp.generateLabelFromNumber(i)});
     }
 
     return help.deepFreeze({nodes, edges: [], directed, weighted} as GraphPlain);
