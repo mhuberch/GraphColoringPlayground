@@ -306,6 +306,10 @@ export default class UIInteractions {
             const predefined = (await import("./util/predefinedGraphs")).default;
             window.main.setData(predefined.Konigsberg(), false, true, true);
         });
+        makeSimpleClickListener("#load-graphG1-link", async () => {
+            const predefined = (await import("./util/predefinedGraphs")).default;
+            window.main.setData(predefined.GraphG1(), false, true, true);
+        });
         makeSimpleClickListener("#load-complete-link", async () => {
             const predefined = (await import("./util/predefinedGraphs")).default;
             predefined.Complete();
