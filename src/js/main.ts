@@ -135,6 +135,24 @@ const self: MainI = {
                     GraphState.addEdge(data.from, data.to);
                 };
                 if (data.from === data.to) {
+                    alert("Connect a node to itself is not allowed");
+                    return;
+                }
+                else if (GraphState.checkAdjacency(data.from, data.to)) {
+                    alert("These two edges are already connected.");
+                    return;
+                }
+
+                apply();
+            },
+            /*addEdge: (data, callback) => {
+                const apply = () => {
+                    if (typeof callback === "function") {
+                        callback(null);
+                    }
+                    GraphState.addEdge(data.from, data.to);
+                };
+                if (data.from === data.to) {
                     if (confirm("Do you want to connect the node to itself?")) {
                         apply();
                     }
@@ -142,7 +160,7 @@ const self: MainI = {
                 }
 
                 apply();
-            },
+            },*/
             editEdge: (data, callback) => {
                 callback(null);
                 self.visOptions.manipulation.deleteEdge({ edges: [data.id] });

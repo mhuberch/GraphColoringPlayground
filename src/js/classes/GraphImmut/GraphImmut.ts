@@ -444,6 +444,7 @@ export default class GraphImmut {
         return G;
     }
 
+    // MH: Adjacency matrix
     getNodeAdjacency(id: number): number[] {
         const adj: number[] = [];
         this.edges.forEach((edge) => {

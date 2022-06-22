@@ -259,6 +259,12 @@ export default class GraphState {
         }
     }
 
+    static checkAdjacency(from: number | string, to: number | string , graph = GraphState.graph): boolean {
+        const nodeFrom = getInt(from);
+        const nodeTo = getInt(to);
+        return graph.areAdjacent(nodeFrom, nodeTo);
+    }
+
     static clearColorFromNodes(nodes: NodeImmutPlain[]): NodeImmutPlain[] {
         nodes.forEach((v) => {
             v.color = null;
