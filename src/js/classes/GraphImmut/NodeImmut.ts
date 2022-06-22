@@ -1,11 +1,17 @@
 "use strict";
 
+import help from "../../util/genericHelpers";
+
 export interface NodeImmutPlain {
     id: Readonly<number>;
     label: string;
     [key: string]: any;
     [key: number]: any;
 }
+
+const capitalLetters = help.deepFreeze([
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+]) as string[];
 
 export default class NodeImmut {
     private readonly id: Readonly<number>;
@@ -14,7 +20,13 @@ export default class NodeImmut {
 
     constructor(id: any, label: null | string = null, extraAttrs: null | any = null) {
         if (label === null) {
-            this.label = id.toString();
+            // MH: If the id is an integer number and between 0 and 25, than take a capital letter from the alphabet as label
+            if (typeof id === "number" && (id >= 0 && id <=25)) {
+                this.label = capitalLetters[id];
+            } else {
+                this.label = id.toString();
+            }
+            
         } else {
             this.label = label;
         }
