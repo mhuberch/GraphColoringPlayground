@@ -483,6 +483,14 @@ export default class UIInteractions {
                     p += `Vertex ${GraphState.nodeIDToLabel(i)} gets color ${v}\n`;
                 });
 
+                help.printout(p)
+
+                if (!confirm("Do you want to continue")) {
+                    window.main.applyColors();
+                    return;    
+                }
+                
+
                 p += `\n${JSON.stringify(help.rotate(a.colors), null, 4)}\n\n`;
 
                 p = `<h3>Graph Coloring Using Welsh-Powell Algorithm</h3><hr>${help.htmlEncode(p)}`;
