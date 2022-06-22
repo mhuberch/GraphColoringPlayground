@@ -1,6 +1,7 @@
 "use strict";
 
 import help from './util/genericHelpers';
+import gHelp from './util/graphHelpers';
 import randomColor from 'randomcolor';
 import GraphState, { AddNodeI, GraphStateHistory } from './graphState';
 import GraphImmut from "./classes/GraphImmut/GraphImmut";
@@ -93,7 +94,7 @@ const self: MainI = {
                         type: "html",
                         initialValue: `<p>Node ID: ${await GraphState.getProperty("vertices")}</p>`
                     },
-                    { type: "text", label: "Label", initialValue: await GraphState.getProperty("vertices") }
+                    { type: "text", label: "Label", initialValue: gHelp.generateLabelFromNumber(await GraphState.getProperty("vertices")) }
                 ]);
 
                 $popup.on("click", ".btn-success", () => {
