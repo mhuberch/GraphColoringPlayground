@@ -466,14 +466,14 @@ export default class UIInteractions {
             // Use cached responses when able
             let a = {
                 chromaticNumber: (await GraphState.getProperty("Approx. Chromatic Welsh")) as number,
-                colors: GraphState.state.graphColoring as {}
+                colors: GraphState.state.graphColoringWelsh as {}
             };
 
             const printGC = () => {
                 GraphState.graphProperties.colormode = 2;
                 GraphState.graphProperties["Approx. Chromatic Welsh"] = a.chromaticNumber;
                 GraphState.setUpToDate(true, ["Approx. Chromatic Welsh", "graphColoringWelsh"]);
-                (GraphState.state.graphColoring as {}) = a.colors;
+                (GraphState.state.graphColoringWelsh as {}) = a.colors;
 
                 const colors = help.flatten(a.colors);
                 let p = `Number of Vertices: ${colors.length}`;

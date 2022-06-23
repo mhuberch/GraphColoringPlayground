@@ -33,7 +33,7 @@ interface GraphProperties {
 interface GraphStateData {
     stronglyConnectedComponents: null | { [key: number]: number };
     connectedComponents: null | { [key: number]: number };
-    graphColoring: null | number[];
+    graphColoringWelsh: null | number[];
 
     [index: string]: null | number[] | { [key: number]: number };
 }
@@ -121,7 +121,7 @@ export default class GraphState {
     public static state: GraphStateData = {
         stronglyConnectedComponents: null,
         connectedComponents: null,
-        graphColoring: null,
+        graphColoringWelsh: null,
     };
     public static graph: GraphImmut;
     public static graphProperties: GraphProperties = {
