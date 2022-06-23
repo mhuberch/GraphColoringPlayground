@@ -363,19 +363,19 @@ export default class UIInteractions {
                 if (window.settings.getOption("nodePhysics") !== vals[0]) {
                     window.settings.changeOption("nodePhysics", vals[0]); // Physics
                 }
-                if (window.settings.getOption("direction") !== vals[1]) {
-                    window.settings.changeOption("direction", vals[1]);
-                    let G = GraphState.graph;
-                    G = vals[1] ? G.asDirected(true) : G.asUndirected();
-                    // Clear node coloring because graph color doesn't apply to directed graphs
-                    window.main.setData(GraphState.getGraphData(G, true));
-                }
-                if (window.settings.getOption("weights") !== vals[2]) {
-                    window.settings.changeOption("weights", vals[2]);
-                    let G = GraphState.graph;
-                    G = vals[2] ? G.asWeighted() : G.asUnweighted();
-                    window.main.setData(GraphState.getGraphData(G));
-                }
+                // if (window.settings.getOption("direction") !== vals[1]) {
+                //     window.settings.changeOption("direction", vals[1]);
+                //     let G = GraphState.graph;
+                //     G = vals[1] ? G.asDirected(true) : G.asUndirected();
+                //     // Clear node coloring because graph color doesn't apply to directed graphs
+                //     window.main.setData(GraphState.getGraphData(G, true));
+                // }
+                // if (window.settings.getOption("weights") !== vals[2]) {
+                //     window.settings.changeOption("weights", vals[2]);
+                //     let G = GraphState.graph;
+                //     G = vals[2] ? G.asWeighted() : G.asUnweighted();
+                //     window.main.setData(GraphState.getGraphData(G));
+                // }
             },
             "Options",
             "Save",
@@ -385,16 +385,16 @@ export default class UIInteractions {
                     initialValue: window.settings.getOption("nodePhysics"),
                     type: "checkbox"
                 },
-                {
-                    label: "Directed Graph",
-                    initialValue: window.settings.getOption("direction"),
-                    type: "checkbox"
-                },
-                {
-                    label: "Weighted Graph",
-                    initialValue: window.settings.getOption("weights"),
-                    type: "checkbox"
-                }
+                // {
+                //     label: "Directed Graph",
+                //     initialValue: window.settings.getOption("direction"),
+                //     type: "checkbox"
+                // },
+                // {
+                //     label: "Weighted Graph",
+                //     initialValue: window.settings.getOption("weights"),
+                //     type: "checkbox"
+                // }
             ],
             null
         );

@@ -175,7 +175,7 @@ export default class PredefinedGraphs {
     public static Custom(): void {
         help.showFormModal(($modal, vals) => {
                 $modal.modal("hide");
-                window.main.setData(newCustomGraph(vals[0], vals[1], vals[2]), false, true, true);
+                window.main.setData(newCustomGraph(vals[0], false, false), false, true, true);
             },
             "Configurable Graph", "Go",
             [
@@ -184,8 +184,8 @@ export default class PredefinedGraphs {
                         return v >= 0 || "Number of vertices must be non-negative";
                     }
                 },
-                {type: "checkbox", initialValue: false, label: "Directed"},
-                {type: "checkbox", initialValue: false, label: "Weighted"},
+                //{type: "checkbox", initialValue: false, label: "Directed"},
+                //{type: "checkbox", initialValue: false, label: "Weighted"},
             ]);
     }
 }
