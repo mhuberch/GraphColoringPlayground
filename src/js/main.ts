@@ -220,8 +220,18 @@ const self: MainI = {
         if (window.settings.getOption("direction")) {
             return;
         }
-        const graphColors = await GraphState.getProperty("graphColoring", true);
-        const chromaticNumber = await GraphState.getProperty("Chromatic Number", true);
+
+        const coloring = GraphState.graphProperties.colormode;
+
+        let graphColors : any;
+        let chromaticNumber : any;
+
+        alert(coloring);
+
+        if (coloring === 2) {
+            graphColors = await GraphState.getProperty("graphColoring", true);
+            chromaticNumber = await GraphState.getProperty("Chromatic Number", true);
+        }
 
         const basicColors = ['#ff3f3f ', '#ffbf64', '#ffff00', '#00ff80', '#00a0ff', '#f964ff'];
         const addColors = randomColor({ count: chromaticNumber > 7 ? chromaticNumber - 6 : 1, luminosity: "light" });

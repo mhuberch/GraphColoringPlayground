@@ -470,6 +470,7 @@ export default class UIInteractions {
             };
 
             const printGC = () => {
+                GraphState.graphProperties.colormode = 2;
                 GraphState.graphProperties["Chromatic Number"] = a.chromaticNumber;
                 GraphState.setUpToDate(true, ["Chromatic Number", "graphColoring"]);
                 (GraphState.state.graphColoring as {}) = a.colors;

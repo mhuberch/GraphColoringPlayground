@@ -20,6 +20,7 @@ interface UpToDateProperties {
 interface GraphProperties {
     vertices: number;
     edges: number;
+    colormode: number;
     eulerian: boolean;
     "Chromatic Number": number | null;
     "Connected Components": number | null;
@@ -126,6 +127,7 @@ export default class GraphState {
     public static graphProperties: GraphProperties = {
         vertices: 0,
         edges: 0,
+        colormode: 0,
         eulerian: false,
         "Chromatic Number": null,
         "Connected Components": null,
