@@ -223,7 +223,12 @@ const self: MainI = {
         const graphColors = await GraphState.getProperty("graphColoring", true);
         const chromaticNumber = await GraphState.getProperty("Chromatic Number", true);
 
-        const colors = randomColor({ count: chromaticNumber, luminosity: "light" });
+        const basicColors = ['#ff3f3f ', '#ffbf64', '#ffff00', '#00ff80', '#00a0ff', '#f964ff'];
+        const addColors = randomColor({ count: chromaticNumber > 7 ? chromaticNumber - 6 : 1, luminosity: "light" });
+
+        const colors = [...basicColors, ...addColors];
+
+        // const colors = randomColor({ count: chromaticNumber, luminosity: "light" });
         let G = GraphState.graph;
         (G.getAllNodes() as NodeImmutPlain[]).forEach((v) => {
             G = G.editNode(v.id, { color: colors[graphColors[v.id]] });
