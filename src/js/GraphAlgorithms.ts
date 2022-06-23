@@ -26,8 +26,27 @@ export default class GraphAlgorithms {
         return new GraphImmut(gp.nodes, gp.edges, gp.directed, gp.weighted);
     };
 
+
+    // // Coloring with brute force
+    // public static colorBruteForce = (G: GraphImmut = GraphState.graph) : {colors: {}; chromaticNumber: number} => {
+
+    //     // start with degree + 1
+
+    //     // check if k-colorable with brute force
+
+    // }
+
+    // Check, if a coloring is admissible
+    public static checkColoring = (G: GraphImmut = GraphState.graph): boolean => {
+
+
+
+        return true;
+
+    }
+
     // Welsh-Powell Algorithm
-    public static colorNetwork = (G: GraphImmut = GraphState.graph): { colors: {}; chromaticNumber: number } => {
+    public static colorNetworkWelsh = (G: GraphImmut = GraphState.graph): { colors: {}; chromaticNumber: number } => {
         // Get node ID's only
         const nodeArr: number[] = genericH.datasetToArray(G.getAllNodes(), "id") as number[];
 

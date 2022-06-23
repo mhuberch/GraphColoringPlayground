@@ -22,7 +22,7 @@ interface GraphProperties {
     edges: number;
     colormode: number;
     eulerian: boolean;
-    "Chromatic Number": number | null;
+    "Approx. Chromatic Welsh": number | null;
     "Connected Components": number | null;
     "Strongly Connected Components": number | null;
     cyclic: boolean;
@@ -68,15 +68,15 @@ export default class GraphState {
     public static maxHistory = 10;
     public static upToDate: UpToDateProperties[] = [
         {
-            name: "Chromatic Number", upToDate: false, type: "property",
+            name: "Approx. Chromatic Welsh", upToDate: false, type: "property",
             applyFunc: () => {
-                return window.ui.makeAndPrintGraphColoring();
+                return window.ui.makeAndPrintGraphColoringWelsh();
             }
         },
         {
-            name: "graphColoring", upToDate: false, type: "state",
+            name: "graphColoringWelsh", upToDate: false, type: "state",
             applyFunc: () => {
-                return window.ui.makeAndPrintGraphColoring();
+                return window.ui.makeAndPrintGraphColoringWelsh();
             }
         },
         { name: "vertices", upToDate: true, always: true, type: "property" },
@@ -129,7 +129,7 @@ export default class GraphState {
         edges: 0,
         colormode: 0,
         eulerian: false,
-        "Chromatic Number": null,
+        "Approx. Chromatic Welsh": null,
         "Connected Components": null,
         "Strongly Connected Components": null,
         cyclic: false,

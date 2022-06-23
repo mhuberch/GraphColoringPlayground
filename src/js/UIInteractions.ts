@@ -202,9 +202,9 @@ export default class UIInteractions {
     static getAlgorithms(): AlgorithmI[] {
         return [
             {
-                name: "Graph Coloring",
+                name: "Graph Coloring Welsh",
                 directional: false,
-                applyFunc: UIInteractions.makeAndPrintGraphColoring,
+                applyFunc: UIInteractions.makeAndPrintGraphColoringWelsh,
                 display: true
             },
             {
@@ -449,8 +449,8 @@ export default class UIInteractions {
         );
     }
 
-    static makeAndPrintGraphColoring(): Promise<void> {
-        const myName = "Graph Coloring";
+    static makeAndPrintGraphColoringWelsh(): Promise<void> {
+        const myName = "Graph Coloring Welsh";
         if (UIInteractions.isRunning[myName]) {
             UIInteractions.printAlreadyRunning(myName);
             return Promise.reject("Already Running");
@@ -465,19 +465,19 @@ export default class UIInteractions {
 
             // Use cached responses when able
             let a = {
-                chromaticNumber: (await GraphState.getProperty("Chromatic Number")) as number,
+                chromaticNumber: (await GraphState.getProperty("Approx. Chromatic Welsh")) as number,
                 colors: GraphState.state.graphColoring as {}
             };
 
             const printGC = () => {
                 GraphState.graphProperties.colormode = 2;
-                GraphState.graphProperties["Chromatic Number"] = a.chromaticNumber;
-                GraphState.setUpToDate(true, ["Chromatic Number", "graphColoring"]);
+                GraphState.graphProperties["Approx. Chromatic Welsh"] = a.chromaticNumber;
+                GraphState.setUpToDate(true, ["Approx. Chromatic Welsh", "graphColoringWelsh"]);
                 (GraphState.state.graphColoring as {}) = a.colors;
 
                 const colors = help.flatten(a.colors);
                 let p = `Number of Vertices: ${colors.length}`;
-                p += `\nChromatic Number: ${a.chromaticNumber}`;
+                p += `\nApprox. Chromatic Number from Welsh algorithm: ${a.chromaticNumber}`;
                 p += "\n\n";
 
                 colors.forEach((v, i) => {
@@ -504,7 +504,7 @@ export default class UIInteractions {
 
             const iStartedProgress = UIInteractions.startLoadingAnimation();
 
-            if (!(a.chromaticNumber !== null && (await GraphState.getProperty("graphColoring")) !== null)) {
+            if (!(a.chromaticNumber !== null && (await GraphState.getProperty("graphColoringWelsh")) !== null)) {
                 const w = UIInteractions.getWorkerIfPossible(e => {
                     a = e.data;
                     printGC();
@@ -516,7 +516,7 @@ export default class UIInteractions {
                     resolve(e.data);
                 });
                 w.send({
-                    type: "colorNetwork",
+                    type: "colorNetworkWelsh",
                     args: [],
                     graph: window.main.graphState.getGraphData(),
                     convertToGraphImmut: true

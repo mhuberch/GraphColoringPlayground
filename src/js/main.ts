@@ -229,8 +229,12 @@ const self: MainI = {
         alert(coloring);
 
         if (coloring === 2) {
-            graphColors = await GraphState.getProperty("graphColoring", true);
-            chromaticNumber = await GraphState.getProperty("Chromatic Number", true);
+            graphColors = await GraphState.getProperty("graphColoringWelsh", true);
+            chromaticNumber = await GraphState.getProperty("Approx. Chromatic Welsh", true);
+        }
+        else {
+            alert("No correct colormode");
+            return;
         }
 
         const basicColors = ['#ff3f3f ', '#ffbf64', '#ffff00', '#00ff80', '#00a0ff', '#f964ff'];
