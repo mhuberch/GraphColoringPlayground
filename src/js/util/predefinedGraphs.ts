@@ -96,7 +96,7 @@ const hypercubeGraph = (D: number): Readonly<GraphPlain> => {
     };
 
     for (let i = 0; i < numNodes; i++) {
-        nodes.push({id: i, label: pad(i.toString(2), D), color: 0});
+        nodes.push({id: i, label: pad(i.toString(2), D), color: "white"});
         generateDifferByOne(i, D).forEach((j) => {
             edges.push({from: i, to: j, weight: 1});
         });
@@ -108,7 +108,7 @@ const hypercubeGraph = (D: number): Readonly<GraphPlain> => {
 const newCustomGraph = (V: number, directed = false, weighted = false): Readonly<GraphPlain> => {
     const nodes = [];
     for (let i = 0; i < V; i++) {
-        nodes.push({id: i, label: gHelp.generateLabelFromNumber(i), color: 0});
+        nodes.push({id: i, label: gHelp.generateLabelFromNumber(i), color: "white"});
     }
 
     return help.deepFreeze({nodes, edges: [], directed, weighted} as GraphPlain);

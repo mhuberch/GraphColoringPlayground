@@ -211,7 +211,10 @@ export default class GraphState {
     private static updateGraph(graph = GraphState.graph) {
         let nodes = graph.getAllNodes() as NodeImmutPlain[];
         let edges = graph.getAllEdges() as EdgeImmutPlain[];
+        
+        alert("Updating");
         if (!window.settings.getOption("customColors")) {
+            alert("Updating and clearing");
             nodes = GraphState.clearColorFromNodes(nodes);
             edges = GraphState.clearColorFromEdges(edges);
         }
@@ -230,7 +233,7 @@ export default class GraphState {
         this.updateGraph(graph);
     }
 
-    static editNode(id: number | string, label: string, color?: string, graph = GraphState.graph) {
+    static editNode(id: number | string, label: string, color: string, graph = GraphState.graph) {
         const iId = getInt(id);
         graph = graph.editNode(iId, { label, color });
         window.main.setData(GraphState.getGraphData(graph), false, false);
@@ -269,7 +272,7 @@ export default class GraphState {
 
     static clearColorFromNodes(nodes: NodeImmutPlain[]): NodeImmutPlain[] {
         nodes.forEach((v) => {
-            v.color = null;
+            v.color = "white";
         });
         return nodes;
     }

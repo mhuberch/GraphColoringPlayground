@@ -27,7 +27,7 @@ export interface MainI {
         }
     };
     cancelEdit: (callback: Function) => void;
-    saveData: (data: any, callback: Function, operation: string, label: string, color: number) => Promise<void>;
+    saveData: (data: any, callback: Function, operation: string, label: string, color: string) => Promise<void>;
     nodeLabelIDValidator: (v: string) => (boolean | string);
     applyColors: () => Promise<void>;
     setData: (data: GraphPlain, recalcProps?: boolean, graphChanged?: boolean, rearrangeGraph?: boolean) => void;
@@ -83,8 +83,8 @@ interface VisEdgeInternal {
     "Purple": "purple",
 };*/
 
-const basicColors = ["white", '#ff3f3f ', '#ffbf64', '#ffff00', '#00ff80', '#00a0ff', '#f964ff'];
-const basicColorsLabel = ["white","red", "orange", "yellow", "green", "blue", "violet"];
+const basicColors = ["gray", '#ff3f3f ', '#ffbf64', '#ffff00', '#00ff80', '#00a0ff', '#f964ff'];
+const basicColorsLabel = ["not colored","1: red", "2: orange", "3: yellow", "4: green", "5: blue", "6: violet"];
 const basicColorsNum = basicColors.length;
 const basicColorsIndices = Array.from(Array(basicColorsNum).keys());
 
@@ -117,17 +117,18 @@ const self: MainI = {
                         type: "html",
                         initialValue: `<p>Node ID: ${await GraphState.getProperty("vertices")}</p>`
                     },
-                 //   { type: "text", label: "Label", initialValue: gHelp.generateLabelFromNumber(await GraphState.getProperty("vertices")) }
-                //]);
                     { type: "text", label: "Label", initialValue: gHelp.generateLabelFromNumber(await GraphState.getProperty("vertices")) },
                     { type: "select", label: "Color", optionText: basicColorsLabel, optionValues: basicColorsIndices}
+                    //{ type: "select", label: "Color", optionText: Object.keys(customColorPallete), optionValues: Object.values(customColorPallete)}
+                    
                 ];
                 
                 const $popup = help.makeFormModal("Add Node", "Save", options);
 
                 $popup.on("click", ".btn-success", () => {
                     $popup.modal("hide");
-                    self.saveData(data, callback, "add", $popup.find("input").first().val() as string, $popup.find("select").first().val() as number);
+                    self.saveData(data, callback, "add", $popup.find("input").first().val() as string, basicColors[$popup.find("select").first().val() as number]);
+//                    self.saveData(data, callback, "add", $popup.find("input").first().val() as string, $popup.find("select").first().val() as string);
                 }).on("click", ".btn-cancel", () => {
                     $popup.modal("hide");
                     self.cancelEdit(callback);
@@ -157,7 +158,7 @@ const self: MainI = {
 
                 $popup.on("click", ".btn-success", () => {
                     $popup.modal("hide");
-                    self.saveData(data, callback, "editNode", $popup.find("input").first().val() as string, $popup.find("select").first().val() as number);
+                    self.saveData(data, callback, "editNode", $popup.find("input").first().val() as string, basicColors[$popup.find("select").first().val() as number]);
                 }).on("click", ".btn-cancel", () => {
                     $popup.modal("hide");
                     self.cancelEdit(callback);

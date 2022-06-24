@@ -84,21 +84,21 @@ describe('Edit Node', () => {
         expect(newNode).to.be.frozen;
         expect(newNode.toPlain()).to.deep.equal({id: 0, label: '0', testcolor: 'red'});
 
-        const node2 = new NodeImmut(0, '0', 0, {oldKey: 1});
+        const node2 = new NodeImmut(0, '0', "white", {oldKey: 1});
         const newNode2 = node2.editNode(null, {testcolor: 'red'});
         expect(newNode2).to.not.equal(node2);
         expect(newNode2).to.be.frozen;
         expect(newNode2.toPlain()).to.deep.equal({id: 0, label: '0', testcolor: 'red', oldKey: 1});
     });
     it('Should edit extra attributes', () => {
-        const node = new NodeImmut(0, '0', 0, {testcolor: 'blue'});
+        const node = new NodeImmut(0, '0', "white", {testcolor: 'blue'});
         const newNode = node.editNode(null, {testcolor: 'red'});
         expect(newNode).to.not.equal(node);
         expect(newNode).to.be.frozen;
         expect(newNode.toPlain()).to.deep.equal({id: 0, label: '0', testcolor: 'red'});
     });
     it('Should change label and attributes', () => {
-        const node = new NodeImmut(0, '0', 0, {testcolor: 'blue'});
+        const node = new NodeImmut(0, '0', "white", {testcolor: 'blue'});
         const newNode = node.editNode('abc', {testcolor: 'red'});
         expect(newNode).to.not.equal(node);
         expect(newNode).to.be.frozen;

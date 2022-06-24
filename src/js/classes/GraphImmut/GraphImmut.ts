@@ -18,7 +18,7 @@ const filterExtraAttr = (data: any, labels: any) => {
 };
 
 const filterNodeExtraAttr = (data: any) => {
-    return filterExtraAttr(data, ["label", "id"]);
+    return filterExtraAttr(data, ["label", "id", "color"]);
 };
 
 const filterEdgeExtraAttr = (data: any) => {
@@ -194,10 +194,13 @@ export default class GraphImmut {
         if (!("label" in data)) {
             data.label = id.toString();
         }
+        if (!("color" in data)) {
+            data.color = "white";
+        }
 
         const extraAttrs = filterNodeExtraAttr(data);
 
-        return new GraphImmut(this.nodes.set(id, new NodeImmut(id, data.label, extraAttrs)),
+        return new GraphImmut(this.nodes.set(id, new NodeImmut(id, data.label, data.color, extraAttrs)),
             this.edges, this.directed, this.weighted);
     }
 
@@ -206,11 +209,16 @@ export default class GraphImmut {
             return false;
         }
 
+        alert()
+
         const extraAttrs = filterNodeExtraAttr(data);
         if (!("label" in data)) {
             data.label = (this.getNode(id, true) as NodeImmut).getLabel();
         }
-        return new GraphImmut(this.nodes.set(id, (this.getNode(id, true) as NodeImmut).editNode(data.label, extraAttrs)),
+        if (!("color" in data)) {
+            data.color = (this.getNode(id, true) as NodeImmut).getColor();
+        }
+        return new GraphImmut(this.nodes.set(id, (this.getNode(id, true) as NodeImmut).editNode(data.label, data.color, extraAttrs)),
             this.edges, this.directed, this.weighted);
     }
 

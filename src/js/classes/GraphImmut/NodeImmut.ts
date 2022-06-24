@@ -5,7 +5,7 @@ import help from "../../util/genericHelpers";
 export interface NodeImmutPlain {
     id: Readonly<number>;
     label: string;
-    //color: number;
+    color: string;
     [key: string]: any;
     [key: number]: any;
 }
@@ -17,10 +17,10 @@ const capitalLetters = help.deepFreeze([
 export default class NodeImmut {
     private readonly id: Readonly<number>;
     private readonly label: Readonly<string>;
-    private readonly color: Readonly<number>;
+    private readonly color: Readonly<string>;
     private readonly attributes: any;
 
-    constructor(id: any, label: null | string = null, color: null | number = null, extraAttrs: null | any = null) {
+    constructor(id: any, label: null | string = null, color: null | string = null, extraAttrs: null | any = null) {
         if (label === null) {
             // MH: If the id is an integer number and between 0 and 25, than take a capital letter from the alphabet as label
             if (typeof id === "number" && (id >= 0 && id <=25)) {
@@ -44,7 +44,7 @@ export default class NodeImmut {
         this.label = Object.freeze(this.label);
         this.id = Object.freeze(id);
         if (color === null) {
-            color = 0;
+            color = "white";
         }
         this.color = Object.freeze(color);
         
@@ -74,7 +74,7 @@ export default class NodeImmut {
         return this.label;
     }
 
-    getColor(): Readonly<number> {
+    getColor(): Readonly<string> {
         return this.color;
     }
 
@@ -90,9 +90,12 @@ export default class NodeImmut {
         return this.attributes;
     }
 
-    editNode(label: any = null, extraAttrs: any = null): NodeImmut {
+    editNode(label: any = null, color: any = null, extraAttrs: any = null): NodeImmut {
         if (label === null) {
             label = this.getLabel();
+        }
+        if (color === null) {
+            color = this.getColor();
         }
 
         // Merge existing and new attributes favoring the new
@@ -103,6 +106,6 @@ export default class NodeImmut {
             });
         }
 
-        return new NodeImmut(this.getID(), label, attributes);
+        return new NodeImmut(this.getID(), label, color, attributes);
     }
 }

@@ -42,7 +42,7 @@ describe('Constructor', () => {
         expect(graph.isWeighted()).to.be.false;
     });
     it('Should construct with plain node list with non-normalized IDs', () => {
-        const graph = new GraphImmut([{id: 1, label: '1'}, {id: 3, label: '3'}, {id: 6, label: 'different'}],
+        const graph = new GraphImmut([{id: 1, label: '1', color: "white"}, {id: 3, label: '3', color: "white"}, {id: 6, label: 'different', color: "white"}],
             null, false, false);
 
         expect(graph).to.be.a('object')
@@ -53,7 +53,7 @@ describe('Constructor', () => {
         expect(graph.getNumberOfEdges()).to.equal(0);
     });
     it('Should construct with plain node list with non-normalized IDs and edges', () => {
-        const graph = new GraphImmut([{id: 1, label: '1'}, {id: 3, label: '3'}, {id: 6, label: 'different'}],
+        const graph = new GraphImmut([{id: 1, label: '1', color: "white"}, {id: 3, label: '3', color: "white"}, {id: 6, label: 'different', color: "white"}],
             [{from: 1, to: 6, weight: 1}, {from: 6, to: 3, weight: 1}], false, false);
 
         expect(graph).to.be.a('object')
@@ -68,7 +68,7 @@ describe('Constructor', () => {
 });
 
 describe('Get Methods', () => {
-    const graph = new GraphImmut([{id: 0, label: '0'}, {id: 1, label: '1'}, {id: 2, label: 'different'}],
+    const graph = new GraphImmut([{id: 0, label: '0', color: "white"}, {id: 1, label: '1', color: "white"}, {id: 2, label: 'different', color: "white"}],
         [{from: 0, to: 2, weight: 1}, {from: 1, to: 2, weight: 1}], false, false);
 
     it('Should get counts', () => {
@@ -94,10 +94,10 @@ describe('Get Methods', () => {
 
     it('Should get node out-degrees', () => {
         expect(graph.getAllOutDegrees()).to.deep.equal([1, 1, 0]);
-        const graph2 = new GraphImmut([{id: 0, label: '0'}, {id: 1, label: '1'}, {id: 2, label: 'different'}],
+        const graph2 = new GraphImmut([{id: 0, label: '0', color: "white"}, {id: 1, label: '1', color: "white"}, {id: 2, label: 'different', color: "white"}],
             [{from: 0, to: 2, weight: 1}, {from: 2, to: 1, weight: 1}], false, false);
         expect(graph2.getAllOutDegrees()).to.deep.equal([1, 0, 1]);
-        const graph3 = new GraphImmut([{id: 0, label: '0'}, {id: 1, label: '1'}, {id: 2, label: 'different'}],
+        const graph3 = new GraphImmut([{id: 0, label: '0', color: "white"}, {id: 1, label: '1', color: "white"}, {id: 2, label: 'different', color: "white"}],
             [{from: 0, to: 2, weight: 1}, {from: 0, to: 1, weight: 1}, {from: 2, to: 1, weight: 1}], false, false);
         expect(graph3.getAllOutDegrees()).to.deep.equal([2, 0, 1]);
     });
