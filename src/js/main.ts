@@ -68,20 +68,25 @@ interface VisEdgeInternal {
 }
 
 const customColorPallete = {
-    "Default": "DEFAULT",
-    "Red": "red",
-    "Maroon": "maroon",
-    "Yellow": "yellow",
-    "Olive": "olive",
-    "Lime": "lime",
-    "Green": "green",
-    "Aqua": "aqua",
-    "Teal": "teal",
-    "Blue": "blue",
-    "Navy": "navy",
-    "Fuchsia": "fuchsia",
-    "Purple": "purple",
+    "default": "DEFAULT",
+    "1: red": "#ff3f3f",
+    "2: orange": "#ffbf64",
+    "3: yellow": "#ffff00",
+    "4: green": "#00ff80",
+    "5: blue": "#0059ff",
+    "6: violet": "#f964ff"
 };
+
+const customColorPaletteArray = [
+    {key: 'a', value: 1},
+    {key: 'b', value: 2},
+    {key: 'c', value: 3}
+  ];
+  
+
+ //    { type: "select", label: "Color", optionValues: [0, 1, 2, 3, 4, 5], optionText: ["red", "orange", "yellow", "green", "blue", "violet"], initialValue: 0}
+                //]);
+// const basicColors = ['#ff3f3f ', '#ffbf64', '#ffff00', '#00ff80', '#00a0ff', '#f964ff'];
 
 const self: MainI = {
     graphState: GraphState,
@@ -132,7 +137,7 @@ const self: MainI = {
             },
             editNode: (data, callback) => {
                 const customColors = window.settings.getOption("customColors");
-                const initialColor = Object.getOwnPropertyNames(data.color).includes("background") ? (data.color as any).background : "DEFAULT";
+                const initialColor = Object.getOwnPropertyNames(data.color).includes("background") ? (data.color as any).background : "white";
 
                 const options: ModalFormRow[] = [
                     {

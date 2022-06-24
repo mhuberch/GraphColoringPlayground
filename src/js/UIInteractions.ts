@@ -319,6 +319,9 @@ export default class UIInteractions {
             const predefined = (await import("./util/predefinedGraphs")).default;
             predefined.Custom();
         });
+        makeSimpleClickListener("#load-default-color", async () => {
+            GraphState.resetColor();
+        });
         makeSimpleClickListener("#undo-link", window.main.undo);
         makeSimpleClickListener("#redo-link", window.main.redo);
         makeSimpleClickListener("#calculate-all-properties-link", async () => {

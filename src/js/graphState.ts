@@ -216,6 +216,14 @@ export default class GraphState {
         window.main.setData({ nodes, edges });
     }
 
+    static resetColor() {
+        const saveState = window.settings.getOption("customColors");
+        window.settings.changeOption("customColors", false);
+        this.updateGraph();
+        window.settings.changeOption("customColors", saveState);
+
+    }
+
     static addEdge(from: number | string, to: number | string, weight = 0, graph = GraphState.graph) {
         const edgeFrom = getInt(from);
         const edgeTo = getInt(to);
