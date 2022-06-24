@@ -7,6 +7,7 @@ import Worker from "worker-loader!./workers/GraphAlgorithmWorker";
 import NodeImmut from "./classes/GraphImmut/NodeImmut";
 import EdgeImmut from "./classes/GraphImmut/EdgeImmut";
 import GraphImmut from "./classes/GraphImmut/GraphImmut";
+import * as languages from "./languages";
 
 interface AlgorithmI {
     name: string;
@@ -17,7 +18,7 @@ interface AlgorithmI {
 }
 
 const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean): void => {
-    const myName = "Shortest Path";
+    const myName = languages.current.ShortestPath;
     if (UIInteractions.isRunning[myName]) {
         UIInteractions.printAlreadyRunning(myName);
         return;
@@ -41,19 +42,15 @@ const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean):
                 UIInteractions.isRunning[myName] = false;
 
                 if (a === false) {
-                    if (title.includes("Dijkstra")) {
+                    if (fn.includes("dijkstra")) {
                         help.showSimpleModal(
-                            "Dijkstra Error",
-                            "<p>The Dijkstra algorithm only works on graphs" +
-                                " with totally non-negative edge weights. Please fix the graph so that there are no" +
-                                " negative edge weights.</p><p>Alternatively, try the Bellman-Ford algorithm which solves" +
-                                " exactly this problem.</p>"
+                            languages.current.DijkstraError,
+                            languages.current.DijkstraErrorHTML
                         );
-                    } else if (title.includes("Bellman")) {
+                    } else if (fn.includes("bellman")) {
                         help.showSimpleModal(
-                            "Bellman-Ford Error",
-                            "<p>The Bellman-Ford algorithm only works on graphs" +
-                                " with no negative edge-weight cycles. Please remove the negative cycle and try again.</p>"
+                            languages.current.BellmanFordError,
+                            languages.current.BellmanFordErrorHTML
                         );
                     }
                     return;
@@ -61,17 +58,16 @@ const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean):
 
                 a = a as ShortestPathResult;
 
-                let p = `<h3>${title}</h3><hr>No path exists from ${help.htmlEncode(
-                    source.toString()
-                )} to ${help.htmlEncode(sink.toString())}`;
+                let p = `<h3>${title}</h3><hr>${help.stringReplacement(languages.current.NoPathFromAToB,
+                    help.htmlEncode(source.toString()), help.htmlEncode(sink.toString()))}`;
 
                 if (a.pathExists) {
-                    p = `${title} From ${GraphState.nodeIDToLabel(source)} to `;
-                    p += `${GraphState.nodeIDToLabel(sink)}: ${a.distance}`;
+                    p = help.stringReplacement(languages.current.ShortestPathFromAToB, title,
+                        GraphState.nodeIDToLabel(source), GraphState.nodeIDToLabel(sink), a.distance);
                     if (weighted) {
-                        p += `\nWith weighted cost: ${a.cost}`;
+                        p += `\n${help.stringReplacement(languages.current.WithWeightedCost, a.cost)}`;
                     }
-                    p += "\n\nUsing Path: ";
+                    p += "\n\n" + languages.current.UsingPath;
 
                     p = help.htmlEncode(p);
                     let graph = GraphState.getGraphData(GraphState.graph, false, true);
@@ -98,15 +94,15 @@ const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean):
             });
         },
         title,
-        "Go",
+        languages.current.Go,
         [
             {
-                label: "Start Node",
+                label: languages.current.StartNode,
                 type: "text",
                 validationFunc: window.main.nodeLabelIDValidator
             },
             {
-                label: "End Node",
+                label: languages.current.EndNode,
                 type: "text",
                 validationFunc: window.main.nodeLabelIDValidator
             }
@@ -116,14 +112,14 @@ const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean):
 
 const makeAndPrintComponents = async (stronglyConnected: boolean): Promise<void> => {
     let a = null;
-    let cc = "Connected Components";
+    let cc = languages.current.ConnectedComponents;
     let componentKey = "connectedComponents";
 
     if (stronglyConnected) {
         if (!window.settings.getOption("direction")) {
             return;
         }
-        cc = "Strongly " + cc;
+        cc = languages.current.StronglyConnectedComponents;
         componentKey = "stronglyConnectedComponents";
     } else {
         if (window.settings.getOption("direction")) {
@@ -133,7 +129,7 @@ const makeAndPrintComponents = async (stronglyConnected: boolean): Promise<void>
 
     if (UIInteractions.isRunning[cc]) {
         UIInteractions.printAlreadyRunning(cc);
-        return Promise.reject("Already Running");
+        return Promise.reject(languages.current.TaskAlreadyRunning);
     }
     UIInteractions.isRunning[cc] = true;
 
@@ -147,11 +143,11 @@ const makeAndPrintComponents = async (stronglyConnected: boolean): Promise<void>
         GraphState.state[componentKey] = a.components;
 
         const components = help.flatten(a.components);
-        let p = `Number of ${cc}: ${a.count}`;
+        let p = help.stringReplacement(languages.current.NumberOfConnectedComponents, cc, a.count);
         p += "\n\n";
 
         components.forEach((v, i) => {
-            p += `Vertex ${GraphState.nodeIDToLabel(i)} is in connected component #${v}\n`;
+            p += help.stringReplacement(languages.current.VertexIsInConnectedComponentNumber, GraphState.nodeIDToLabel(i), v + "") + "\n";
         });
 
         p += `\n${JSON.stringify(help.rotate(a.components), null, 4)}\n\n`;
@@ -202,13 +198,14 @@ export default class UIInteractions {
     static getAlgorithms(): AlgorithmI[] {
         return [
             {
-                name: "Graph Coloring Welsh",
+                //name: "Graph Coloring Welsh",
+                name: languages.current.GraphColoring,
                 directional: false,
                 applyFunc: UIInteractions.makeAndPrintGraphColoringWelsh,
                 display: true
             },
             {
-                name: "Connected Components",
+                name: languages.current.ConnectedComponents,
                 directional: false,
                 applyFunc: () => {
                     makeAndPrintComponents(false);
@@ -216,7 +213,7 @@ export default class UIInteractions {
                 display: true
             },
             {
-                name: "Strongly Connected Components",
+                name: languages.current.StronglyConnectedComponents,
                 directional: true,
                 display: true,
                 applyFunc: () => {
@@ -224,63 +221,63 @@ export default class UIInteractions {
                 }
             },
             {
-                name: "Breadth-First Shortest Path",
+                name: languages.current.BFS,
                 directional: false,
                 applyFunc: () => {
-                    makeAndPrintShortestPath("Breadth-First Shortest Path", "breadthFirstSearch", false);
+                    makeAndPrintShortestPath(languages.current.BFS, "breadthFirstSearch", false);
                 },
                 display: true
             },
             {
-                name: "Dijkstra Shortest Path",
+                name: languages.current.Dijkstra,
                 applyFunc: () => {
-                    makeAndPrintShortestPath("Dijkstra Shortest Path", "dijkstraSearch", true);
+                    makeAndPrintShortestPath(languages.current.Dijkstra, "dijkstraSearch", true);
                 },
                 display: true
             },
             {
-                name: "Bellman-Ford Shortest Path",
+                name: languages.current.BellmanFord,
                 weighted: true,
                 directional: true,
                 applyFunc: () => {
-                    makeAndPrintShortestPath("Bellman-Ford Shortest Path", "bellmanFord", true);
+                    makeAndPrintShortestPath(languages.current.BellmanFord, "bellmanFord", true);
                 },
                 display: true
             },
             {
-                name: "Ford-Fulkerson",
+                name: languages.current.FordFulkerson,
                 weighted: true,
                 directional: true,
                 applyFunc: UIInteractions.makeAndPrintFFMCMF,
                 display: true
             },
             {
-                name: "Kruskal Minimum Spanning Tree",
+                name: languages.current.KruskalMST,
                 weighted: true,
                 directional: false,
                 applyFunc: UIInteractions.makeAndPrintKruskal,
                 display: true
             },
             {
-                name: "Cyclic",
+                name: languages.current.Cyclic,
                 applyFunc: UIInteractions.makeAndPrintIsCyclic,
                 directional: true,
                 display: true
             },
             {
-                name: "Topological Sort",
+                name: languages.current.TopoSort,
                 applyFunc: UIInteractions.makeAndPrintTopologicalSort,
                 directional: true,
                 display: true
             },
             {
-                name: "Eulerian",
+                name: languages.current.Eulerian,
                 directional: false,
                 display: false,
                 applyFunc: null
             },
             {
-                name: "Eulerian",
+                name: languages.current.Eulerian,
                 directional: true,
                 display: true,
                 applyFunc: UIInteractions.makeAndPrintDirectionalEulerian
@@ -348,11 +345,8 @@ export default class UIInteractions {
 
     static printHelp(): void {
         help.showSimpleModal(
-            "Help",
-            "<h4>For support see the " +
-                "<a href='https://github.com/MikeDombo/graphPlayground' target='_blank'>GitHub repository</a>" +
-                " for guides</h4> <h4>See <a href='https://github.com/MikeDombo/graphPlayground/issues' target='_blank'>" +
-                "GitHub issues</a> to submit bugs or feature requests.</h4>"
+            languages.current.Help,
+            languages.current.IssuesHTML
         );
     }
 
@@ -363,6 +357,7 @@ export default class UIInteractions {
                 if (window.settings.getOption("nodePhysics") !== vals[0]) {
                     window.settings.changeOption("nodePhysics", vals[0]); // Physics
                 }
+
                 // if (window.settings.getOption("direction") !== vals[1]) {
                 //     window.settings.changeOption("direction", vals[1]);
                 //     let G = GraphState.graph;
@@ -376,25 +371,36 @@ export default class UIInteractions {
                 //     G = vals[2] ? G.asWeighted() : G.asUnweighted();
                 //     window.main.setData(GraphState.getGraphData(G));
                 // }
+                if (window.settings.getOption("customColors") !== vals[1]) {
+                    window.settings.changeOption("customColors", vals[1]);
+                }
+
             },
-            "Options",
-            "Save",
+            languages.current.Options,
+            languages.current.Save,
             [
                 {
-                    label: "Graph Physics",
+                    label: languages.current.GraphPhysics,
                     initialValue: window.settings.getOption("nodePhysics"),
                     type: "checkbox"
                 },
+
                 // {
-                //     label: "Directed Graph",
+                //     label: languages.current.DiGraph,
                 //     initialValue: window.settings.getOption("direction"),
                 //     type: "checkbox"
                 // },
                 // {
-                //     label: "Weighted Graph",
+                //     label: languages.current.WeightedGraph,
                 //     initialValue: window.settings.getOption("weights"),
                 //     type: "checkbox"
-                // }
+                // },
+                {
+                    label: languages.current.CustomNodeColors,
+                    initialValue: window.settings.getOption("customColors"),
+                    type: "checkbox"
+                }
+
             ],
             null
         );
@@ -439,21 +445,25 @@ export default class UIInteractions {
     }
 
     static printAlreadyRunning(name?: string) {
-        let n = "This task";
+        let n = languages.current.ThisTask;
         if (name) {
             n = name;
         }
         help.showSimpleModal(
-            "Task Already Running",
-            "<p>" + n + " is already running, please wait for it to finish first.</p>"
+            languages.current.TaskAlreadyRunning,
+            "<p>" + help.stringReplacement(languages.current.TaskAlreadyRunningBody, n) + "</p>"
         );
     }
 
+
+        //const myName = "Graph Coloring Welsh";
+
     static makeAndPrintGraphColoringWelsh(): Promise<void> {
-        const myName = "Graph Coloring Welsh";
+        const myName = languages.current.GraphColoring;
+
         if (UIInteractions.isRunning[myName]) {
             UIInteractions.printAlreadyRunning(myName);
-            return Promise.reject("Already Running");
+            return Promise.reject(languages.current.TaskAlreadyRunning);
         }
         UIInteractions.isRunning[myName] = true;
 
@@ -476,12 +486,16 @@ export default class UIInteractions {
                 (GraphState.state.graphColoringWelsh as {}) = a.colors;
 
                 const colors = help.flatten(a.colors);
-                let p = `Number of Vertices: ${colors.length}`;
-                p += `\nApprox. Chromatic Number from Welsh algorithm: ${a.chromaticNumber}`;
+
+                // p += `\nApprox. Chromatic Number from Welsh algorithm: ${a.chromaticNumber}`;
+
+                let p = help.stringReplacement(languages.current.NumberOfVertices, colors.length + "");
+                p += "\n" + help.stringReplacement(languages.current.ChromaticNumberIs, a.chromaticNumber + "");
+
                 p += "\n\n";
 
                 colors.forEach((v, i) => {
-                    p += `Vertex ${GraphState.nodeIDToLabel(i)} gets color ${v}\n`;
+                    p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
                 });
 
                 /*help.printout(p)
@@ -494,9 +508,8 @@ export default class UIInteractions {
 
                 p += `\n${JSON.stringify(help.rotate(a.colors), null, 4)}\n\n`;
 
-                p = `<h3>Graph Coloring Using Welsh-Powell Algorithm</h3><hr>${help.htmlEncode(p)}`;
-                p +=
-                    "<br/><button class='btn btn-primary' onclick='main.applyColors()'>Apply New Colors To Graph</button>";
+                p = `<h3>${languages.current.GraphColoringTitle}</h3><hr>${help.htmlEncode(p)}`;
+                p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
 
                 help.printout(p);
                 window.main.applyColors();
@@ -531,10 +544,10 @@ export default class UIInteractions {
     }
 
     static makeAndPrintDirectionalEulerian(): Promise<void> {
-        const myName = "Eulerian";
+        const myName = languages.current.Eulerian;
         if (UIInteractions.isRunning[myName]) {
             UIInteractions.printAlreadyRunning(myName);
-            return Promise.reject("Already Running");
+            return Promise.reject(languages.current.TaskAlreadyRunning);
         }
         UIInteractions.isRunning[myName] = true;
 
@@ -566,13 +579,13 @@ export default class UIInteractions {
     }
 
     static makeAndPrintEulerian(ignoreDuplicate = false): Promise<void> {
-        const myName = "Eulerian";
+        const myName = languages.current.Eulerian;
         if (UIInteractions.isRunning[myName]) {
             if (ignoreDuplicate) {
                 return Promise.resolve();
             }
             UIInteractions.printAlreadyRunning(myName);
-            return Promise.reject("Already Running");
+            return Promise.reject(languages.current.TaskAlreadyRunning);
         }
         UIInteractions.isRunning[myName] = true;
 
@@ -606,7 +619,7 @@ export default class UIInteractions {
         if (!window.settings.getOption("direction") || !window.settings.getOption("weights")) {
             return;
         }
-        const myName = "Ford-Fulkerson";
+        const myName = languages.current.FordFulkerson;
         if (UIInteractions.isRunning[myName]) {
             UIInteractions.printAlreadyRunning(myName);
             return;
@@ -623,10 +636,8 @@ export default class UIInteractions {
                 let a: boolean | FlowResult | null = null;
 
                 const cb = () => {
-                    let p = `<h3>Ford-Fulkerson</h3><hr>No path exists from `;
-                    p += `${help.htmlEncode(GraphState.nodeIDToLabel(source))} to ${help.htmlEncode(
-                        GraphState.nodeIDToLabel(sink)
-                    )}`;
+                    let p = `<h3>${languages.current.FordFulkerson}</h3><hr>${help.stringReplacement(languages.current.NoPathFromAToB,
+                        help.htmlEncode(GraphState.nodeIDToLabel(source)), help.htmlEncode(GraphState.nodeIDToLabel(sink)))}`;
 
                     if (a === false) {
                         help.printout(p);
@@ -634,17 +645,17 @@ export default class UIInteractions {
                     }
                     a = a as { maxFlow: number; flowPath: any[] };
 
-                    p = `Ford-Fulkerson MaxFlow-MinCut Max Flow From ${GraphState.nodeIDToLabel(source)} `;
-                    p += `to ${GraphState.nodeIDToLabel(sink)}: ${a.maxFlow}`;
-                    p += "\n\nUsing Capacities:\n\n";
+                    p = `${languages.current.FordFulkersonMaxFlowMinCut} ${help.stringReplacement(languages.current.MaxFlowFromAToB,
+                        GraphState.nodeIDToLabel(source), GraphState.nodeIDToLabel(sink), a.maxFlow + "")}`;
+                    p += `\n\n${languages.current.UsingCapacities}\n\n`;
                     p = help.htmlEncode(p);
                     a.flowPath.forEach(v => {
-                        p += `${GraphState.nodeIDToLabel(v.from)}&rarr;${GraphState.nodeIDToLabel(v.to)} using ${
-                            v.flow
-                        } of ${v.capacity}\n`;
+                        p += help.stringReplacement(languages.current.FlowWithCapacity, GraphState.nodeIDToLabel(v.from),
+                            GraphState.nodeIDToLabel(v.to), v.flow + "", v.capacity + "");
+                        p += "\n";
                     });
                     p = p.trim();
-                    p = "<h3>Ford-Fulkerson MaxFlow-MinCut</h3><hr>" + p;
+                    p = `<h3>${languages.current.FordFulkersonMaxFlowMinCut}</h3><hr>` + p;
 
                     help.printout(p);
                 };
@@ -666,16 +677,16 @@ export default class UIInteractions {
                     graph: window.main.graphState.getGraphData()
                 });
             },
-            "Ford-Fulkerson MaxFlow-MinCut",
-            "Go",
+            languages.current.FordFulkersonMaxFlowMinCut,
+            languages.current.Go,
             [
                 {
-                    label: "Source Node",
+                    label: languages.current.SourceNode,
                     type: "text",
                     validationFunc: window.main.nodeLabelIDValidator
                 },
                 {
-                    label: "Sink Node",
+                    label: languages.current.SinkNode,
                     type: "text",
                     validationFunc: window.main.nodeLabelIDValidator
                 }
@@ -688,7 +699,7 @@ export default class UIInteractions {
             return;
         }
 
-        const myName = "Kruskal";
+        const myName = languages.current.KruskalMST;
         if (UIInteractions.isRunning[myName]) {
             UIInteractions.printAlreadyRunning(myName);
             return;
@@ -700,15 +711,15 @@ export default class UIInteractions {
             const a: MSTResult = e.data;
             w.cleanup();
 
-            let p = `Kruskal's Minimum Spanning Tree Total Weight: ${a.totalWeight}`;
-            p += "\n\nUsing Edges:\n\n";
+            let p = help.stringReplacement(languages.current.KruskalMSTTotalWeight, a.totalWeight + "");
+            p += `\n\n${languages.current.UsingEdges}\n\n`;
             p = help.htmlEncode(p);
             a.mst.forEach(v => {
                 p += `${GraphState.nodeIDToLabel(new EdgeImmut(v).getFrom())}&rarr;`;
                 p += `${GraphState.nodeIDToLabel(new EdgeImmut(v).getTo())}\n`;
             });
             p = p.trim();
-            p = `<h3>Kruskal Minimum Spanning Tree</h3><hr>${p}`;
+            p = `<h3>${languages.current.KruskalMST}</h3><hr>${p}`;
 
             if (iStartedProgress) {
                 UIInteractions.stopLoadingAnimation();
@@ -730,10 +741,10 @@ export default class UIInteractions {
             return Promise.resolve();
         }
 
-        const myName = "Cyclic";
+        const myName = languages.current.Cyclic;
         if (UIInteractions.isRunning[myName]) {
             UIInteractions.printAlreadyRunning(myName);
-            return Promise.reject("Already Running");
+            return Promise.reject(languages.current.TaskAlreadyRunning);
         }
         UIInteractions.isRunning[myName] = true;
 
@@ -763,7 +774,7 @@ export default class UIInteractions {
             return;
         }
 
-        const myName = "Topological Sort";
+        const myName = languages.current.TopoSort;
         if (UIInteractions.isRunning[myName]) {
             UIInteractions.printAlreadyRunning(myName);
             return;
@@ -783,20 +794,17 @@ export default class UIInteractions {
             if (a === true) {
                 GraphState.graphProperties.cyclic = true;
                 GraphState.setUpToDate(true, ["cyclic"]);
-                help.printout(
-                    "<h3>Topological Sorting Failed</h3><hr>Topological sorting failed because the graph contains a cycle"
-                );
-
+                help.printout(languages.current.TopoSortErrorHTML);
                 return;
             }
 
-            let p = "Topological Sorting:\n\n";
+            let p = languages.current.TopoSort + ":\n\n";
             p = help.htmlEncode(p);
             (a as any[]).forEach(v => {
                 p += `${GraphState.nodeIDToLabel(v.id)}, `;
             });
             p = p.slice(0, -2);
-            p = `<h3>Topological Sorting</h3><hr>${p}`;
+            p = `<h3>${languages.current.TopoSort}</h3><hr>${p}`;
 
             help.printout(p);
         });
