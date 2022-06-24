@@ -41,8 +41,8 @@ export default {
     interpolateNodesFromEdges: (edges: EdgeImmutPlain[]): NodeImmutPlain[] => {
         const nodes: NodeImmutPlain[] = [];
         edges.forEach((v) => {
-            nodes[v.from] = {id: v.from, label: gHelp.generateLabelFromNumber(v.from)};
-            nodes[v.to] = {id: v.to, label: gHelp.generateLabelFromNumber(v.to)};
+            nodes[v.from] = {id: v.from, label: gHelp.generateLabelFromNumber(v.from), color: 0};
+            nodes[v.to] = {id: v.to, label: gHelp.generateLabelFromNumber(v.to), color: 0};
         });
 
         return nodes;

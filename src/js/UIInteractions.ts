@@ -377,9 +377,9 @@ export default class UIInteractions {
                 //     window.main.setData(GraphState.getGraphData(G));
                 // }
 
-                if (window.settings.getOption("customColors") !== vals[1]) {
-                    window.settings.changeOption("customColors", vals[1]);
-                }
+                // if (window.settings.getOption("customColors") !== vals[1]) {
+                //     window.settings.changeOption("customColors", vals[1]);
+                // }
             },
             "Options",
             "Save",
@@ -401,11 +401,11 @@ export default class UIInteractions {
                 //     type: "checkbox"
                 // },
 
-                {
-                    label: "Customize Node Colors",
-                    initialValue: window.settings.getOption("customColors"),
-                    type: "checkbox"
-                }
+                // {
+                //     label: "Customize Node Colors",
+                //     initialValue: window.settings.getOption("customColors"),
+                //     type: "checkbox"
+                // }
             ],
             null
         );

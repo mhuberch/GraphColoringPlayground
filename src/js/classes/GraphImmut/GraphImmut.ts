@@ -240,8 +240,9 @@ export default class GraphImmut {
                 if (node.getID().toString() === label) {
                     label = nodeMap[node.getID()].toString();
                 }
+                let color = node.getColor();
 
-                return new NodeImmut(nodeMap[node.getID()], label, node.getAllAttributes());
+                return new NodeImmut(nodeMap[node.getID()], label, color, node.getAllAttributes());
             }) as List<NodeImmut>;
 
         // Remap edges

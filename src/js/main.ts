@@ -27,7 +27,7 @@ export interface MainI {
         }
     };
     cancelEdit: (callback: Function) => void;
-    saveData: (data: any, callback: Function, operation: string, label: string, color: string) => Promise<void>;
+    saveData: (data: any, callback: Function, operation: string, label: string, color: number) => Promise<void>;
     nodeLabelIDValidator: (v: string) => (boolean | string);
     applyColors: () => Promise<void>;
     setData: (data: GraphPlain, recalcProps?: boolean, graphChanged?: boolean, rearrangeGraph?: boolean) => void;
@@ -67,7 +67,7 @@ interface VisEdgeInternal {
     label?: string
 }
 
-const customColorPallete = {
+/*const customColorPallete = {
     "Default": "DEFAULT",
     "Red": "red",
     "Maroon": "maroon",
@@ -81,7 +81,14 @@ const customColorPallete = {
     "Navy": "navy",
     "Fuchsia": "fuchsia",
     "Purple": "purple",
-};
+};*/
+
+const basicColors = ["white", '#ff3f3f ', '#ffbf64', '#ffff00', '#00ff80', '#00a0ff', '#f964ff'];
+const basicColorsLabel = ["white","red", "orange", "yellow", "green", "blue", "violet"];
+const basicColorsNum = basicColors.length;
+const basicColorsIndices = Array.from(Array(basicColorsNum).keys());
+
+
 
 const self: MainI = {
     graphState: GraphState,
@@ -105,7 +112,6 @@ const self: MainI = {
         interaction: { hover: true },
         manipulation: {
             addNode: async (data, callback) => {
-                const customColors = window.settings.getOption("customColors");
                 const options: ModalFormRow[] = [
                     {
                         type: "html",
@@ -114,15 +120,14 @@ const self: MainI = {
                  //   { type: "text", label: "Label", initialValue: gHelp.generateLabelFromNumber(await GraphState.getProperty("vertices")) }
                 //]);
                     { type: "text", label: "Label", initialValue: gHelp.generateLabelFromNumber(await GraphState.getProperty("vertices")) },
+                    { type: "select", label: "Color", optionText: basicColorsLabel, optionValues: basicColorsIndices}
                 ];
-                if (customColors) {
-                    options.push({ type: "select", label: "Color", optionText: Object.keys(customColorPallete), optionValues: Object.values(customColorPallete) });
-                }
+                
                 const $popup = help.makeFormModal("Add Node", "Save", options);
 
                 $popup.on("click", ".btn-success", () => {
                     $popup.modal("hide");
-                    self.saveData(data, callback, "add", $popup.find("input").first().val() as string, $popup.find("select").first().val() as string);
+                    self.saveData(data, callback, "add", $popup.find("input").first().val() as string, $popup.find("select").first().val() as number);
                 }).on("click", ".btn-cancel", () => {
                     $popup.modal("hide");
                     self.cancelEdit(callback);
@@ -132,8 +137,9 @@ const self: MainI = {
                 }).modal("show");
             },
             editNode: (data, callback) => {
-                const customColors = window.settings.getOption("customColors");
-                const initialColor = Object.getOwnPropertyNames(data.color).includes("background") ? (data.color as any).background : "DEFAULT";
+                
+                //const initialColor = Object.getOwnPropertyNames(data.color).includes("background") ? (data.color as any).background : "DEFAULT";
+                const initialColor = data.color;
 
                 const options: ModalFormRow[] = [
                     {
@@ -141,18 +147,17 @@ const self: MainI = {
                         initialValue: `<p>Node ID: ${data.id}</p>`
                     },
                     { type: "text", label: "Label", initialValue: data.label },
+                    { type: "select", label: "Color", optionText: basicColorsLabel, optionValues: basicColorsIndices, initialValue: initialColor }
                 // MY SOLUTION
                 //{ type: "select", label: "Color", optionValues: [0, 1, 2, 3, 4, 5], optionText: ["red", "orange", "yellow", "green", "blue", "violet"], initialValue: 0}
                 //]);
                 ];
-                if (customColors) {
-                    options.push({ type: "select", label: "Color", optionText: Object.keys(customColorPallete), optionValues: Object.values(customColorPallete), initialValue: initialColor });
-                }
+                
                 const $popup = help.makeFormModal("Edit Node", "Save", options);
 
                 $popup.on("click", ".btn-success", () => {
                     $popup.modal("hide");
-                    self.saveData(data, callback, "editNode", $popup.find("input").first().val() as string, $popup.find("select").first().val() as string);
+                    self.saveData(data, callback, "editNode", $popup.find("input").first().val() as string, $popup.find("select").first().val() as number);
                 }).on("click", ".btn-cancel", () => {
                     $popup.modal("hide");
                     self.cancelEdit(callback);
@@ -235,9 +240,6 @@ const self: MainI = {
 
         data.label = label;
         data.color = color;
-        if (color === "DEFAULT") {
-            data.color = undefined;
-        }
         if (operation === "add") {
             GraphState.addNode(data);
         }
@@ -273,9 +275,8 @@ const self: MainI = {
             alert("No correct colormode");
             return;
         }
-
-        const basicColors = ['#ff3f3f ', '#ffbf64', '#ffff00', '#00ff80', '#00a0ff', '#f964ff'];
-        const addColors = randomColor({ count: chromaticNumber > 7 ? chromaticNumber - 6 : 1, luminosity: "light" });
+        
+        const addColors = randomColor({ count: chromaticNumber > basicColorsNum+1 ? chromaticNumber - basicColorsNum : 1, luminosity: "light" });
 
         const colors = [...basicColors, ...addColors];
 

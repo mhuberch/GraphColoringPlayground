@@ -5,6 +5,7 @@ import help from "../../util/genericHelpers";
 export interface NodeImmutPlain {
     id: Readonly<number>;
     label: string;
+    //color: number;
     [key: string]: any;
     [key: number]: any;
 }
@@ -16,9 +17,10 @@ const capitalLetters = help.deepFreeze([
 export default class NodeImmut {
     private readonly id: Readonly<number>;
     private readonly label: Readonly<string>;
+    private readonly color: Readonly<number>;
     private readonly attributes: any;
 
-    constructor(id: any, label: null | string = null, extraAttrs: null | any = null) {
+    constructor(id: any, label: null | string = null, color: null | number = null, extraAttrs: null | any = null) {
         if (label === null) {
             // MH: If the id is an integer number and between 0 and 25, than take a capital letter from the alphabet as label
             if (typeof id === "number" && (id >= 0 && id <=25)) {
@@ -41,6 +43,12 @@ export default class NodeImmut {
         this.attributes = Object.freeze(this.attributes);
         this.label = Object.freeze(this.label);
         this.id = Object.freeze(id);
+        if (color === null) {
+            color = 0;
+        }
+        this.color = Object.freeze(color);
+        
+        
 
         if (new.target === NodeImmut) {
             Object.freeze(this);
@@ -48,7 +56,7 @@ export default class NodeImmut {
     }
 
     toPlain(): NodeImmutPlain {
-        const toReturn: NodeImmutPlain = { id: this.id, label: this.label };
+        const toReturn: NodeImmutPlain = { id: this.id, label: this.label, color: this.color };
         Object.keys(this.attributes).forEach(key => {
             if (!(key in toReturn)) {
                 toReturn[key] = this.attributes[key];
@@ -64,6 +72,10 @@ export default class NodeImmut {
 
     getLabel(): Readonly<string> {
         return this.label;
+    }
+
+    getColor(): Readonly<number> {
+        return this.color;
     }
 
     getAttribute(attribute: string | number): any {
