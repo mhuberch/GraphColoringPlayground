@@ -3,7 +3,8 @@
 import gHelp from './graphHelpers';
 import help from './genericHelpers';
 import {EdgeImmutPlain} from "../classes/GraphImmut/EdgeImmut";
-import {NodeImmutPlain} from "../classes/GraphImmut/NodeImmut";
+import NodeImmut, {NodeImmutPlain} from "../classes/GraphImmut/NodeImmut";
+import { makeMain } from '@sentry/browser';
 
 interface Degree {
     in: number;
@@ -40,6 +41,10 @@ export default {
 
     interpolateNodesFromEdges: (edges: EdgeImmutPlain[]): NodeImmutPlain[] => {
         const nodes: NodeImmutPlain[] = [];
+
+        // MH: TODO NOT REALLY CLEAN
+        window.settings.changeOption("customColors", true);
+
         edges.forEach((v) => {
             nodes[v.from] = {id: v.from, label: gHelp.generateLabelFromNumber(v.from)};
             nodes[v.to] = {id: v.to, label: gHelp.generateLabelFromNumber(v.to)};
@@ -54,5 +59,36 @@ export default {
         } else {
             return prelabel.toString();
         }
+    },
+
+    toggleNodeColor : (node: NodeImmut) : string | undefined => {
+        
+        const customColorPalleteArray = ["DEFAULT", "#ff3f3f", "#ffbf64", "#ffff00", "#00ff80", "#f964ff"];
+        const customColorPalleteInverted = {
+            "#ff3f3f": 1,
+            "#ffbf64": 2,
+            "#ffff00": 3,
+            "#00ff80": 4,
+            "#f964ff": 5
+        };
+
+        const currentColor = node.getAttribute('color');
+
+        let currentIndex = 0;        
+
+        if (currentColor === null || currentColor === undefined) {
+            currentIndex = 0;
+        }
+        else {
+            const currentColorString = currentColor as string;
+            currentIndex = customColorPalleteArray.indexOf(currentColorString);
+        }
+
+        if (currentIndex === 5) {
+            return undefined;
+        }
+
+        
+        return customColorPalleteArray[(currentIndex+1)%6];
     }
 };

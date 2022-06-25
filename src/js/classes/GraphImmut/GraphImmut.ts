@@ -185,6 +185,15 @@ export default class GraphImmut {
         return node.toPlain();
     }
 
+    getNodeForColor(id: number): NodeImmut | boolean {
+        const node = this.nodes.get(id);
+        if (typeof node === "undefined") {
+            return false;
+        }
+
+        return node;
+    }
+
     addNode(data: any = null): GraphImmut {
         if (data === null) {
             data = {};

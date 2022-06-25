@@ -16,6 +16,7 @@ export interface MainI {
     container: HTMLElement;
     visWeightEdgeEdit: (data: VisEditEdgeInternal, callback: Function) => void;
     visOptions: {
+        edges: { smooth: boolean};
         interaction: { hover: boolean };
         manipulation: {
             addNode: (data: AddNodeI, callback: Function) => void;
@@ -68,20 +69,13 @@ interface VisEdgeInternal {
 }
 
 const customColorPallete = {
-    "default": "DEFAULT",
-    "1: red": "#ff3f3f",
-    "2: orange": "#ffbf64",
-    "3: yellow": "#ffff00",
-    "4: green": "#00ff80",
-    "5: blue": "#0059ff",
+    "1: blue": "DEFAULT",
+    "2: red": "#ff3f3f",
+    "3: orange": "#ffbf64",
+    "4: yellow": "#ffff00",
+    "5: green": "#00ff80",
     "6: violet": "#f964ff"
 };
-
-const customColorPaletteArray = [
-    {key: 'a', value: 1},
-    {key: 'b', value: 2},
-    {key: 'c', value: 3}
-  ];
   
 
  //    { type: "select", label: "Color", optionValues: [0, 1, 2, 3, 4, 5], optionText: ["red", "orange", "yellow", "green", "blue", "violet"], initialValue: 0}
@@ -107,6 +101,7 @@ const self: MainI = {
         ]);
     },
     visOptions: {
+        edges: { smooth: false},
         interaction: { hover: true },
         manipulation: {
             addNode: async (data, callback) => {
@@ -476,7 +471,40 @@ const self: MainI = {
             if (window.settings.getOption("weights") && "edges" in p && p.edges.length === 1) {
                 network.editEdgeMode();
             }
-            if ("nodes" in p && p.nodes.length === 1) {
+            if ("nodes" in p && p.nodes.length === 1 && window.settings.getOption("fastColorChange")) {
+                
+                
+                const chosenNode = p.nodes as unknown as number[];
+                const nodeId = chosenNode[0];
+
+                const data = GraphState.graph.getNodeForColor(nodeId);
+
+                if (typeof data !== 'boolean') {
+                    //console.log(data);
+                    const newColor = gHelp.toggleNodeColor(data);
+                    GraphState.editNode(data.getID(), data.getLabel(), newColor);
+                }
+                else {
+                    alert("Double-click selection of node doesn't work.")
+                }
+
+                
+
+                // if (typeof data === "String") {
+                //     gHelp.toggleNodeColor(data);
+                // }
+                
+
+                // console.log(data);
+
+
+
+                // const currentNode = GraphState.graph.getNode(p.nodes[0] as number, true);
+
+                // GraphState.editNode(data.id, data.label, data.color);
+
+            }
+            if ("nodes" in p && p.nodes.length === 1 && !window.settings.getOption("fastColorChange")) {
                 network.editNode();
             }
         });

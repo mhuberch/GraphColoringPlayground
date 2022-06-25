@@ -65,6 +65,8 @@ const completeGraph = (V: number): Readonly<GraphPlain> => {
         }
     }
 
+    // MH: TODO NOT REALLY CLEAN
+    window.settings.changeOption("customColors", true);
     return help.deepFreeze({nodes, edges, directed: false, weighted: false} as GraphPlain);
 };
 
@@ -102,6 +104,8 @@ const hypercubeGraph = (D: number): Readonly<GraphPlain> => {
         });
     }
 
+    // MH: TODO NOT REALLY CLEAN
+    window.settings.changeOption("customColors", true);
     return help.deepFreeze({nodes, edges, directed: false, weighted: false} as GraphPlain);
 };
 
@@ -111,6 +115,8 @@ const newCustomGraph = (V: number, directed = false, weighted = false): Readonly
         nodes.push({id: i, label: gHelp.generateLabelFromNumber(i)});
     }
 
+    // MH: TODO NOT REALLY CLEAN
+    window.settings.changeOption("customColors", true);
     return help.deepFreeze({nodes, edges: [], directed, weighted} as GraphPlain);
 };
 

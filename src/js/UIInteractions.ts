@@ -374,8 +374,20 @@ export default class UIInteractions {
                 //     G = vals[2] ? G.asWeighted() : G.asUnweighted();
                 //     window.main.setData(GraphState.getGraphData(G));
                 // }
-                if (window.settings.getOption("customColors") !== vals[1]) {
-                    window.settings.changeOption("customColors", vals[1]);
+                // if (window.settings.getOption("customColors") !== vals[1]) {
+                //     window.settings.changeOption("customColors", vals[1]);
+                // }
+                if (window.settings.getOption("smoothEdges") !== vals[1]) {
+                    window.settings.changeOption("smoothEdges", vals[1]);
+
+                    window.network.setOptions({ edges: { smooth: vals[1] } });
+                    let G = GraphState.graph;
+                    window.main.setData(GraphState.getGraphData(G));
+                    
+                }
+
+                if (window.settings.getOption("fastColorChange") !== vals[2]) {
+                    window.settings.changeOption("fastColorChange", vals[2]);                  
                 }
 
             },
@@ -398,9 +410,20 @@ export default class UIInteractions {
                 //     initialValue: window.settings.getOption("weights"),
                 //     type: "checkbox"
                 // },
+                // {
+                //     label: languages.current.CustomNodeColors,
+                //     initialValue: window.settings.getOption("customColors"),
+                //     type: "checkbox"
+                // }
                 {
-                    label: languages.current.CustomNodeColors,
-                    initialValue: window.settings.getOption("customColors"),
+                    label: languages.current.SmoothEdges,
+                    initialValue: window.settings.getOption("smoothEdges"),
+                    type: "checkbox"
+                },
+                
+                {
+                    label: languages.current.FastColorChange,
+                    initialValue: window.settings.getOption("fastColorChange"),
                     type: "checkbox"
                 }
 

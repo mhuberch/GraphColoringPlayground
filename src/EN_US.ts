@@ -60,6 +60,8 @@ export default {
     DiGraph: "Directed Graph",
     WeightedGraph: "Weighted Graph",
     CustomNodeColors: "Customize Node Colors",
+    SmoothEdges: "Smooth Edges",
+    FastColorChange: "Change node color by double click",
     ThisTask: "This task",
     ReColor: "Apply New Colors To Graph",
 };
