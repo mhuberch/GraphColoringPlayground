@@ -89,6 +89,8 @@ export default {
     NodeId: "Node ID: $1",
     Color: "Color",
     ConnectNodeToItselfConfirmation: "Do you want to connect the node to itself?",
+    ConnectNodeToItselfAlert: "Connect a node to itself is not allowed!",
+    AlreadyConnectedNodes: "These two nodes are already connected.",
     InvalidLabelOrId: "Invalid Label or ID",
 
 
