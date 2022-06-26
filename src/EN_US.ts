@@ -64,4 +64,82 @@ export default {
     FastColorChange: "Change node color by double click",
     ThisTask: "This task",
     ReColor: "Apply New Colors To Graph",
+    File: "File",
+    ImportFile: "Import File",
+    ImportText: "Import Text",
+    ExportFile: "Export File",
+    ExportText: "Export Text",
+    CalculateAllProperties: "Calculate All Properties",
+    NewGraphLayout: "New Graph Layout",
+    GraphOptions: "Graph Options",
+    ExampleGraphs: "Example Graphs",
+    LoadPetersen: "Load Petersen Graph",
+    LoadKonigsberg: "Load Königsberg Bridges Graph",
+    LoadComplete: "Load Complete Graph",
+    LoadHypercube: "Load Hypercube Graph",
+    LoadCustom: "Load Custom Graph",
+    Algorithms: "Algorithms",
+    GraphProperties: "Graph Properties",
+    Results: "Results",
+    AddNode: "Add Node",
+    EditEdge: "Edit Edge",
+    EditNode: "Edit Node",
+    WeightCapacity: "Weight/Capacity",
+    LabelLabel: "Label",
+    NodeId: "Node ID: $1",
+    Color: "Color",
+    ConnectNodeToItselfConfirmation: "Do you want to connect the node to itself?",
+    InvalidLabelOrId: "Invalid Label or ID",
+
+
+    // Import/Export
+    DataImportError: "Data Import Error",
+    DataImportErrorText: "The provided input does not conform the the import specifications.",
+    JsonParseError: "JSON Parse Error",
+    JsonParseErrorText: "There was an error parsing your input as JSON.",
+    DimacsParseError: "DIMACS Parse Error",
+    DimacsParseErrorText: "Sorry, but I only know how to parse \"edge\" formatted DIMACS files.",
+    DimacsParseErrorNoProgram: "No program line found!",
+    UnrecognizedInputError: "Unrecognized Input Format",
+    ImportGraphFromText: "Import Graph From Text",
+    ImportGraphFromFile: "Import Graph From File",
+    Import: "Import",
+    ExportToJson: "Export to JSON",
+    ExportToDimacs: "Export to DIMACS",
+    ExportGraphToFile: "Export Graph To File",
+    ExportGraphToText: "Export Graph To Text",
+    Format: "Format",
+    InputText: "Input Text",
+    UploadFile: "Upload File",
+    MustChooseFileError: "You must choose a file first",
+
+    // Predefined Graphs
+    ConfigurableCompleteGraph: "Configurable Complete Graph",
+    NumberOfVerticesLabel: "Number of Vertices",
+    NumberOfVerticesNonNegativeError: "Number of vertices must be non-negative",
+    ConfigurableGraph: "Configurable Graph",
+    ConfigurableHypercubeGraph: "Configurable Hypercube Graph",
+    NumberOfDimensionsLabel: "Number of Dimensions",
+    NumberOfDimensionsNonNegativeError: "Number of dimensions must be non-negative",
+
+    // VisJS locale
+    VisLocale: {
+        "en": {}, // Required, even though we will not use it.
+        // Customize the text below...
+        "": {
+            edit: 'Edit',
+            del: 'Delete selected',
+            back: 'Back',
+            addNode: 'Add Node',
+            addEdge: 'Add Edge',
+            editNode: 'Edit Node',
+            editEdge: 'Edit Edge',
+            addDescription: 'Click in an empty space to place a new node.',
+            edgeDescription: 'Click on a node and drag the edge to another node to connect them.',
+            editEdgeDescription: 'Click on the control points and drag them to a node to connect to it.',
+            createEdgeError: 'Cannot link edges to a cluster.',
+            deleteClusterError: 'Clusters cannot be deleted.',
+            editClusterError: 'Clusters cannot be edited.'
+        }
+    }
 };

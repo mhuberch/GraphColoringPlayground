@@ -10,6 +10,8 @@ import { EdgeImmutPlain } from "./classes/GraphImmut/EdgeImmut";
 import { GraphPlain } from "./util/predefinedGraphs";
 import { Network, Node as VisNode, Edge } from "vis-network";
 import { DataSet } from "vis-data";
+import * as languages from "./languages";
+
 
 export interface MainI {
     graphState: typeof GraphState;
@@ -25,7 +27,9 @@ export interface MainI {
             editEdge: (data: VisEdgeInternal, callback: Function) => void;
             deleteEdge: (data: { edges: string[] }, callback?: Function) => void;
             deleteNode: (data: { nodes: string[] }, callback: Function) => void
-        }
+        },
+        locale?: string,
+        locales?: any,
     };
     cancelEdit: (callback: Function) => void;
     saveData: (data: any, callback: Function, operation: string, label: string, color: string) => Promise<void>;
@@ -92,10 +96,10 @@ const self: MainI = {
             $modal.modal("hide");
             const value = parseFloat(vals[0]);
             GraphState.editEdge(data.from.id, data.to.id, value, parseFloat(data.label!));
-        }, "Edit Edge", "Save", [
+        }, languages.current.EditEdge, languages.current.Save, [
             {
                 type: "numeric",
-                label: "Weight/Capacity",
+                label: languages.current.WeightCapacity,
                 initialValue: parseFloat(data.label!)
             }
         ]);
@@ -109,15 +113,16 @@ const self: MainI = {
                 const options: ModalFormRow[] = [
                     {
                         type: "html",
-                        initialValue: `<p>Node ID: ${await GraphState.getProperty("vertices")}</p>`
+                        initialValue: `<p>${help.stringReplacement(languages.current.NodeId, await GraphState.getProperty("vertices"))}</p>`
                     },
 
-                    { type: "text", label: "Label", initialValue: gHelp.generateLabelFromNumber(await GraphState.getProperty("vertices")) }
+                    { type: "text", label: languages.current.LabelLabel, initialValue: gHelp.generateLabelFromNumber(await GraphState.getProperty("vertices")) }
+
                 ];
                 if (customColors) {
-                    options.push({ type: "select", label: "Color", optionText: Object.keys(customColorPallete), optionValues: Object.values(customColorPallete) });
+                    options.push({ type: "select", label: languages.current.Color, optionText: Object.keys(customColorPallete), optionValues: Object.values(customColorPallete) });
                 }
-                const $popup = help.makeFormModal("Add Node", "Save", options);
+                const $popup = help.makeFormModal(languages.current.AddNode, languages.current.Save, options);
 
                 $popup.on("click", ".btn-success", () => {
                     $popup.modal("hide");
@@ -137,18 +142,19 @@ const self: MainI = {
                 const options: ModalFormRow[] = [
                     {
                         type: "html",
-                        initialValue: `<p>Node ID: ${data.id}</p>`
+                        initialValue: `<p>${help.stringReplacement(languages.current.NodeId, data.id + "")}</p>`
                     },
-                    { type: "text", label: "Label", initialValue: data.label },
+                    { type: "text", label: languages.current.LabelLabel, initialValue: data.label },
 
                 //    { type: "select", label: "Color", optionValues: [0, 1, 2, 3, 4, 5], optionText: ["red", "orange", "yellow", "green", "blue", "violet"], initialValue: 0}
                 //]);
 
+
                 ];
                 if (customColors) {
-                    options.push({ type: "select", label: "Color", optionText: Object.keys(customColorPallete), optionValues: Object.values(customColorPallete), initialValue: initialColor });
+                    options.push({ type: "select", label: languages.current.Color, optionText: Object.keys(customColorPallete), optionValues: Object.values(customColorPallete), initialValue: initialColor });
                 }
-                const $popup = help.makeFormModal("Edit Node", "Save", options);
+                const $popup = help.makeFormModal(languages.current.EditNode, languages.current.Save, options);
 
                 $popup.on("click", ".btn-success", () => {
                     $popup.modal("hide");
@@ -169,11 +175,11 @@ const self: MainI = {
                     GraphState.addEdge(data.from, data.to);
                 };
                 if (data.from === data.to) {
-                    alert("Connect a node to itself is not allowed");
+                    alert(languages.current.ConnectNodeToItselfAlert);
                     return;
                 }
                 else if (GraphState.checkAdjacency(data.from, data.to)) {
-                    alert("These two edges are already connected.");
+                    alert(languages.current.AlreadyConnectedNodes);
                     return;
                 }
 
@@ -187,7 +193,8 @@ const self: MainI = {
                     GraphState.addEdge(data.from, data.to);
                 };
                 if (data.from === data.to) {
-                    if (confirm("Do you want to connect the node to itself?")) {
+                    if (confirm(languages.current.ConnectNodeToItselfConfirmation)) {
+
                         apply();
                     }
                     return;
@@ -250,7 +257,7 @@ const self: MainI = {
         if (GraphState.nodeLabelToID(v) > -1) {
             return true;
         }
-        return "Invalid Label or ID";
+        return languages.current.InvalidLabelOrId;
     },
 
     applyColors: async () => {
