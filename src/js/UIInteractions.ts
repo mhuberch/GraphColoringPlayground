@@ -587,6 +587,7 @@ export default class UIInteractions {
                 if (iStartedProgress) {
                     UIInteractions.stopLoadingAnimation();
                 }
+                UIInteractions.isRunning[myName] = false;
             }
         });
     }
