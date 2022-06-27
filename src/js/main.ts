@@ -173,6 +173,7 @@ const self: MainI = {
                         callback(null);
                     }
                     GraphState.addEdge(data.from, data.to);
+                    window.network.addEdgeMode();
                 };
                 if (data.from === data.to) {
                     alert(languages.current.ConnectNodeToItselfAlert);
