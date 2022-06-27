@@ -351,11 +351,34 @@ export default class UIInteractions {
             const imp = (await import("./dataImportExport")).default;
             imp.makeExportTextModal();
         });
+        makeSimpleClickListener("#import-graph-g1", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.makeImportGraphExercise1();
+        });
+        makeSimpleClickListener("#import-graph-g2", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.makeImportGraphExercise2();
+        });
+        makeSimpleClickListener("#import-graph-g3", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.makeImportGraphExercise3();
+        });
+        makeSimpleClickListener("#import-graph-g4", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.makeImportGraphExercise4();
+        });
+
         (document.querySelector("#fileDropdown") as HTMLAnchorElement).innerText = languages.current.File;
         (document.querySelector("#import-file-link") as HTMLAnchorElement).innerText = languages.current.ImportFile;
         (document.querySelector("#import-text-link") as HTMLAnchorElement).innerText = languages.current.ImportText;
         (document.querySelector("#export-file-link") as HTMLAnchorElement).innerText = languages.current.ExportFile;
         (document.querySelector("#export-text-link") as HTMLAnchorElement).innerText = languages.current.ExportText;
+
+        (document.querySelector("#graphloadDropdown") as HTMLAnchorElement).innerText = languages.current.LoadGraphs;
+        (document.querySelector("#import-graph-g1") as HTMLAnchorElement).innerText = "Graph G1";
+        (document.querySelector("#import-graph-g2") as HTMLAnchorElement).innerText = "Graph G2";
+        (document.querySelector("#import-graph-g3") as HTMLAnchorElement).innerText = "Graph G3";
+        (document.querySelector("#import-graph-g4") as HTMLAnchorElement).innerText = "Graph G4";
 
         (document.querySelector("#calculate-all-properties-link") as HTMLAnchorElement).innerText = languages.current.CalculateAllProperties;
         (document.querySelector("#new-graph-layout-link") as HTMLAnchorElement).innerText = languages.current.NewGraphLayout;

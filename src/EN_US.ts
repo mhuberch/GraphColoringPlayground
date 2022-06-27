@@ -37,6 +37,7 @@ export default {
     NumberOfConflicts: "Number of conflicts: $1",
     NodeIsInConflictWith: "$1.) Colors of node $2 and node $3 are in conflict.",
     VertexIsInConnectedComponentNumber: "Vertex $1 is in connected component #$2",
+    LoadGraphs: "Load Exercise Graphs",
     
     NumberOfVertices: "Number of Vertices: $1",
     ChromaticNumberIs: "Chromatic Number: $1",
