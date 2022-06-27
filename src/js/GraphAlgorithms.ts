@@ -23,6 +23,10 @@ export type ConnectedComponentResult = { components: { [key: number]: number }; 
 
 export type CheckingColorResult = { from: number[]; to: number[]; num: number; confList: number[][]};
 
+export type kColorResult = { kcolor: number; kcolorable: boolean; color: number[]};
+
+export type kColorResultRecursive = { kcolorable: boolean; color: number[]};
+
 export default class GraphAlgorithms {
     public static graphPlainToGraphImmut = (gp: GraphPlain): GraphImmut => {
         return new GraphImmut(gp.nodes, gp.edges, gp.directed, gp.weighted);
@@ -118,6 +122,51 @@ export default class GraphAlgorithms {
         const chromaticNumber = genericH.max(genericH.flatten(colorIndex) as any[]) + 1;
         return { colors: colorIndex, chromaticNumber };
     };
+
+    
+
+    public static kColoringBruteForce = (G: GraphImmut = GraphState.graph): kColorResult => {
+        // export type kColorResult = { kcolor: number; kcolorable: boolean; color: number[]};
+    
+        console.log("Hi there. I'm kColoringBruteForce");
+
+        return { kcolor: 1, kcolorable: false, color: []}
+    }
+
+    public static kColoringBruteForceRecursive = (kcolor: number, curNode: number, color: number[], G: GraphImmut = GraphState.graph): kColorResultRecursive => {
+        //function graphColoring(graph,m,i,color)
+        // {
+        // if current index reached end
+        // if (i == V) {
+    
+        // // if coloring is safe
+        // if (isSafe(graph, color))
+        // {
+    
+        //     // Print the solution
+        //     printSolution(color);
+        //     return true;
+        // }
+        // return false;
+        // }
+    
+        // // Assign each color from 1 to m
+        // for (let j = 1; j <= m; j++)
+        // {
+        // color[i] = j;
+    
+        // // Recur of the rest vertices
+        // if (graphColoring(graph, m, i + 1, color))
+        //     return true;
+        // color[i] = 0;
+        // }
+        // return false;
+
+        return { kcolorable: false, color: []};
+
+    }
+    
+
 
     public static connectedComponents = (G: GraphImmut = GraphState.graph): ConnectedComponentResult => {
         const components: { [key: number]: number } = {};

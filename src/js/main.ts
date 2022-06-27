@@ -18,7 +18,7 @@ export interface MainI {
     container: HTMLElement;
     visWeightEdgeEdit: (data: VisEditEdgeInternal, callback: Function) => void;
     visOptions: {
-        edges: { smooth: boolean};
+        edges: { smooth: boolean, color: {inherit: boolean}};
         interaction: { hover: boolean };
         manipulation: {
             addNode: (data: AddNodeI, callback: Function) => void;
@@ -105,7 +105,7 @@ const self: MainI = {
         ]);
     },
     visOptions: {
-        edges: { smooth: false},
+        edges: { smooth: false, color: {inherit: false}},
         interaction: { hover: true },
         manipulation: {
             addNode: async (data, callback) => {
@@ -272,7 +272,11 @@ const self: MainI = {
 
         alert(coloring);
 
-        if (coloring === 2) {
+        if (coloring == 1) {
+            alert("Hi: Aborting now");
+            return;
+        }
+        else if (coloring === 2) {
             graphColors = await GraphState.getProperty("graphColoringWelsh", true);
             chromaticNumber = await GraphState.getProperty("Approx. Chromatic Welsh", true);
         }

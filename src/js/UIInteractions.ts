@@ -110,6 +110,147 @@ const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean):
     );
 };
 
+const makeAndPrintkColoringBruteForce = (): void => {
+    const myName = languages.current.kColoringBruteForce;
+
+    if (UIInteractions.isRunning[myName]) {
+        UIInteractions.printAlreadyRunning(myName);
+        return;
+    }
+    UIInteractions.isRunning[myName] = true;
+
+    help.showFormModal(
+        ($modal, values) => {
+            $modal.modal("hide");
+
+            const knumber = values[0];
+
+            const iStartedProgress = UIInteractions.startLoadingAnimation();
+            const w = UIInteractions.getWorkerIfPossible(e => {
+                let a = {};//e.data;
+                w.cleanup();
+                if (iStartedProgress) {
+                    UIInteractions.stopLoadingAnimation();
+                }
+                UIInteractions.isRunning[myName] = false;
+
+                if (a === false) {
+                    
+                    console.log("Some error in UIInteractions Z. 139: Error!!!");
+
+                    return;
+                }
+
+                a = a as ShortestPathResult;
+
+                let p = languages.current.kColoringBruteForceTitle;
+                // `help.stringReplacement(languages.current.NoPathFromAToB,
+                //     help.htmlEncode(source.toString()), help.htmlEncode(sink.toString()))}`;
+
+                if (a) {
+                    
+                    // let graph = GraphState.getGraphData(GraphState.graph, false, true);
+                    // let G = new GraphImmut(graph.nodes, graph.edges, graph.directed, graph.weighted);
+                    // a.path.forEach((v: number, i: number) => {
+                    //     p += `${help.htmlEncode(GraphState.nodeIDToLabel(v))} &rarr; `;
+                    //     if (i > 0) {
+                    //         G = G.editEdge(a.path[i - 1], v, null, null, "#FF0000") as GraphImmut;
+                    //     }
+                    // });
+                    // GraphState.graph = G;
+                    // window.main.setData(GraphState.getGraphData(G), false, false, false);
+        
+                }
+
+                help.printout(p);
+            });
+            w.send({
+                type: "kColoringBruteForce",
+                args: [],
+                graph: window.main.graphState.getGraphData(),
+                convertToGraphImmut: true
+            });
+        },
+        languages.current.kColoringBruteForce,
+        languages.current.Go,
+        [{
+            type: "numeric", initialValue: 1, label: languages.current.NumberOfColors, validationFunc: (v) => {
+                return v > 0 || languages.current.NumberOfColorsPositiveError;
+            }
+        }]
+    );
+
+    // return new Promise<void>(async resolve => {
+    //     if (window.settings.getOption("direction")) {
+    //         UIInteractions.isRunning[myName] = false;
+    //         return resolve();
+    //     }
+
+    //     // Use cached responses when able
+    //     let a = {
+    //         kColorable: GraphState.state.kColorable as {}
+    //     };
+
+    //     const printKCBF = () => {
+    //         GraphState.graphProperties.colormode = 1;
+            
+            // TODO
+            /*GraphState.graphProperties["Approx. Chromatic Welsh"] = a.chromaticNumber;
+            GraphState.setUpToDate(true, ["Approx. Chromatic Welsh", "graphColoringWelsh"]);
+            (GraphState.state.graphColoringWelsh as {}) = a.colors;*/
+
+            //const colors = help.flatten(a.colors);
+
+            // p += `\nApprox. Chromatic Number from Welsh algorithm: ${a.chromaticNumber}`;
+
+            // let p = help.stringReplacement(languages.current.NumberOfVertices, colors.length + "");
+            // p += "\n" + help.stringReplacement(languages.current.ChromaticNumberIs, a.chromaticNumber + "");
+
+            // p += "\n\n";
+
+            // colors.forEach((v, i) => {
+            //     p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
+            // });
+
+
+            // p += `\n${JSON.stringify(help.rotate(a.colors), null, 4)}\n\n`;
+
+    //         let p = `<h3>${languages.current.kColoringBruteForceTitle}</h3>`//<hr>${help.htmlEncode(p)}`;
+    //         p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
+
+    //         help.printout(p);
+    //         window.main.applyColors();
+    //     };
+
+    //     const iStartedProgress = UIInteractions.startLoadingAnimation();
+
+    //     if (!(a.chromaticNumber !== null && (await GraphState.getProperty("graphColoringWelsh")) !== null)) {
+    //         const w = UIInteractions.getWorkerIfPossible(e => {
+    //             a = e.data;
+    //             printGC();
+    //             w.cleanup();
+    //             if (iStartedProgress) {
+    //                 UIInteractions.stopLoadingAnimation();
+    //             }
+    //             UIInteractions.isRunning[myName] = false;
+    //             resolve(e.data);
+    //         });
+    //         w.send({
+    //             type: "colorNetworkWelsh",
+    //             args: [],
+    //             graph: window.main.graphState.getGraphData(),
+    //             convertToGraphImmut: true
+    //         });
+    //     } else {
+    //         printGC();
+    //         if (iStartedProgress) {
+    //             UIInteractions.stopLoadingAnimation();
+    //         }
+    //         UIInteractions.isRunning[myName] = false;
+    //     }
+    // });
+};
+
 const makeAndPrintComponents = async (stronglyConnected: boolean): Promise<void> => {
     let a = null;
     let cc = languages.current.ConnectedComponents;
@@ -206,9 +347,17 @@ export default class UIInteractions {
             },
             {
                 //name: "Graph Coloring Welsh",
-                name: languages.current.GraphColoring,
+                name: languages.current.GraphColoringGreedy,
                 directional: false,
                 applyFunc: UIInteractions.makeAndPrintGraphColoringWelsh,
+                display: true
+            },
+            {
+                name: languages.current.kColoringBruteForce,
+                directional: false,
+                applyFunc: () => {
+                    makeAndPrintkColoringBruteForce();
+                },
                 display: true
             },
             {
@@ -310,10 +459,6 @@ export default class UIInteractions {
             const predefined = (await import("./util/predefinedGraphs")).default;
             window.main.setData(predefined.Konigsberg(), false, true, true);
         });
-        makeSimpleClickListener("#load-graphG1-link", async () => {
-            const predefined = (await import("./util/predefinedGraphs")).default;
-            window.main.setData(predefined.GraphG1(), false, true, true);
-        });
         makeSimpleClickListener("#load-complete-link", async () => {
             const predefined = (await import("./util/predefinedGraphs")).default;
             predefined.Complete();
@@ -353,19 +498,19 @@ export default class UIInteractions {
         });
         makeSimpleClickListener("#import-graph-g1", async () => {
             const imp = (await import("./dataImportExport")).default;
-            imp.makeImportGraphExercise1();
+            imp.makeImportGraphExercise(0);
         });
         makeSimpleClickListener("#import-graph-g2", async () => {
             const imp = (await import("./dataImportExport")).default;
-            imp.makeImportGraphExercise2();
+            imp.makeImportGraphExercise(1);
         });
         makeSimpleClickListener("#import-graph-g3", async () => {
             const imp = (await import("./dataImportExport")).default;
-            imp.makeImportGraphExercise3();
+            imp.makeImportGraphExercise(2);
         });
         makeSimpleClickListener("#import-graph-g4", async () => {
             const imp = (await import("./dataImportExport")).default;
-            imp.makeImportGraphExercise4();
+            imp.makeImportGraphExercise(3);
         });
 
         (document.querySelector("#fileDropdown") as HTMLAnchorElement).innerText = languages.current.File;
@@ -595,7 +740,7 @@ export default class UIInteractions {
     }
 
     static makeAndPrintGraphColoringWelsh(): Promise<void> {
-        const myName = languages.current.GraphColoring;
+        const myName = languages.current.GraphColoringGreedy;
 
         if (UIInteractions.isRunning[myName]) {
             UIInteractions.printAlreadyRunning(myName);
@@ -679,6 +824,8 @@ export default class UIInteractions {
             }
         });
     }
+
+    
 
     static makeAndPrintDirectionalEulerian(): Promise<void> {
         const myName = languages.current.Eulerian;

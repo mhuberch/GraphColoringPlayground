@@ -43,17 +43,6 @@ const konigsbergEdges = help.deepFreeze([
     { from: 4, to: 1, weight: 1 },
 ]) as EdgeImmutPlain[];
 
-const graphG1Edges = help.deepFreeze([
-    {from: 0, to: 1, weight: 1},
-    {from: 0, to: 2, weight: 1},
-    {from: 0, to: 3, weight: 1},
-    {from: 1, to: 2, weight: 1},
-    {from: 1, to: 4, weight: 1},
-    {from: 2, to: 5, weight: 1},
-    {from: 3, to: 4, weight: 1},
-    {from: 3, to: 5, weight: 1},
-    {from: 4, to: 5, weight: 1}
-]) as EdgeImmutPlain[];
 
 const completeGraph = (V: number): Readonly<GraphPlain> => {
     const edges = [];
@@ -140,15 +129,6 @@ export default class PredefinedGraphs {
         return help.deepFreeze({
             edges: konigsbergEdges,
             nodes: gHelp.interpolateNodesFromEdges(konigsbergEdges),
-            directed: false,
-            weighted: false,
-        });
-    }
-
-    public static GraphG1(): Readonly<GraphPlain> {
-        return help.deepFreeze({
-            edges: graphG1Edges,
-            nodes: gHelp.interpolateNodesFromEdges(graphG1Edges),
             directed: false,
             weighted: false,
         });

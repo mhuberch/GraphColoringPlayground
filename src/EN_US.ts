@@ -1,7 +1,8 @@
 export default {
     // Algorithms
     CheckColoring: "Check Coloring",
-    GraphColoring: "Graph Coloring",
+    GraphColoringGreedy: "Graph Coloring Greedy",
+    kColoringBruteForce: "k-Coloring Bruteforce",
     ConnectedComponents: "Connected Components",
     StronglyConnectedComponents: "Strongly Connected Components",
     BFS: "Breadth-First Shortest Path",
@@ -43,6 +44,9 @@ export default {
     ChromaticNumberIs: "Chromatic Number: $1",
     VertexGetsColor: "Vertex $1 gets color $2",
     GraphColoringTitle: "Graph Coloring Using Welsh-Powell Algorithm",
+    kColoringBruteForceTitle: "Check if the graph is k-colorable using Brute Force",
+    kColoringParameter: "Check k-colorability for k = ",
+    NumberOfColors: "Number of colors",
     CheckColoringTitle: "Checked admissibilty of the current node coloring",
     KruskalMSTTotalWeight: "Kruskal's Minimum Spanning Tree Total Weight: $1",
 
@@ -125,6 +129,7 @@ export default {
     ConfigurableCompleteGraph: "Configurable Complete Graph",
     NumberOfVerticesLabel: "Number of Vertices",
     NumberOfVerticesNonNegativeError: "Number of vertices must be non-negative",
+    NumberOfColorsPositiveError: "Number of colors must be strictly positive",
     ConfigurableGraph: "Configurable Graph",
     ConfigurableHypercubeGraph: "Configurable Hypercube Graph",
     NumberOfDimensionsLabel: "Number of Dimensions",
