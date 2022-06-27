@@ -281,7 +281,7 @@ const self: MainI = {
             return;
         }
 
-        const basicColors = ['#ff3f3f ', '#ffbf64', '#ffff00', '#00ff80', '#00a0ff', '#f964ff'];
+        const basicColors = ['#ff3f3f', '#ffbf64', '#ffff00', '#00ff80', '#00a0ff', '#f964ff'];
         const addColors = randomColor({ count: chromaticNumber > 7 ? chromaticNumber - 6 : 1, luminosity: "light" });
 
         const colors = [...basicColors, ...addColors];

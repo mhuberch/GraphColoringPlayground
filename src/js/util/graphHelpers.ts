@@ -84,11 +84,10 @@ export default {
             currentIndex = customColorPalleteArray.indexOf(currentColorString);
         }
 
-        if (currentIndex === 5) {
+        if (currentIndex === 5 || currentIndex < 0) {
             return undefined;
         }
 
-        
         return customColorPalleteArray[(currentIndex+1)%6];
     }
 };
