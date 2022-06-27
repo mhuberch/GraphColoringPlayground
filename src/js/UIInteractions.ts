@@ -532,24 +532,6 @@ export default class UIInteractions {
             let a = { from: [], to: [],  num: -1, confList: []};
 
             const printCC = () => {
-                // GraphState.graphProperties.colormode = 2;
-                // GraphState.graphProperties["Approx. Chromatic Welsh"] = a.chromaticNumber;
-                // GraphState.setUpToDate(true, ["Approx. Chromatic Welsh", "graphColoringWelsh"]);
-                // (GraphState.state.graphColoringWelsh as {}) = a.colors;
-
-                // const colors = help.flatten(a.colors);
-
-                // let p = help.stringReplacement(languages.current.NumberOfVertices, colors.length + "");
-                // p += "\n" + help.stringReplacement(languages.current.ChromaticNumberIs, a.chromaticNumber + "");
-
-                // p += "\n\n";
-
-                // colors.forEach((v, i) => {
-                //     p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
-                // });                
-
-                // p += `\n${JSON.stringify(help.rotate(a.colors), null, 4)}\n\n`;
-
                 let p = help.stringReplacement(languages.current.NumberOfConflicts, a.num + "");
 
                 const conflist = a.confList;
@@ -560,14 +542,10 @@ export default class UIInteractions {
                     p += help.stringReplacement(languages.current.NodeIsInConflictWith, (i+1).toString(), GraphState.nodeIDToLabel(v[0]), GraphState.nodeIDToLabel(v[1]) + "") + "\n";
                 });
 
-                // const conflictsStart = help.flatten(a.from);
-                // const conflictEnd = help.flatten(a.to);
-
                 p = `<h3>${languages.current.CheckColoringTitle}</h3><hr>${help.htmlEncode(p)}`;
-                //p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
 
                 help.printout(p);
-                //window.main.applyColors();
+                
             };
 
             const iStartedProgress = UIInteractions.startLoadingAnimation();
