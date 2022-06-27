@@ -242,12 +242,6 @@ export default class GraphState {
         window.main.setData(GraphState.getGraphData(graph), false, false);
     }
 
-    // static toggleNodeColor(id: number | string, label: string, graph = GraphState.graph) {
-    //     const iId = getInt(id);
-    //     graph = graph.editNode(iId, { label, color });
-    //     window.main.setData(GraphState.getGraphData(graph), false, false);
-    // }
-
     static editEdge(from: number | string, to: number | string,
         newWeight: number, oldWeight: number, graph = GraphState.graph) {
         const edgeFrom = getInt(from);

@@ -61,6 +61,19 @@ export default {
         }
     },
 
+
+    compareColor : (color1: string | undefined | null, color2: string | undefined | null) => {
+        if (color1 === null || color1 === undefined) {
+            color1 = "DEFAULT";
+        }
+        if (color2 === null || color2 === undefined) {
+            color2 = "DEFAULT";
+        }
+
+        return color1 === color2;
+
+    },
+
     toggleNodeColor : (node: NodeImmut) : string | undefined => {
         
         const customColorPalleteArray = ["DEFAULT", "#ff3f3f", "#ffbf64", "#ffff00", "#00ff80", "#f964ff"];

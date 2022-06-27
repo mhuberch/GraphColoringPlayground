@@ -1,5 +1,6 @@
 export default {
     // Algorithms
+    CheckColoring: "Check Coloring",
     GraphColoring: "Graph Coloring",
     ConnectedComponents: "Connected Components",
     StronglyConnectedComponents: "Strongly Connected Components",
@@ -33,11 +34,15 @@ export default {
     UsingCapacities: "Using capacities:",
     FlowWithCapacity: "$1 &rarr; $2 using $3 of $4",
     NumberOfConnectedComponents: "Number of $1: $2",
+    NumberOfConflicts: "Number of conflicts: $1",
+    NodeIsInConflictWith: "$1.) Colors of node $2 and node $3 are in conflict.",
     VertexIsInConnectedComponentNumber: "Vertex $1 is in connected component #$2",
+    
     NumberOfVertices: "Number of Vertices: $1",
     ChromaticNumberIs: "Chromatic Number: $1",
     VertexGetsColor: "Vertex $1 gets color $2",
     GraphColoringTitle: "Graph Coloring Using Welsh-Powell Algorithm",
+    CheckColoringTitle: "Checked admissibilty of the current node coloring",
     KruskalMSTTotalWeight: "Kruskal's Minimum Spanning Tree Total Weight: $1",
 
     // UI

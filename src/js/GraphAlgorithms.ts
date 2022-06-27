@@ -21,6 +21,8 @@ export type ShortestPathResult = {
 };
 export type ConnectedComponentResult = { components: { [key: number]: number }; count: number };
 
+export type CheckingColorResult = { from: number[]; to: number[]; num: number; confList: number[][]};
+
 export default class GraphAlgorithms {
     public static graphPlainToGraphImmut = (gp: GraphPlain): GraphImmut => {
         return new GraphImmut(gp.nodes, gp.edges, gp.directed, gp.weighted);
@@ -37,11 +39,36 @@ export default class GraphAlgorithms {
     // }
 
     // Check, if a coloring is admissible
-    public static checkColoring = (G: GraphImmut = GraphState.graph): boolean => {
+    public static checkColoring = (G: GraphImmut = GraphState.graph): CheckingColorResult => {
+
+        const nodes = G.getAllNodes(true) as NodeImmut[];
+
+        const conflictStartID: number[] = [];
+        const conflictEndID: number[] = [];
+        const conflictList : number[][] = [];
 
 
+        const V = G.getNumberOfNodes();
+        for (let v = 0; v < V; v++) {
+            const vertexAdjacency = G.getNodeAdjacency(v);
+            const currentColor = nodes[v].getAttribute('color');
 
-        return true;
+            //console.log("Vertex with ID" + v);
+            //console.log("has adjacency: " + vertexAdjacency);
+
+            for (const i of vertexAdjacency) {
+                const conflict  = graphH.compareColor(currentColor, nodes[i].getAttribute('color'));
+                if (conflict && i > v) {
+                    conflictStartID.push(v);
+                    conflictEndID.push(i);
+                    conflictList.push([v, i]);
+                }
+            }
+        }
+        
+        const numOfConflicts = conflictStartID.length;
+
+        return { from: conflictStartID, to: conflictEndID,  num: numOfConflicts, confList: conflictList};
 
     }
 
