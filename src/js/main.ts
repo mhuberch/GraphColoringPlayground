@@ -271,11 +271,19 @@ const self: MainI = {
         let graphColors : any;
         let chromaticNumber : any;
 
-        alert(coloring);
+        // alert(coloring);
 
         if (coloring == 1) {
-            alert("Hi: Aborting now");
-            return;
+            // console.log("Starting coloring in mode 1");
+            chromaticNumber = await GraphState.getProperty("Most recent k-color check");
+            // console.log("Chromatic number is given by " + chromaticNumber);
+            const graphKColorable = await GraphState.getProperty("kColorable", true);
+            // console.log("GraphKColorable is given by");
+            // console.log(graphKColorable);
+            graphColors = graphKColorable[chromaticNumber]; //GraphState.state.kColorable[3]
+            // console.log("Those are the loaded colors");
+            // console.log(graphColors);
+
         }
         else if (coloring === 2) {
             graphColors = await GraphState.getProperty("graphColoringWelsh", true);

@@ -46,6 +46,8 @@ export default {
     GraphColoringTitle: "Graph Coloring Using Welsh-Powell Algorithm",
     kColoringBruteForceTitle: "Check if the graph is k-colorable using Brute Force",
     kColoringParameter: "Check k-colorability for k = ",
+    kColoringSuccess: "Positive answer: The given graph is $1-colorable.",
+    kColoringFail: "Negative answer: The given graph is NOT $1-colorable.",
     NumberOfColors: "Number of colors",
     CheckColoringTitle: "Checked admissibilty of the current node coloring",
     KruskalMSTTotalWeight: "Kruskal's Minimum Spanning Tree Total Weight: $1",

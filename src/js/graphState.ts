@@ -25,6 +25,7 @@ interface GraphProperties {
     "Approx. Chromatic Welsh": number | null;
     "Connected Components": number | null;
     "Strongly Connected Components": number | null;
+    "Most recent k-color check": number | null;
     cyclic: boolean;
 
     [index: string]: boolean | number | null;
@@ -71,13 +72,25 @@ export default class GraphState {
         {
             name: "Approx. Chromatic Welsh", upToDate: false, type: "property",
             applyFunc: () => {
-                return window.ui.makeAndPrintGraphColoringWelsh();
+                return window.ui.resetGraphColoringWelsh();
             }
         },
         {
             name: "graphColoringWelsh", upToDate: false, type: "state",
             applyFunc: () => {
-                return window.ui.makeAndPrintGraphColoringWelsh();
+                return window.ui.resetGraphColoringWelsh();
+            }
+        },
+        {
+            name: "Most recent k-color check", upToDate: false, type: "property"
+        },
+        {
+            name: "colormode", upToDate: false, type: "property"
+        },
+        {
+            name: "kColorable", upToDate: false, type: "state",
+            applyFunc: () => {
+                return null;
             }
         },
         { name: "vertices", upToDate: true, always: true, type: "property" },
@@ -134,6 +147,7 @@ export default class GraphState {
         "Approx. Chromatic Welsh": null,
         "Connected Components": null,
         "Strongly Connected Components": null,
+        "Most recent k-color check": null,
         cyclic: false,
     };
 

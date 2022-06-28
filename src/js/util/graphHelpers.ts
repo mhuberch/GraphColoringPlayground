@@ -5,6 +5,7 @@ import help from './genericHelpers';
 import {EdgeImmutPlain} from "../classes/GraphImmut/EdgeImmut";
 import NodeImmut, {NodeImmutPlain} from "../classes/GraphImmut/NodeImmut";
 import { makeMain } from '@sentry/browser';
+import GraphImmut from '../classes/GraphImmut/GraphImmut';
 
 interface Degree {
     in: number;
@@ -102,5 +103,27 @@ export default {
         }
 
         return customColorPalleteArray[(currentIndex+1)%6];
+    },
+
+    checkColoringByNumber : (color: number[], G: GraphImmut): boolean => {
+
+        const nodes = G.getAllNodes(true) as NodeImmut[];
+
+        const V = G.getNumberOfNodes();
+        for (let v = 0; v < V; v++) {
+            const vertexAdjacency = G.getNodeAdjacency(v);
+            const currentColor = color[v];
+
+            for (const i of vertexAdjacency) {
+                const conflict  = (currentColor === color[i]);
+                if (conflict && i > v) {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+
     }
+
 };

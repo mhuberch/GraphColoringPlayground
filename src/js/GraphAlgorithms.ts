@@ -8,6 +8,7 @@ import NodeImmut from "./classes/GraphImmut/NodeImmut";
 import GraphImmut from "./classes/GraphImmut/GraphImmut";
 import GraphState from "./graphState";
 import { GraphPlain } from "./util/predefinedGraphs";
+import graphHelpers from "./util/graphHelpers";
 
 type EdgeFlowProp = { from: number; to: number; capacity: number; flow: number };
 export type MSTResult = { mst: EdgeImmutPlain[]; totalWeight: number };
@@ -23,9 +24,9 @@ export type ConnectedComponentResult = { components: { [key: number]: number }; 
 
 export type CheckingColorResult = { from: number[]; to: number[]; num: number; confList: number[][]};
 
-export type kColorResult = { kcolor: number; kcolorable: boolean; color: number[]};
+export type kColorResult = { kColor: number; kColorable: boolean; color: number[]};
 
-export type kColorResultRecursive = { kcolorable: boolean; color: number[]};
+export type kColorResultRecursive = { kColorable: boolean; color: number[]};
 
 export default class GraphAlgorithms {
     public static graphPlainToGraphImmut = (gp: GraphPlain): GraphImmut => {
@@ -43,7 +44,7 @@ export default class GraphAlgorithms {
     // }
 
     // Check, if a coloring is admissible
-    public static checkColoring = (G: GraphImmut = GraphState.graph): CheckingColorResult => {
+    public static checkColoringByString = (G: GraphImmut = GraphState.graph): CheckingColorResult => {
 
         const nodes = G.getAllNodes(true) as NodeImmut[];
 
@@ -125,50 +126,103 @@ export default class GraphAlgorithms {
 
     
 
-    public static kColoringBruteForce = (G: GraphImmut = GraphState.graph): kColorResult => {
-        // export type kColorResult = { kcolor: number; kcolorable: boolean; color: number[]};
+    public static kColoringBruteForce = (kColor: number, G: GraphImmut = GraphState.graph): kColorResult => {
+        // export type kColorResult = { kColor: number; kColorable: boolean; color: number[]};
     
         console.log("Hi there. I'm kColoringBruteForce");
+        console.log(GraphState.state);
 
-        return { kcolor: 1, kcolorable: false, color: []}
+        const kColoringBruteForceRecursive = (kColor: number, curNode: number, color: number[], G: GraphImmut): kColorResultRecursive => {
+            //function graphColoring(graph,m,i,color)
+            // {
+            const V = G.getNumberOfNodes();
+            
+            // console.log("CurNode: " + curNode + " with colors " + color);
+
+            if (curNode === V) {
+                const check = graphHelpers.checkColoringByNumber(color, G);
+                if (check) {            
+                    return { kColorable: true, color };
+                }
+                else {
+                    return { kColorable: false, color: [] };
+                }
+            }
+    
+            for (let j=1; j <= kColor; j++) {
+                color[curNode] = j;
+    
+                const recAnswer = kColoringBruteForceRecursive(kColor, curNode+1, color, G);
+    
+                if (recAnswer.kColorable) {
+                    return recAnswer;
+                }
+    
+                color[curNode] = 0;
+    
+            }
+    
+            return { kColorable: false, color: []};
+    
+        }
+
+        // console.log("Graph " + G);
+
+        const V = G.getNumberOfNodes();
+
+        // console.log(V);
+
+        const color = new Array(V).fill(0);
+
+        // console.log("Soon starting the recursive algorithm. Start ")
+
+        const recAnswer = kColoringBruteForceRecursive(kColor, 0, color, G);
+
+        if (recAnswer.kColorable) {
+            return { kColor, kColorable: true, color: recAnswer.color };
+        }
+
+        return { kColor, kColorable: false, color: []};
     }
 
-    public static kColoringBruteForceRecursive = (kcolor: number, curNode: number, color: number[], G: GraphImmut = GraphState.graph): kColorResultRecursive => {
-        //function graphColoring(graph,m,i,color)
-        // {
-        // if current index reached end
-        // if (i == V) {
-    
-        // // if coloring is safe
-        // if (isSafe(graph, color))
-        // {
-    
-        //     // Print the solution
-        //     printSolution(color);
-        //     return true;
-        // }
-        // return false;
-        // }
-    
-        // // Assign each color from 1 to m
-        // for (let j = 1; j <= m; j++)
-        // {
-        // color[i] = j;
-    
-        // // Recur of the rest vertices
-        // if (graphColoring(graph, m, i + 1, color))
-        //     return true;
-        // color[i] = 0;
-        // }
-        // return false;
+    // public static kColoringBruteForceRecursive = (kColor: number, curNode: number, color: number[], G: GraphImmut = GraphState.graph): kColorResultRecursive => {
+    //     //function graphColoring(graph,m,i,color)
+    //     // {
+    //     const V = G.getNumberOfNodes();
+        
+    //     if (curNode === V) {
+    //         const check = this.checkColoringByNumber(color);
+    //         if (check) {            
+    //             return { kColorable: true, color };
+    //         }
+    //         else {
+    //             return { kColorable: false, color: [] };
+    //         }
+    //     }
 
-        return { kcolorable: false, color: []};
+    //     for (let j=1; j <= kColor; j++) {
+    //         color[curNode] = j;
 
-    }
+    //         const recAnswer = this.kColoringBruteForceRecursive(kColor, curNode+1, color);
+
+    //         if (recAnswer.kColorable) {
+    //             return recAnswer;
+    //         }
+
+    //         color[curNode] = 0;
+
+    //     }
+
+    //     return { kColorable: false, color: []};
+
+    // }
     
 
 
     public static connectedComponents = (G: GraphImmut = GraphState.graph): ConnectedComponentResult => {
+        
+        console.log("Hi, I'm connectedComponents");
+        
         const components: { [key: number]: number } = {};
         let componentCount = 0;
         const setComponentNum = (v: number) => {

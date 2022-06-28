@@ -1,7 +1,7 @@
 import gHelp from "./util/graphHelpers";
 import help from "./util/genericHelpers";
 import GraphState from "./graphState";
-import { FlowResult, MSTResult, ShortestPathResult } from "./GraphAlgorithms";
+import { FlowResult, kColorResult, MSTResult, ShortestPathResult } from "./GraphAlgorithms";
 //@ts-ignore
 import Worker from "worker-loader!./workers/GraphAlgorithmWorker";
 import NodeImmut from "./classes/GraphImmut/NodeImmut";
@@ -123,50 +123,118 @@ const makeAndPrintkColoringBruteForce = (): void => {
         ($modal, values) => {
             $modal.modal("hide");
 
-            const knumber = values[0];
+            const kColor = values[0];
 
             const iStartedProgress = UIInteractions.startLoadingAnimation();
             const w = UIInteractions.getWorkerIfPossible(e => {
-                let a = {};//e.data;
+                let a = e.data;
                 w.cleanup();
                 if (iStartedProgress) {
                     UIInteractions.stopLoadingAnimation();
                 }
                 UIInteractions.isRunning[myName] = false;
 
-                if (a === false) {
-                    
-                    console.log("Some error in UIInteractions Z. 139: Error!!!");
+                
+                a = a as kColorResult;
+                // kColorable: null | { [key: number]: {boolean, number[]} };
+                // console.log("Finished Brute Force");
+                // console.log(a);
 
-                    return;
-                }
+                GraphState.graphProperties.colormode = 1;
 
-                a = a as ShortestPathResult;
-
-                let p = languages.current.kColoringBruteForceTitle;
+                //let p = languages.current.kColoringBruteForceTitle;
                 // `help.stringReplacement(languages.current.NoPathFromAToB,
                 //     help.htmlEncode(source.toString()), help.htmlEncode(sink.toString()))}`;
 
-                if (a) {
-                    
-                    // let graph = GraphState.getGraphData(GraphState.graph, false, true);
-                    // let G = new GraphImmut(graph.nodes, graph.edges, graph.directed, graph.weighted);
-                    // a.path.forEach((v: number, i: number) => {
-                    //     p += `${help.htmlEncode(GraphState.nodeIDToLabel(v))} &rarr; `;
-                    //     if (i > 0) {
-                    //         G = G.editEdge(a.path[i - 1], v, null, null, "#FF0000") as GraphImmut;
-                    //     }
-                    // });
-                    // GraphState.graph = G;
-                    // window.main.setData(GraphState.getGraphData(G), false, false, false);
-        
+                // console.log("check ");
+                // console.log(GraphState.getProperty("Most recent k-color check"));
+
+                console.log("Hi there. I'm makeAndPrintColoringBruteForce");
+                console.log(GraphState.state);
+
+                if (GraphState.state.kColorable === null || GraphState.getProperty("Most recent k-color check") == null) {
+                    GraphState.graphProperties["Most recent k-color check"] = -1;
+                    GraphState.state.kColorable = {};
+                    console.log("Newly set up; kColorable and MostRecentKColorCheck");
                 }
 
-                help.printout(p);
+                // console.log("Check a. kColorable: " + a.kColorable);
+
+                if (a.kColorable) {
+                    
+
+                    GraphState.graphProperties["Most recent k-color check"] = a.kColor;
+                    GraphState.setUpToDate(true, ["Most recent k-color check", "kColorable"]); // TODO: What about kColor dictionary if changing the graph?
+                    (GraphState.state.kColorable[kColor] as {}) = a.color;
+
+                    // console.log("Saving output from kColor-Algorithm");
+                    // console.log(a.color);
+                    // console.log(GraphState.state.kColorable[3]);
+                    // console.log(GraphState.getProperty("kColorable", true));
+                    
+                    // console.log("Building output string");
+
+                    let p = help.stringReplacement(languages.current.kColoringSuccess, a.kColor + "");
+                    
+                    p = `<h3>${languages.current.kColoringBruteForceTitle}</h3><hr>${help.htmlEncode(p)}`;
+                    p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
+
+                    
+
+                    help.printout(p);
+                    window.main.applyColors();
+                }
+                else {
+                    let p = help.stringReplacement(languages.current.kColoringFail, a.kColor + "");
+
+                    GraphState.state.kColorable[kColor] = [];
+
+                    help.printout(p);
+
+                }
+
+                
+
+                //     // Use cached responses when able
+                //     let a = {
+                //         kColorable: GraphState.state.kColorable as {}
+                //     };
+
+                //     const printKCBF = () => {
+                //         GraphState.graphProperties.colormode = 1;
+                        
+                        // TODO
+                        /*GraphState.graphProperties["Approx. Chromatic Welsh"] = a.chromaticNumber;
+                        GraphState.setUpToDate(true, ["Approx. Chromatic Welsh", "graphColoringWelsh"]);
+                        (GraphState.state.graphColoringWelsh as {}) = a.colors;*/
+
+                        //const colors = help.flatten(a.colors);
+
+                        // p += `\nApprox. Chromatic Number from Welsh algorithm: ${a.chromaticNumber}`;
+
+                        // let p = help.stringReplacement(languages.current.NumberOfVertices, colors.length + "");
+                        // p += "\n" + help.stringReplacement(languages.current.ChromaticNumberIs, a.chromaticNumber + "");
+
+                        // p += "\n\n";
+
+                        // colors.forEach((v, i) => {
+                        //     p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
+                        // });
+
+
+                        // p += `\n${JSON.stringify(help.rotate(a.colors), null, 4)}\n\n`;
+
+                //         let p = `<h3>${languages.current.kColoringBruteForceTitle}</h3>`//<hr>${help.htmlEncode(p)}`;
+                //         p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
+
+                //         help.printout(p);
+                //         window.main.applyColors();
+
+                // help.printout(p);
             });
             w.send({
                 type: "kColoringBruteForce",
-                args: [],
+                args: [kColor],
                 graph: window.main.graphState.getGraphData(),
                 convertToGraphImmut: true
             });
@@ -179,76 +247,6 @@ const makeAndPrintkColoringBruteForce = (): void => {
             }
         }]
     );
-
-    // return new Promise<void>(async resolve => {
-    //     if (window.settings.getOption("direction")) {
-    //         UIInteractions.isRunning[myName] = false;
-    //         return resolve();
-    //     }
-
-    //     // Use cached responses when able
-    //     let a = {
-    //         kColorable: GraphState.state.kColorable as {}
-    //     };
-
-    //     const printKCBF = () => {
-    //         GraphState.graphProperties.colormode = 1;
-            
-            // TODO
-            /*GraphState.graphProperties["Approx. Chromatic Welsh"] = a.chromaticNumber;
-            GraphState.setUpToDate(true, ["Approx. Chromatic Welsh", "graphColoringWelsh"]);
-            (GraphState.state.graphColoringWelsh as {}) = a.colors;*/
-
-            //const colors = help.flatten(a.colors);
-
-            // p += `\nApprox. Chromatic Number from Welsh algorithm: ${a.chromaticNumber}`;
-
-            // let p = help.stringReplacement(languages.current.NumberOfVertices, colors.length + "");
-            // p += "\n" + help.stringReplacement(languages.current.ChromaticNumberIs, a.chromaticNumber + "");
-
-            // p += "\n\n";
-
-            // colors.forEach((v, i) => {
-            //     p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
-            // });
-
-
-            // p += `\n${JSON.stringify(help.rotate(a.colors), null, 4)}\n\n`;
-
-    //         let p = `<h3>${languages.current.kColoringBruteForceTitle}</h3>`//<hr>${help.htmlEncode(p)}`;
-    //         p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
-
-    //         help.printout(p);
-    //         window.main.applyColors();
-    //     };
-
-    //     const iStartedProgress = UIInteractions.startLoadingAnimation();
-
-    //     if (!(a.chromaticNumber !== null && (await GraphState.getProperty("graphColoringWelsh")) !== null)) {
-    //         const w = UIInteractions.getWorkerIfPossible(e => {
-    //             a = e.data;
-    //             printGC();
-    //             w.cleanup();
-    //             if (iStartedProgress) {
-    //                 UIInteractions.stopLoadingAnimation();
-    //             }
-    //             UIInteractions.isRunning[myName] = false;
-    //             resolve(e.data);
-    //         });
-    //         w.send({
-    //             type: "colorNetworkWelsh",
-    //             args: [],
-    //             graph: window.main.graphState.getGraphData(),
-    //             convertToGraphImmut: true
-    //         });
-    //     } else {
-    //         printGC();
-    //         if (iStartedProgress) {
-    //             UIInteractions.stopLoadingAnimation();
-    //         }
-    //         UIInteractions.isRunning[myName] = false;
-    //     }
-    // });
 };
 
 const makeAndPrintComponents = async (stronglyConnected: boolean): Promise<void> => {
@@ -339,7 +337,6 @@ export default class UIInteractions {
     static getAlgorithms(): AlgorithmI[] {
         return [
             {
-                //name: "Graph Coloring Welsh",
                 name: languages.current.CheckColoring,
                 directional: false,
                 applyFunc: UIInteractions.checkGraphColoring,
@@ -730,13 +727,25 @@ export default class UIInteractions {
                 resolve(e.data);
             });
             w.send({
-                type: "checkColoring",
+                type: "checkColoringByString",
                 args: [],
                 graph: window.main.graphState.getGraphData(),
                 convertToGraphImmut: true
             });
             
         });
+    }
+
+    static resetGraphColoringWelsh(): Promise<void> {
+
+        console.log("Hi, I'm resetGraphColoringWelsh");
+
+        return new Promise<void>(async resolve => {
+            GraphState.graphProperties["Approx. Chromatic Welsh"] = null;
+            GraphState.setUpToDate(true, ["Approx. Chromatic Welsh", "graphColoringWelsh"]);
+            GraphState.state.graphColoringWelsh = null;
+        });
+
     }
 
     static makeAndPrintGraphColoringWelsh(): Promise<void> {
@@ -778,14 +787,6 @@ export default class UIInteractions {
                 colors.forEach((v, i) => {
                     p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
                 });
-
-                /*help.printout(p)
-
-                if (!confirm("Do you want to continue")) {
-                    window.main.applyColors();
-                    return;    
-                }*/
-                
 
                 p += `\n${JSON.stringify(help.rotate(a.colors), null, 4)}\n\n`;
 
