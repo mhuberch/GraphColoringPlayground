@@ -447,6 +447,7 @@ export default class UIInteractions {
         };
 
         makeSimpleClickListener("#print-help-link", UIInteractions.printHelp);
+        makeSimpleClickListener("#stop-allworker-link", UIInteractions.terminateAllWebWorkers);
         makeSimpleClickListener("#graph-options-link", UIInteractions.printOptions);
         makeSimpleClickListener("#load-petersen-link", async () => {
             const predefined = (await import("./util/predefinedGraphs")).default;
@@ -674,10 +675,6 @@ export default class UIInteractions {
             "<p>" + help.stringReplacement(languages.current.TaskAlreadyRunningBody, n) + "</p>"
         );
     }
-
-
-        //const myName = "Graph Coloring Welsh";
-
 
     static checkGraphColoring(): Promise<void> {
         const myName = languages.current.CheckColoring;
