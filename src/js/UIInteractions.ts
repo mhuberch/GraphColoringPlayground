@@ -106,7 +106,11 @@ const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean):
                 type: "text",
                 validationFunc: window.main.nodeLabelIDValidator
             }
-        ]
+        ],
+        ($modal) => {
+            UIInteractions.isRunning[myName] = false;
+            $modal.modal("hide");
+        }
     );
 };
 
@@ -460,7 +464,10 @@ export default class UIInteractions {
                 v.terminate();
             }
         }
+        // Cleanup state
         GraphState.workerPool = [];
+        UIInteractions.stopLoadingAnimation();
+        UIInteractions.isRunning = {};
     }
 
     static getWorkerIfPossible(onmessage: (d: { data: any }) => any): WorkerProxy {
@@ -587,6 +594,7 @@ export default class UIInteractions {
                 if (iStartedProgress) {
                     UIInteractions.stopLoadingAnimation();
                 }
+                UIInteractions.isRunning[myName] = false;
             }
         });
     }
@@ -738,7 +746,11 @@ export default class UIInteractions {
                     type: "text",
                     validationFunc: window.main.nodeLabelIDValidator
                 }
-            ]
+            ],
+            ($modal) => {
+                UIInteractions.isRunning[myName] = false;
+                $modal.modal("hide");
+            }
         );
     }
 
