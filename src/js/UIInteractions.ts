@@ -655,6 +655,7 @@ export default class UIInteractions {
                 v.terminate();
             }
         }
+        // Cleanup state
         GraphState.workerPool = [];
         UIInteractions.stopLoadingAnimation();
         UIInteractions.isRunning = {};
