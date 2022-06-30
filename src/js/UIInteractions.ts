@@ -656,6 +656,8 @@ export default class UIInteractions {
             }
         }
         GraphState.workerPool = [];
+        UIInteractions.stopLoadingAnimation();
+        UIInteractions.isRunning = {};
     }
 
     static getWorkerIfPossible(onmessage: (d: { data: any }) => any): WorkerProxy {
