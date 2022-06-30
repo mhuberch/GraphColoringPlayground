@@ -114,6 +114,24 @@ const self = {
 
     },
 
+    setGraphBackground: (whichone: number): void => {
+        if (whichone === 0) {
+            window.network.off("beforeDrawing");
+            GraphState.repaint();
+        }
+        else if (whichone === 1) {
+            window.network.on("beforeDrawing", function(ctx) {
+                // var img = document.createElement("img");
+                // img.src = "./img/verkehrskreuzung.png";
+                // ctx.drawImage(img, -100, -100);
+                ctx.drawImage(document.getElementById("scream"), -100, -100);
+                
+            });
+            GraphState.repaint();
+        }
+        
+    },
+
     makeExportFileModal: (): void => {
         help.showFormModal(null, languages.current.ExportGraphToFile, null,
             [{

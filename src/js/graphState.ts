@@ -237,7 +237,10 @@ export default class GraphState {
         window.settings.changeOption("customColors", false);
         this.updateGraph();
         window.settings.changeOption("customColors", saveState);
+    }
 
+    static repaint() {
+        this.updateGraph();
     }
 
     static addEdge(from: number | string, to: number | string, weight = 0, graph = GraphState.graph) {

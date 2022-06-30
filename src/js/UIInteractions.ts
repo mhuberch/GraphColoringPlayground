@@ -510,6 +510,15 @@ export default class UIInteractions {
             const imp = (await import("./dataImportExport")).default;
             imp.makeImportGraphExercise(3);
         });
+        makeSimpleClickListener("#blank-background", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.setGraphBackground(0);
+        });
+        makeSimpleClickListener("#import-verkehrskreuzung", async () => {
+            console.log("Hallo");
+            const imp = (await import("./dataImportExport")).default;
+            imp.setGraphBackground(1);
+        });
 
         (document.querySelector("#fileDropdown") as HTMLAnchorElement).innerText = languages.current.File;
         (document.querySelector("#import-file-link") as HTMLAnchorElement).innerText = languages.current.ImportFile;
@@ -522,6 +531,10 @@ export default class UIInteractions {
         (document.querySelector("#import-graph-g2") as HTMLAnchorElement).innerText = "Graph G2";
         (document.querySelector("#import-graph-g3") as HTMLAnchorElement).innerText = "Graph G3";
         (document.querySelector("#import-graph-g4") as HTMLAnchorElement).innerText = "Graph G4";
+
+        (document.querySelector("#setBackgroundDropdown") as HTMLAnchorElement).innerText = languages.current.SetBackground;
+        (document.querySelector("#blank-background") as HTMLAnchorElement).innerText = "Reset";
+        (document.querySelector("#import-verkehrskreuzung") as HTMLAnchorElement).innerText = "Verkehrskreuzung";
 
         (document.querySelector("#calculate-all-properties-link") as HTMLAnchorElement).innerText = languages.current.CalculateAllProperties;
         (document.querySelector("#new-graph-layout-link") as HTMLAnchorElement).innerText = languages.current.NewGraphLayout;
