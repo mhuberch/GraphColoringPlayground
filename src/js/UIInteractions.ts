@@ -106,7 +106,11 @@ const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean):
                 type: "text",
                 validationFunc: window.main.nodeLabelIDValidator
             }
-        ]
+        ],
+        ($modal) => {
+            UIInteractions.isRunning[myName] = false;
+            $modal.modal("hide");
+        }
     );
 };
 
@@ -245,7 +249,12 @@ const makeAndPrintkColoringBruteForce = (): void => {
             type: "numeric", initialValue: 1, label: languages.current.NumberOfColors, validationFunc: (v) => {
                 return v > 0 || languages.current.NumberOfColorsPositiveError;
             }
-        }]
+        }
+        ],
+        ($modal) => {
+            UIInteractions.isRunning[myName] = false;
+            $modal.modal("hide");
+        }
     );
 };
 
@@ -985,7 +994,11 @@ export default class UIInteractions {
                     type: "text",
                     validationFunc: window.main.nodeLabelIDValidator
                 }
-            ]
+            ],
+            ($modal) => {
+                UIInteractions.isRunning[myName] = false;
+                $modal.modal("hide");
+            }
         );
     }
 
