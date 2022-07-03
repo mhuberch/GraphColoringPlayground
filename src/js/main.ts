@@ -286,8 +286,8 @@ const self: MainI = {
 
         }
         else if (coloring === 2) {
-            graphColors = await GraphState.getProperty("graphColoringWelsh", true);
-            chromaticNumber = await GraphState.getProperty("Approx. Chromatic Welsh", true);
+            graphColors = await GraphState.getProperty("graphColoringGreedy", true);
+            chromaticNumber = await GraphState.getProperty("Approx. Chromatic Greedy", true);
         }
         else {
             alert("No correct colormode");
@@ -308,6 +308,9 @@ const self: MainI = {
     },
 
     setData: (data, recalcProps = false, graphChanged = true, rearrangeGraph = false) => {
+        
+        // console.log("Hi, I am 'setData'");
+        
         // Store existing positions in the data if we're supposed to keep the layout
         if (rearrangeGraph) {
             data.nodes.forEach((v) => {

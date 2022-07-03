@@ -4,7 +4,6 @@ import gHelp from './graphHelpers';
 import help from './genericHelpers';
 import {EdgeImmutPlain} from "../classes/GraphImmut/EdgeImmut";
 import NodeImmut, {NodeImmutPlain} from "../classes/GraphImmut/NodeImmut";
-import { makeMain } from '@sentry/browser';
 import GraphImmut from '../classes/GraphImmut/GraphImmut';
 
 interface Degree {

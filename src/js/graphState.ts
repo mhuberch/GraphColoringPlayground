@@ -22,7 +22,7 @@ interface GraphProperties {
     edges: number;
     colormode: number;
     eulerian: boolean;
-    "Approx. Chromatic Welsh": number | null;
+    "Approx. Chromatic Greedy": number | null;
     "Connected Components": number | null;
     "Strongly Connected Components": number | null;
     "Most recent k-color check": number | null;
@@ -34,7 +34,7 @@ interface GraphProperties {
 interface GraphStateData {
     stronglyConnectedComponents: null | { [key: number]: number };
     connectedComponents: null | { [key: number]: number };
-    graphColoringWelsh: null | number[];
+    graphColoringGreedy: null | number[];
     kColorable: null | { [key: number]: number[] };
 
     [index: string]: null | number[] | { [key: number]: number } | { [key: number]: number[] };
@@ -70,15 +70,17 @@ export default class GraphState {
     public static maxHistory = 10;
     public static upToDate: UpToDateProperties[] = [
         {
-            name: "Approx. Chromatic Welsh", upToDate: false, type: "property",
+            name: "Approx. Chromatic Greedy", upToDate: false, type: "property",
             applyFunc: () => {
-                return window.ui.resetGraphColoringWelsh();
+                // console.log("Hi, I'm updating approx. chromatic welsh.");
+                return window.ui.resetgraphColoringGreedy();
+                
             }
         },
         {
-            name: "graphColoringWelsh", upToDate: false, type: "state",
+            name: "graphColoringGreedy", upToDate: false, type: "state",
             applyFunc: () => {
-                return window.ui.resetGraphColoringWelsh();
+                return window.ui.resetgraphColoringGreedy();
             }
         },
         {
@@ -90,6 +92,7 @@ export default class GraphState {
         {
             name: "kColorable", upToDate: false, type: "state",
             applyFunc: () => {
+                // console.log("Hi, I'm updating kColorable.");
                 return null;
             }
         },
@@ -135,7 +138,7 @@ export default class GraphState {
     public static state: GraphStateData = {
         stronglyConnectedComponents: null,
         connectedComponents: null,
-        graphColoringWelsh: null,
+        graphColoringGreedy: null,
         kColorable: null
     };
     public static graph: GraphImmut;
@@ -144,7 +147,7 @@ export default class GraphState {
         edges: 0,
         colormode: 0,
         eulerian: false,
-        "Approx. Chromatic Welsh": null,
+        "Approx. Chromatic Greedy": null,
         "Connected Components": null,
         "Strongly Connected Components": null,
         "Most recent k-color check": null,
@@ -152,9 +155,11 @@ export default class GraphState {
     };
 
     static setUpToDate(value = false, listOptions?: string[]) {
+        // console.log("Hi, I am 'setUpToDate'");
         const all = listOptions === null || typeof listOptions === "undefined";
         let property = false;
         GraphState.upToDate.forEach((v) => {
+            // console.log(v);
             if ((!("always" in v) || !v.always) && (all || listOptions!.indexOf(v.name) > -1)) {
                 v.upToDate = value;
                 if (v.type === "property") {
@@ -168,11 +173,15 @@ export default class GraphState {
     }
 
     static async getProperty(property: keyof GraphProperties, updateIfNotUpdated = false, ignoreDuplicate = false): Promise<any> {
+        // console.log("Hi, I am getProperty");
         const a = GraphState.upToDate.find((v) => {
             return ("name" in v && v.name === property);
         })!;
         if (!a.upToDate) {
+            console.log("Not up to date:");
+            console.log(a);
             if ("applyFunc" in a && typeof a.applyFunc === "function" && updateIfNotUpdated) {
+                console.log("applyFunc applied:");
                 await a.applyFunc(ignoreDuplicate);
             }
             else {
@@ -223,6 +232,7 @@ export default class GraphState {
     }
 
     private static updateGraph(graph = GraphState.graph) {
+        // console.log("Hi, I am 'updateGraph'");
         let nodes = graph.getAllNodes() as NodeImmutPlain[];
         let edges = graph.getAllEdges() as EdgeImmutPlain[];
         if (!window.settings.getOption("customColors")) {

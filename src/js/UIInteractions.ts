@@ -17,6 +17,13 @@ interface AlgorithmI {
     display: boolean;
 }
 
+const possibleColorModes = {
+    "Ordered by Node Label (increasing)": 1,
+    "Ordered by Node Label (decreasing)": 2,
+    "Ordered by Degree (increasing)": 3,
+    "Ordered by Degree (decreasing)": 4
+}
+
 const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean): void => {
     const myName = languages.current.ShortestPath;
     if (UIInteractions.isRunning[myName]) {
@@ -114,6 +121,145 @@ const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean):
     );
 };
 
+
+const makeAndPrintGreedyColoring = (): void => {
+    const myName = languages.current.GraphColoringGreedy;
+    if (UIInteractions.isRunning[myName]) {
+        UIInteractions.printAlreadyRunning(myName);
+        return;
+    }
+    UIInteractions.isRunning[myName] = true;
+
+    help.showFormModal(
+        ($modal, values) => {
+            $modal.modal("hide");
+
+            const orderingMode = values[0];
+
+            const iStartedProgress = UIInteractions.startLoadingAnimation();
+            const w = UIInteractions.getWorkerIfPossible(e => {
+                let a = e.data;
+                w.cleanup();
+                if (iStartedProgress) {
+                    UIInteractions.stopLoadingAnimation();
+                }
+                UIInteractions.isRunning[myName] = false;
+
+                GraphState.graphProperties.colormode = 2;
+                GraphState.graphProperties["Approx. Chromatic Greedy"] = a.chromaticNumber;
+                GraphState.setUpToDate(true, ["Approx. Chromatic Greedy", "graphColoringGreedy"]);
+                (GraphState.state.graphColoringGreedy as {}) = a.colors;
+
+                const colors = help.flatten(a.colors);
+
+                // p += `\nApprox. Chromatic Number from Welsh algorithm: ${a.chromaticNumber}`;
+
+                // let p = help.stringReplacement(languages.current.NumberOfVertices, colors.length + "");
+                let p = help.stringReplacement(languages.current.ApproxChromaticNumberIs, a.chromaticNumber + "");
+
+                p += "\n\n";
+
+                colors.forEach((v, i) => {
+                    p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
+                });
+
+                /*help.printout(p)
+                if (!confirm("Do you want to continue")) {
+                    window.main.applyColors();
+                    return;    
+                }*/
+                
+
+                // p     += `\n${JSON.stringify(help.rotate(a.colors), null, 4)}\n\n`;
+
+                const historyToPrint: {nodeToColor: number, colorsOfNeighbors: {[key: number]: number} }[] = a.history;
+
+                console.log(historyToPrint);
+
+                p += "\n\n";
+
+                // history.push({nodeToColor: vertexOrder[curPos], colorsOfNeighbors: coloredAdjacencyList});
+
+                if (historyToPrint != null && window.settings.getOption("stepByStepInfo")) {
+                    p += "Step-by-Step output:\n";
+
+                    for (let step = 0; step < historyToPrint.length; step++) {
+
+                        const curNode: number = historyToPrint[step].nodeToColor;
+                        const colAdjList: { [key: number]: number } = historyToPrint[step].colorsOfNeighbors as {};
+
+                        // console.log(historyToPrint[step]);
+                        // console.log("Current node: " + curNode);
+                        // console.log(GraphState.nodeIDToLabel(curNode));
+                        console.log(colAdjList);
+                        console.log(typeof colAdjList[0]);
+                        console.log(typeof Object.keys(colAdjList))
+                        
+
+                        p += "Step " + (step+1) + " : " + "AL(" + GraphState.nodeIDToLabel(curNode) + ") : ";
+
+                        for (let neighbor in colAdjList) {
+                            const nb: number = (neighbor as unknown) as number;
+                            if ( colAdjList[neighbor] === -1) {
+                                // p += neighbor + " not yet colored; "
+                                p += GraphState.nodeIDToLabel(nb) + " not yet colored; "
+                            }
+                            else {
+                                p += GraphState.nodeIDToLabel(nb) + " with color " + colAdjList[neighbor] + "; ";
+                            }
+                            // p += GraphState.nodeIDToLabel(neighbor) + " with color " + colAdjList[neighbor].toString() + "; ";
+                        }
+
+                        p += "--> " + help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(curNode), colors[curNode] + "");
+                        //p += "--> " + help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(curNode), 0colors[curNode].toString()) + "\n";
+                        p += "\n";
+
+                    }
+
+                    // console.log(historyToPrint);
+                }
+                else {
+                    p += "No step-by-step output. If desired, please ensure that the checkbox 'Step-by-Step Info' in the 'Graph Options' menu is chosen and rerun the coloring algorithm.";
+                }
+
+                p = `<h3>${languages.current.GraphColoringGreedyTitle}</h3><hr>${help.htmlEncode(p)}`;
+                
+
+
+                if (a.chromaticNumber > 6) {
+                    p += "As the coloring needs more than the six standard colors additional randomly chosen colors are used. To change their appearence press the button."
+                    p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
+                }
+
+                help.printout(p);
+                window.main.applyColors();
+
+            });
+            w.send({
+                type: "colorNetworkGreedy",
+                args: [orderingMode],
+                convertToGraphImmut: true,
+                graph: window.main.graphState.getGraphData()
+            });
+        },
+        languages.current.GraphColoringGreedy,
+        languages.current.Go,
+        [
+            {
+                type: "select",
+                label: languages.current.ColoringMode, 
+                optionText: Object.keys(possibleColorModes), 
+                optionValues: Object.values(possibleColorModes), 
+                initialValue: 0
+            }
+        ],
+        ($modal) => {
+            UIInteractions.isRunning[myName] = false;
+            $modal.modal("hide");
+        }
+    );
+};
+
 const makeAndPrintkColoringBruteForce = (): void => {
     const myName = languages.current.kColoringBruteForce;
 
@@ -153,8 +299,8 @@ const makeAndPrintkColoringBruteForce = (): void => {
                 // console.log("check ");
                 // console.log(GraphState.getProperty("Most recent k-color check"));
 
-                console.log("Hi there. I'm makeAndPrintColoringBruteForce");
-                console.log(GraphState.state);
+                // console.log("Hi there. I'm makeAndPrintColoringBruteForce");
+                // console.log(GraphState.state);
 
                 if (GraphState.state.kColorable === null || GraphState.getProperty("Most recent k-color check") == null) {
                     GraphState.graphProperties["Most recent k-color check"] = -1;
@@ -208,9 +354,9 @@ const makeAndPrintkColoringBruteForce = (): void => {
                 //         GraphState.graphProperties.colormode = 1;
                         
                         // TODO
-                        /*GraphState.graphProperties["Approx. Chromatic Welsh"] = a.chromaticNumber;
-                        GraphState.setUpToDate(true, ["Approx. Chromatic Welsh", "graphColoringWelsh"]);
-                        (GraphState.state.graphColoringWelsh as {}) = a.colors;*/
+                        /*GraphState.graphProperties["Approx. Chromatic Greedy"] = a.chromaticNumber;
+                        GraphState.setUpToDate(true, ["Approx. Chromatic Greedy", "graphColoringGreedy"]);
+                        (GraphState.state.graphColoringGreedy as {}) = a.colors;*/
 
                         //const colors = help.flatten(a.colors);
 
@@ -355,7 +501,9 @@ export default class UIInteractions {
                 //name: "Graph Coloring Welsh",
                 name: languages.current.GraphColoringGreedy,
                 directional: false,
-                applyFunc: UIInteractions.makeAndPrintGraphColoringWelsh,
+                applyFunc: () => {
+                    makeAndPrintGreedyColoring();
+                },
                 display: true
             },
             {
@@ -524,7 +672,6 @@ export default class UIInteractions {
             imp.setGraphBackground(0);
         });
         makeSimpleClickListener("#import-verkehrskreuzung", async () => {
-            console.log("Hallo");
             const imp = (await import("./dataImportExport")).default;
             imp.setGraphBackground(1);
         });
@@ -607,6 +754,10 @@ export default class UIInteractions {
                     window.settings.changeOption("fastColorChange", vals[2]);                  
                 }
 
+                if (window.settings.getOption("stepByStepInfo") !== vals[3]) {
+                    window.settings.changeOption("stepByStepInfo", vals[3]);                  
+                }
+
             },
             languages.current.Options,
             languages.current.Save,
@@ -641,6 +792,12 @@ export default class UIInteractions {
                 {
                     label: languages.current.FastColorChange,
                     initialValue: window.settings.getOption("fastColorChange"),
+                    type: "checkbox"
+                },
+
+                {
+                    label: languages.current.StepByStepInfo,
+                    initialValue: window.settings.getOption("stepByStepInfo"),
                     type: "checkbox"
                 }
 
@@ -758,20 +915,20 @@ export default class UIInteractions {
         });
     }
 
-    static resetGraphColoringWelsh(): Promise<void> {
+    static resetgraphColoringGreedy(): Promise<void> {
 
-        console.log("Hi, I'm resetGraphColoringWelsh");
+        // console.log("Hi, I'm resetgraphColoringGreedy");
 
         return new Promise<void>(async resolve => {
-            GraphState.graphProperties["Approx. Chromatic Welsh"] = null;
-            GraphState.setUpToDate(true, ["Approx. Chromatic Welsh", "graphColoringWelsh"]);
-            GraphState.state.graphColoringWelsh = null;
+            GraphState.graphProperties["Approx. Chromatic Greedy"] = null;
+            GraphState.setUpToDate(true, ["Approx. Chromatic Greedy", "graphColoringGreedy"]);
+            GraphState.state.graphColoringGreedy = null;
         });
 
     }
 
-    static makeAndPrintGraphColoringWelsh(): Promise<void> {
-        const myName = languages.current.GraphColoringGreedy;
+    static makeAndPrintgraphColoringWelsh(): Promise<void> {
+        const myName = languages.current.GraphColoringWelsh;
 
         if (UIInteractions.isRunning[myName]) {
             UIInteractions.printAlreadyRunning(myName);
@@ -787,15 +944,15 @@ export default class UIInteractions {
 
             // Use cached responses when able
             let a = {
-                chromaticNumber: (await GraphState.getProperty("Approx. Chromatic Welsh")) as number,
-                colors: GraphState.state.graphColoringWelsh as {}
+                chromaticNumber: (await GraphState.getProperty("Approx. Chromatic Greedy")) as number,
+                colors: GraphState.state.graphColoringGreedy as {}
             };
 
             const printGC = () => {
                 GraphState.graphProperties.colormode = 2;
-                GraphState.graphProperties["Approx. Chromatic Welsh"] = a.chromaticNumber;
-                GraphState.setUpToDate(true, ["Approx. Chromatic Welsh", "graphColoringWelsh"]);
-                (GraphState.state.graphColoringWelsh as {}) = a.colors;
+                GraphState.graphProperties["Approx. Chromatic Greedy"] = a.chromaticNumber;
+                GraphState.setUpToDate(true, ["Approx. Chromatic Greedy", "graphColoringGreedy"]);
+                (GraphState.state.graphColoringGreedy as {}) = a.colors;
 
                 const colors = help.flatten(a.colors);
 
@@ -810,6 +967,13 @@ export default class UIInteractions {
                     p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
                 });
 
+                /*help.printout(p)
+                if (!confirm("Do you want to continue")) {
+                    window.main.applyColors();
+                    return;    
+                }*/
+                
+
                 p += `\n${JSON.stringify(help.rotate(a.colors), null, 4)}\n\n`;
 
                 p = `<h3>${languages.current.GraphColoringTitle}</h3><hr>${help.htmlEncode(p)}`;
@@ -821,7 +985,7 @@ export default class UIInteractions {
 
             const iStartedProgress = UIInteractions.startLoadingAnimation();
 
-            if (!(a.chromaticNumber !== null && (await GraphState.getProperty("graphColoringWelsh")) !== null)) {
+            if (!(a.chromaticNumber !== null && (await GraphState.getProperty("graphColoringGreedy")) !== null)) {
                 const w = UIInteractions.getWorkerIfPossible(e => {
                     a = e.data;
                     printGC();
@@ -1127,6 +1291,7 @@ export default class UIInteractions {
         });
     }
 
+    // display only the graph algorithms that are suited for directional, weighted graphs
     static printGraphAlgorithms(): void {
         const $div = document.getElementById("algorithms-pane")!;
         $div.innerHTML = "";

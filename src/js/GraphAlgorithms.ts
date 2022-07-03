@@ -77,8 +77,170 @@ export default class GraphAlgorithms {
 
     }
 
+    public static colorNetworkGreedy = (orderingMode: string, G: GraphImmut = GraphState.graph): { colors: {}; chromaticNumber: number; history: { nodeToColor: number; colorsOfNeighbors: { [key: number]: number; }; }[]} => {
+        
+        const V = G.getNumberOfNodes();
+        
+        // Get node ID's only
+        const nodes = G.getAllNodes(true) as NodeImmut[];
+        const nodeArr: number[] = genericH.datasetToArray(G.getAllNodes(), "id") as number[];
+
+        const degrees = G.getAllOutDegrees();
+        const nodeArrLabel: string[] = genericH.datasetToArray(G.getAllNodes(), "label") as string[];
+
+        // Put vertices in array in decreasing order of degree
+        
+        // console.log(orderingMode);
+        console.log(nodeArr);
+        console.log(nodeArrLabel);
+
+        let vertexOrder: number[] = [];
+
+        if (orderingMode === "1") {
+            // Put vertices in the increasing order of their label.
+            vertexOrder = genericH.sort(nodeArr, (a, b) => {
+                return (nodeArrLabel[a].toLowerCase()).localeCompare(nodeArrLabel[b].toLowerCase());
+            });
+            // console.log("Ordering 1");
+        }
+        else if (orderingMode === "2") {
+            // Put vertices in the decreasing order of their id.
+            vertexOrder = genericH.sort(nodeArr, (a, b) => {
+                return (-1)* (nodeArrLabel[a].toLowerCase()).localeCompare(nodeArrLabel[b].toLowerCase());
+            });
+            // console.log("Ordering 2");
+        }
+        else if (orderingMode === "3") {
+            // Put vertices in array in decreasing order of degree
+            
+            vertexOrder = genericH.sort(nodeArr, (a, b) => {
+                return degrees[a] < degrees[b] ? 1 : degrees[a] === degrees[b] ? 0 : -1;
+            });
+            // console.log("Ordering 3");
+        }
+        else if (orderingMode === "4") {
+            // Put vertices in array in decreasing order of degree
+            const degrees = G.getAllOutDegrees();
+            vertexOrder = genericH.sort(nodeArr, (a, b) => {
+                return degrees[a] > degrees[b] ? 1 : degrees[a] === degrees[b] ? 0 : -1;
+            });
+            // console.log("Ordering 4");
+        }
+        else {
+            console.log("No valid orderingMode");
+            // console.log(typeof orderingMode);
+            // console.log(orderingMode);
+        }
+        // console.log(vertexOrder);
+        
+
+        const history = [];
+        const colors = {};
+
+        const colorIndex: { [key: number]: number } = {};
+
+        // initalize vertices as unassigned
+        for (let i=0; i < V; i++) {
+            colorIndex[i] = -1;
+        }
+
+        // only for history
+        const vertexAdjacency = G.getNodeAdjacency(vertexOrder[0]);
+        const coloredAdjacencyList: { [key: number]: number } = {};
+        for (const index in vertexAdjacency) {
+            coloredAdjacencyList[vertexAdjacency[index]] = colorIndex[vertexAdjacency[index]];
+        }
+        history.push({nodeToColor: vertexOrder[0], colorsOfNeighbors: coloredAdjacencyList});
+
+        // set color for first node to 0
+        colorIndex[vertexOrder[0]] = 0;
+
+        for (let curPos=1; curPos < V; curPos++){
+
+            const vertexAdjacency = G.getNodeAdjacency(vertexOrder[curPos]);
+            const coloredAdjacencyList: { [key: number]: number } = {};
+            for (const index in vertexAdjacency) {
+                coloredAdjacencyList[vertexAdjacency[index]] = colorIndex[vertexAdjacency[index]];
+            }
+            // create history
+            history.push({nodeToColor: vertexOrder[curPos], colorsOfNeighbors: coloredAdjacencyList});
+
+            //
+            const allUsedColors= Object.values(coloredAdjacencyList);
+            const ref :{ [key: number]: boolean } = {};
+    
+            let minimalMissingColor  = 0;
+            
+            for (const value of allUsedColors) {
+                if (value < minimalMissingColor) {
+                    continue;
+                }
+                ref[value] = true;
+
+                while (ref[minimalMissingColor]) {
+                    minimalMissingColor++;
+                }
+            }
+            // console.log("==============");
+            // console.log("Current Node: " + curPos);
+            // console.log(vertexAdjacency);
+            // console.log(coloredAdjacencyList);
+            // console.log(allUsedColors);
+            // console.log("Minimal missing color: " + minimalMissingColor);
+
+            colorIndex[vertexOrder[curPos]] = minimalMissingColor;
+
+            // console.log(colorIndex);
+
+        }
+
+        // let currentColor = 0;
+        // while (vertexOrder.length > 0) {
+        //     const root = vertexOrder.shift()!;
+        //     colorIndex[root] = currentColor;
+
+        //     const myGroup = [];
+        //     myGroup.push(root);
+
+        //     // START: only generate step by step info
+        //     const vertexAdjacency = G.getNodeAdjacency(root);
+        //     const coloredAdjacencyList: { [key: number]: number } = {};
+        //     for (const neighbor in vertexAdjacency) {
+        //         coloredAdjacencyList[neighbor] = nodes[neighbor].getAttribute('color');
+        //     }
+        //     history.push({nodeToColor: root, colorsOfNeighbors: coloredAdjacencyList})
+        //     // END: only generate step by step info
+
+        //     for (let i = 0; i < vertexOrder.length; ) {
+        //         const p = vertexOrder[i];
+        //         let conflict = false;
+                
+        //         for (let j = 0; j < myGroup.length; j++) {
+        //             if (G.areAdjacent(p, myGroup[j])) {
+        //                 i++;
+        //                 conflict = true;
+        //                 break;
+        //             }
+        //         }
+        //         if (conflict) {
+        //             continue;
+        //         }
+
+        //         colorIndex[p] = currentColor;
+        //         myGroup.push(p);
+        //         vertexOrder.splice(i, 1);
+        //     }
+
+        //     currentColor++;
+        // }
+
+        const chromaticNumber = genericH.max(genericH.flatten(colorIndex) as any[]) + 1;
+        // return { colors: colorIndex, chromaticNumber, history};
+        return { colors: colorIndex, chromaticNumber, history };
+    };
+
     // Welsh-Powell Algorithm
-    public static colorNetworkWelsh = (G: GraphImmut = GraphState.graph): { colors: {}; chromaticNumber: number } => {
+    public static colorNetworkWelsh = (G: GraphImmut = GraphState.graph): { colors: {}; chromaticNumber: number} => {
         // Get node ID's only
         const nodeArr: number[] = genericH.datasetToArray(G.getAllNodes(), "id") as number[];
 
@@ -100,7 +262,7 @@ export default class GraphAlgorithms {
             for (let i = 0; i < vertexOrder.length; ) {
                 const p = vertexOrder[i];
                 let conflict = false;
-
+                
                 for (let j = 0; j < myGroup.length; j++) {
                     if (G.areAdjacent(p, myGroup[j])) {
                         i++;
@@ -121,7 +283,7 @@ export default class GraphAlgorithms {
         }
 
         const chromaticNumber = genericH.max(genericH.flatten(colorIndex) as any[]) + 1;
-        return { colors: colorIndex, chromaticNumber };
+        return { colors: colorIndex, chromaticNumber};
     };
 
     
@@ -129,8 +291,8 @@ export default class GraphAlgorithms {
     public static kColoringBruteForce = (kColor: number, G: GraphImmut = GraphState.graph): kColorResult => {
         // export type kColorResult = { kColor: number; kColorable: boolean; color: number[]};
     
-        console.log("Hi there. I'm kColoringBruteForce");
-        console.log(GraphState.state);
+        // console.log("Hi there. I'm kColoringBruteForce");
+        // console.log(GraphState.state);
 
         const kColoringBruteForceRecursive = (kColor: number, curNode: number, color: number[], G: GraphImmut): kColorResultRecursive => {
             //function graphColoring(graph,m,i,color)
@@ -221,7 +383,7 @@ export default class GraphAlgorithms {
 
     public static connectedComponents = (G: GraphImmut = GraphState.graph): ConnectedComponentResult => {
         
-        console.log("Hi, I'm connectedComponents");
+        // console.log("Hi, I'm connectedComponents");
         
         const components: { [key: number]: number } = {};
         let componentCount = 0;
