@@ -174,7 +174,7 @@ const makeAndPrintGreedyColoring = (): void => {
 
                 const historyToPrint: {nodeToColor: number, colorsOfNeighbors: {[key: number]: number} }[] = a.history;
 
-                console.log(historyToPrint);
+                // console.log(historyToPrint);
 
                 p += "\n\n";
 
@@ -191,9 +191,9 @@ const makeAndPrintGreedyColoring = (): void => {
                         // console.log(historyToPrint[step]);
                         // console.log("Current node: " + curNode);
                         // console.log(GraphState.nodeIDToLabel(curNode));
-                        console.log(colAdjList);
-                        console.log(typeof colAdjList[0]);
-                        console.log(typeof Object.keys(colAdjList))
+                        // console.log(colAdjList);
+                        // console.log(typeof colAdjList[0]);
+                        // console.log(typeof Object.keys(colAdjList))
                         
 
                         p += "Step " + (step+1) + " : " + "AL(" + GraphState.nodeIDToLabel(curNode) + ") : ";

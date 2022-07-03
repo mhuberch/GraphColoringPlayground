@@ -178,10 +178,10 @@ export default class GraphState {
             return ("name" in v && v.name === property);
         })!;
         if (!a.upToDate) {
-            console.log("Not up to date:");
-            console.log(a);
+            // console.log("Not up to date:");
+            // console.log(a);
             if ("applyFunc" in a && typeof a.applyFunc === "function" && updateIfNotUpdated) {
-                console.log("applyFunc applied:");
+                // console.log("applyFunc applied:");
                 await a.applyFunc(ignoreDuplicate);
             }
             else {

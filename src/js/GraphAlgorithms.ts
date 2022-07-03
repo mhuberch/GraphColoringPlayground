@@ -91,8 +91,8 @@ export default class GraphAlgorithms {
         // Put vertices in array in decreasing order of degree
         
         // console.log(orderingMode);
-        console.log(nodeArr);
-        console.log(nodeArrLabel);
+        // console.log(nodeArr);
+        // console.log(nodeArrLabel);
 
         let vertexOrder: number[] = [];
 
