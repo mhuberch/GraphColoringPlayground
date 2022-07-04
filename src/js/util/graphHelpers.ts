@@ -123,6 +123,22 @@ export default {
         
         return true;
 
+    },
+
+    nextColorIsSafe : (curNode: number, G: GraphImmut, color : number[], curColor: number): boolean => {
+        const V = G.getNumberOfNodes();
+        const vertexAdjacency = G.getNodeAdjacency(curNode);
+
+        for (let i = 0; i < vertexAdjacency.length; i++) {
+            if (color[vertexAdjacency[i]] === curColor) {
+                return false
+            }
+        }
+
+        return true;
+
     }
+
+    
 
 };

@@ -284,7 +284,7 @@ export default class GraphAlgorithms {
                 }
             }
     
-            for (let j=1; j <= kColor; j++) {
+            for (let j=0; j < kColor; j++) {
                 color[curNode] = j;
     
                 const recAnswer = kColoringBruteForceRecursive(kColor, curNode+1, color, G, totalSteps, maxHist, history);
@@ -293,7 +293,7 @@ export default class GraphAlgorithms {
                     return recAnswer;
                 }
     
-                color[curNode] = 0;
+                color[curNode] = -1;
                 totalSteps = recAnswer.totalSteps;
                 history = recAnswer.history;
     
@@ -309,7 +309,7 @@ export default class GraphAlgorithms {
 
         // console.log(V);
 
-        const color = new Array(V).fill(0);
+        const color = new Array(V).fill(-1);
 
         const history : number[][] = [];
 
@@ -332,33 +332,53 @@ export default class GraphAlgorithms {
             // console.log("CurNode: " + curNode + " with colors " + color);
 
             if (curNode === V) {
-                const check = graphHelpers.checkColoringByNumber(color, G);
-                totalSteps += 1;
+                return { kColorable: true, color, totalSteps, history};
+            }
+
+            for (let j = 0; j < kColor; j++) {
+                
+                totalSteps++;
+
+                const check = graphHelpers.nextColorIsSafe(curNode, G, color, j);
+                let colorHistory = [...color];
+                colorHistory[curNode] = j;
+
                 if (totalSteps <= maxHist) {
-                    history.push([...color]);
+                    history.push([...colorHistory]);
                 }
-                if (check) {            
-                    return { kColorable: true, color, totalSteps, history};
+
+                if (check) {
+                    color[curNode] = j;
+
+                    const recAnswer = kColoringBacktrackingRecursive(kColor, curNode+1, color, G, totalSteps, maxHist, history);
+
+                    if (recAnswer.kColorable) {
+                        return recAnswer;
+                    }
+
+                    totalSteps = recAnswer.totalSteps;
+                    history = recAnswer.history;
+
                 }
-                else {
-                    return { kColorable: false, color: [], totalSteps, history};
-                }
+                    
+                color[curNode] = -1;
+
             }
+
+            // for (let j=1; j <= kColor; j++) {
+            //     color[curNode] = j;
     
-            for (let j=1; j <= kColor; j++) {
-                color[curNode] = j;
+            //     const recAnswer = kColoringBacktrackingRecursive(kColor, curNode+1, color, G, totalSteps, maxHist, history);
     
-                const recAnswer = kColoringBacktrackingRecursive(kColor, curNode+1, color, G, totalSteps, maxHist, history);
+            //     if (recAnswer.kColorable) {
+            //         return recAnswer;
+            //     }
     
-                if (recAnswer.kColorable) {
-                    return recAnswer;
-                }
+            //     color[curNode] = 0;
+            //     totalSteps = recAnswer.totalSteps;
+            //     history = recAnswer.history;
     
-                color[curNode] = 0;
-                totalSteps = recAnswer.totalSteps;
-                history = recAnswer.history;
-    
-            }
+            // }
     
             return { kColorable: false, color: [], totalSteps, history};
     
@@ -370,14 +390,14 @@ export default class GraphAlgorithms {
 
         // console.log(V);
 
-        const color = new Array(V).fill(0);
+        const color = new Array(V).fill(-1);
 
         const history : number[][] = [];
 
 
         const recAnswer = kColoringBacktrackingRecursive(kColor, 0, color, G, 0, numberOfSteps, history);
 
-        // console.log("Finished Backtracking Algorithm");
+        console.log("Finished Backtracking Algorithm");
 
         if (recAnswer.kColorable) {
             return { kColor, kColorable: true, color: recAnswer.color, totalSteps: recAnswer.totalSteps, history };

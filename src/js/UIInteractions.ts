@@ -390,7 +390,7 @@ const makeAndPrintkColoringBacktracking = (): void => {
                     p += "\n";
 
                     for (let step = 0; step < a.history.length; step++) {
-                        p += languages.current.Step + step + ": " + a.history[step].toString() + "\n";
+                        p += languages.current.Step + (step+1) + ": " + (a.history[step]).toString() + "\n";
                     }
                 }
 
@@ -540,7 +540,7 @@ const makeAndPrintkColoringBruteForce = (): void => {
                     p += "\n";
 
                     for (let step = 0; step < a.history.length; step++) {
-                        p += languages.current.Step + step + ": " + a.history[step].toString() + "\n";
+                        p += languages.current.Step + (step+1) + ": " + a.history[step].toString() + "\n";
                     }
                 }
 
