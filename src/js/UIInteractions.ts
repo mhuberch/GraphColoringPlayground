@@ -267,6 +267,157 @@ const makeAndPrintGreedyColoring = (): void => {
     );
 };
 
+
+const makeAndPrintkColoringBacktracking = (): void => {
+    const myName = languages.current.kColoringBacktracking;
+
+    if (UIInteractions.isRunning[myName]) {
+        UIInteractions.printAlreadyRunning(myName);
+        return;
+    }
+    UIInteractions.isRunning[myName] = true;
+
+    const options: ModalFormRow[] = [
+        {
+        type: "numeric", initialValue: 1, label: languages.current.NumberOfColors, validationFunc: (v) => {
+            return v > 0 || languages.current.NumberOfColorsPositiveError;}
+        }
+    ]
+    if (window.settings.getOption("stepByStepInfo")) {
+        options.push(
+            { 
+                type: "numeric", initialValue: 1, label: languages.current.NumberOfSteps, validationFunc: (v) => {
+                    return v > 0 || languages.current.NumberOfColorsPositiveError;}
+            }
+        );
+    }
+
+    help.showFormModal(
+        ($modal, values) => {
+            $modal.modal("hide");
+
+            const kColor = values[0];
+            let numberOfSteps = -1;
+
+            if (window.settings.getOption("stepByStepInfo")) {
+                numberOfSteps = values[1];
+            }
+            
+
+            const iStartedProgress = UIInteractions.startLoadingAnimation();
+            const w = UIInteractions.getWorkerIfPossible(e => {
+                let a = e.data;
+                w.cleanup();
+                if (iStartedProgress) {
+                    UIInteractions.stopLoadingAnimation();
+                }
+                UIInteractions.isRunning[myName] = false;
+
+                
+                a = a as kColorResult;
+
+                // console.log(a.totalSteps);
+                // console.log(a.history);
+
+                // return { kColor, kColorable: false, color: [], totalSteps: recAnswer.totalSteps, history };
+
+                GraphState.graphProperties.colormode = 1;
+
+                
+
+                if (GraphState.state.kColorable === null || GraphState.getProperty("Most recent k-color check") == null) {
+                    GraphState.graphProperties["Most recent k-color check"] = -1;
+                    GraphState.state.kColorable = {};
+                    console.log("Newly set up; kColorable and MostRecentKColorCheck");
+                }
+
+                // console.log("Check a. kColorable: " + a.kColorable);
+
+                let p = "";
+
+                if (a.kColorable) {
+                    
+
+                    GraphState.graphProperties["Most recent k-color check"] = a.kColor;
+
+                    const bestChrNumber = GraphState.graphProperties["Current best guess of chromatic number"];
+                    if (bestChrNumber === null) {
+                        GraphState.graphProperties["Current best guess of chromatic number"] = a.kColor;
+                    }
+                    else {
+                        GraphState.graphProperties["Current best guess of chromatic number"] = Math.min(a.kColor, bestChrNumber);
+                    }
+
+
+                    GraphState.setUpToDate(true, ["Most recent k-color check", "kColorable", "Current best guess of chromatic number"]); // TODO: What about kColor dictionary if changing the graph?
+                    (GraphState.state.kColorable[kColor] as {}) = a.color;
+
+                    // console.log("Saving output from kColor-Algorithm");
+                    // console.log(a.color);
+                    // console.log(GraphState.state.kColorable[3]);
+                    // console.log(GraphState.getProperty("kColorable", true));
+                    
+                    // console.log("Building output string");
+
+                    p += help.stringReplacement(languages.current.kColoringSuccess, a.kColor + "") + "\n";
+
+                    p += help.stringReplacement(languages.current.kColoringTerminated, a.totalSteps + "");
+                    
+                    p = `<h3>${languages.current.kColoringBacktrackingTitle}</h3><hr>${help.htmlEncode(p)}`;
+                    
+                    if (a.kColor > 6) {
+                        p += languages.current.ReColorInfo;
+                        p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
+                    }
+
+                }
+                else {
+                    p += help.stringReplacement(languages.current.kColoringFail, a.kColor + "") + "\n";
+                    p += help.stringReplacement(languages.current.kColoringCheckedAll, a.totalSteps + "");
+
+                    GraphState.state.kColorable[kColor] = [];
+
+                }
+
+                if (numberOfSteps > 0) {
+                    p += "\n\n";
+                    p += help.stringReplacement(languages.current.kColoringDocStep1, numberOfSteps + "") + "\n";
+                    p += languages.current.kColoringDocStep2;
+                    
+                    for (let i = 0; i < a.color.length; i++) {
+                        p += GraphState.nodeIDToLabel(i) + ", ";
+                    };
+                    p += "\n";
+
+                    for (let step = 0; step < a.history.length; step++) {
+                        p += languages.current.Step + step + ": " + a.history[step].toString() + "\n";
+                    }
+                }
+
+                help.printout(p);
+
+                if (a.kColorable) {
+                    window.main.applyColors();
+                }
+
+            });
+            w.send({
+                type: "kColoringBacktracking",
+                args: [kColor, numberOfSteps],
+                graph: window.main.graphState.getGraphData(),
+                convertToGraphImmut: true
+            });
+        },
+        languages.current.kColoringBacktracking,
+        languages.current.Go,
+        options,
+        ($modal) => {
+            UIInteractions.isRunning[myName] = false;
+            $modal.modal("hide");
+        }
+    );
+};
+
 const makeAndPrintkColoringBruteForce = (): void => {
     const myName = languages.current.kColoringBruteForce;
 
@@ -314,26 +465,15 @@ const makeAndPrintkColoringBruteForce = (): void => {
 
                 
                 a = a as kColorResult;
-                // kColorable: null | { [key: number]: {boolean, number[]} };
-                // console.log("Finished Brute Force");
-                // console.log(a);
 
-                console.log(a.totalSteps);
-                console.log(a.history);
+                // console.log(a.totalSteps);
+                // console.log(a.history);
 
                 // return { kColor, kColorable: false, color: [], totalSteps: recAnswer.totalSteps, history };
 
                 GraphState.graphProperties.colormode = 1;
 
-                //let p = languages.current.kColoringBruteForceTitle;
-                // `help.stringReplacement(languages.current.NoPathFromAToB,
-                //     help.htmlEncode(source.toString()), help.htmlEncode(sink.toString()))}`;
-
-                // console.log("check ");
-                // console.log(GraphState.getProperty("Most recent k-color check"));
-
-                // console.log("Hi there. I'm makeAndPrintColoringBruteForce");
-                // console.log(GraphState.state);
+                
 
                 if (GraphState.state.kColorable === null || GraphState.getProperty("Most recent k-color check") == null) {
                     GraphState.graphProperties["Most recent k-color check"] = -1;
@@ -410,44 +550,6 @@ const makeAndPrintkColoringBruteForce = (): void => {
                     window.main.applyColors();
                 }
 
-                
-
-                //     // Use cached responses when able
-                //     let a = {
-                //         kColorable: GraphState.state.kColorable as {}
-                //     };
-
-                //     const printKCBF = () => {
-                //         GraphState.graphProperties.colormode = 1;
-                        
-                        // TODO
-                        /*GraphState.graphProperties["Approx. Chromatic Greedy"] = a.chromaticNumber;
-                        GraphState.setUpToDate(true, ["Approx. Chromatic Greedy", "graphColoringGreedy"]);
-                        (GraphState.state.graphColoringGreedy as {}) = a.colors;*/
-
-                        //const colors = help.flatten(a.colors);
-
-                        // p += `\nApprox. Chromatic Number from Welsh algorithm: ${a.chromaticNumber}`;
-
-                        // let p = help.stringReplacement(languages.current.NumberOfVertices, colors.length + "");
-                        // p += "\n" + help.stringReplacement(languages.current.ChromaticNumberIs, a.chromaticNumber + "");
-
-                        // p += "\n\n";
-
-                        // colors.forEach((v, i) => {
-                        //     p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
-                        // });
-
-
-                        // p += `\n${JSON.stringify(help.rotate(a.colors), null, 4)}\n\n`;
-
-                //         let p = `<h3>${languages.current.kColoringBruteForceTitle}</h3>`//<hr>${help.htmlEncode(p)}`;
-                //         p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
-
-                //         help.printout(p);
-                //         window.main.applyColors();
-
-                // help.printout(p);
             });
             w.send({
                 type: "kColoringBruteForce",
@@ -554,6 +656,12 @@ export default class UIInteractions {
     static getAlgorithms(): AlgorithmI[] {
         return [
             {
+                name: languages.current.GetAllDegrees,
+                directional: false,
+                applyFunc: UIInteractions.getAllDegrees,
+                display: true
+            },
+            {
                 name: languages.current.CheckColoring,
                 directional: false,
                 applyFunc: UIInteractions.checkGraphColoring,
@@ -573,6 +681,14 @@ export default class UIInteractions {
                 directional: false,
                 applyFunc: () => {
                     makeAndPrintkColoringBruteForce();
+                },
+                display: true
+            },
+            {
+                name: languages.current.kColoringBacktracking,
+                directional: false,
+                applyFunc: () => {
+                    makeAndPrintkColoringBacktracking();
                 },
                 display: true
             },
@@ -923,6 +1039,64 @@ export default class UIInteractions {
             languages.current.TaskAlreadyRunning,
             "<p>" + help.stringReplacement(languages.current.TaskAlreadyRunningBody, n) + "</p>"
         );
+    }
+
+    static getAllDegrees(): Promise<void> {
+        const myName = languages.current.GetAllDegrees;
+
+        if (UIInteractions.isRunning[myName]) {
+            UIInteractions.printAlreadyRunning(myName);
+            return Promise.reject(languages.current.TaskAlreadyRunning);
+        }
+        UIInteractions.isRunning[myName] = true;
+
+        return new Promise<void>(async resolve => {
+            if (window.settings.getOption("direction")) {
+                UIInteractions.isRunning[myName] = false;
+                return resolve();
+            }
+
+            let a = { degrees: [] };
+
+            
+
+            const printGAD = () => {
+            
+                const degrees = a.degrees;
+
+                let p = "";
+                
+                degrees.forEach((v,i) => {
+                    p += help.stringReplacement(languages.current.VertexHasDegree, GraphState.nodeIDToLabel(i) + "", v + "") + "\n";
+                });
+
+                p = `<h3>${languages.current.GetAllDegreesTitle}</h3><hr>${help.htmlEncode(p)}`;
+
+                help.printout(p);
+                
+            };
+
+            const iStartedProgress = UIInteractions.startLoadingAnimation();
+
+            
+            const w = UIInteractions.getWorkerIfPossible(e => {
+                a = e.data;
+                printGAD();
+                w.cleanup();
+                if (iStartedProgress) {
+                    UIInteractions.stopLoadingAnimation();
+                }
+                UIInteractions.isRunning[myName] = false;
+                resolve(e.data);
+            });
+            w.send({
+                type: "getAllDegreesWrapper",
+                args: [],
+                graph: window.main.graphState.getGraphData(),
+                convertToGraphImmut: true
+            });
+            
+        });
     }
 
     static checkGraphColoring(): Promise<void> {

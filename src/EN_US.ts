@@ -1,10 +1,12 @@
 export default {
     // Algorithms
     CheckColoring: "Check Coloring",
+    GetAllDegrees: "Get Vertex Degrees",
     GraphColoringGreedy: "Graph Coloring Greedy",
     ColoringMode: "Select the mode, in which the nodes should get colored:",
     GraphColoringWelsh: "Graph Coloring by Welsh-Powell",
     kColoringBruteForce: "k-Coloring Bruteforce",
+    kColoringBacktracking: "k-Coloring Backtracking",
     ConnectedComponents: "Connected Components",
     StronglyConnectedComponents: "Strongly Connected Components",
     BFS: "Breadth-First Shortest Path",
@@ -40,6 +42,7 @@ export default {
     NumberOfConflicts: "Number of conflicts: $1",
     NodeIsInConflictWith: "$1.) Colors of node $2 and node $3 are in conflict.",
     VertexIsInConnectedComponentNumber: "Vertex $1 is in connected component #$2",
+    VertexHasDegree: "Vertex $1 has degree $2",
     LoadGraphs: "Load Exercise Graphs",
     SetBackground: "Set Background",
     
@@ -50,10 +53,11 @@ export default {
     GraphColoringTitle: "Graph Coloring Using Welsh-Powell Algorithm",
     GraphColoringGreedyTitle: "Graph Coloring Using Greedy Algorithm",
     kColoringBruteForceTitle: "Check if the graph is k-colorable using Brute Force",
+    kColoringBacktrackingTitle: "Check if the graph is k-colorable using Backtracking",
     kColoringParameter: "Check k-colorability for k = ",
     kColoringSuccess: "Positive answer: The given graph is $1-colorable.",
-    kColoringTerminated: "The brute force algorithm terminated after $1 testes configurations",
-    kColoringCheckedAll: "The brute force algorithm checked all $1 configurations without success",
+    kColoringTerminated: "The coloring algorithm terminated after $1 tested configurations",
+    kColoringCheckedAll: "The coloring algorithm checked all $1 configurations without success",
     kColoringDocStep1: "Documentation of the first $1 configurations (step-by-step) as requested:",
     kColoringDocStep2: "List indicating the colors of all vertices in : 1 = Color 1; 2 = Color 2; ...) \n Vertices in the following order: ",
     kColoringFail: "Negative answer: The given graph is NOT $1-colorable.",
@@ -61,6 +65,7 @@ export default {
     NumberOfColors: "Number of colors",
     NumberOfSteps: "Number of steps documented by step-by-step info",
     CheckColoringTitle: "Checked admissibilty of the current node coloring",
+    GetAllDegreesTitle: "The vertices have the following degree:",
     KruskalMSTTotalWeight: "Kruskal's Minimum Spanning Tree Total Weight: $1",
 
     // UI

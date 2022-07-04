@@ -24,6 +24,8 @@ export type ConnectedComponentResult = { components: { [key: number]: number }; 
 
 export type CheckingColorResult = { from: number[]; to: number[]; num: number; confList: number[][]};
 
+export type GetDegreesResult = { degrees: number[] };
+
 export type kColorResult = { kColor: number; kColorable: boolean; color: number[]; totalSteps: number; history: number[][]};
 
 export type kColorResultRecursive = { kColorable: boolean; color: number[]; totalSteps: number; history: number[][]};
@@ -75,6 +77,17 @@ export default class GraphAlgorithms {
 
         return { from: conflictStartID, to: conflictEndID,  num: numOfConflicts, confList: conflictList};
 
+    }
+
+    public static getAllDegreesWrapper = (G: GraphImmut = GraphState.graph): GetDegreesResult => {
+        
+        const arr1 = G.getAllInOutDegrees();
+        // const arr = [...arr1];
+
+        // // console.log(arr1);
+        // console.log(arr);
+        
+        return { degrees: arr1 };
     }
 
     public static colorNetworkGreedy = (orderingMode: string, G: GraphImmut = GraphState.graph): { colors: {}; vertexOrder: number[]; chromaticNumber: number; history: { nodeToColor: number; colorsOfNeighbors: { [key: number]: number; }; }[]} => {
@@ -250,17 +263,9 @@ export default class GraphAlgorithms {
     
 
     public static kColoringBruteForce = (kColor: number, numberOfSteps: number, G: GraphImmut = GraphState.graph): kColorResult => {
-        // export type kColorResult = { kColor: number; kColorable: boolean; color: number[]};
-    
-        // console.log("Hi there. I'm kColoringBruteForce");
-        // console.log(GraphState.state);
-
-        // export type kColorResult = { kColor: number; kColorable: boolean; color: number[]; totalSteps: number; history: number[][]};
-        // export type kColorResultRecursive = { kColorable: boolean; color: number[]; totalSteps: number; history: number[][]};
 
         const kColoringBruteForceRecursive = (kColor: number, curNode: number, color: number[], G: GraphImmut, totalSteps: number, maxHist: number, history: number[][]): kColorResultRecursive => {
-            //function graphColoring(graph,m,i,color)
-            // {
+            
             const V = G.getNumberOfNodes();
             
             // console.log("CurNode: " + curNode + " with colors " + color);
@@ -308,7 +313,6 @@ export default class GraphAlgorithms {
 
         const history : number[][] = [];
 
-        // console.log("Soon starting the recursive algorithm. Start ")
 
         const recAnswer = kColoringBruteForceRecursive(kColor, 0, color, G, 0, numberOfSteps, history);
 
@@ -319,37 +323,68 @@ export default class GraphAlgorithms {
         return { kColor, kColorable: false, color: [], totalSteps: recAnswer.totalSteps, history };
     }
 
-    // public static kColoringBruteForceRecursive = (kColor: number, curNode: number, color: number[], G: GraphImmut = GraphState.graph): kColorResultRecursive => {
-    //     //function graphColoring(graph,m,i,color)
-    //     // {
-    //     const V = G.getNumberOfNodes();
-        
-    //     if (curNode === V) {
-    //         const check = this.checkColoringByNumber(color);
-    //         if (check) {            
-    //             return { kColorable: true, color };
-    //         }
-    //         else {
-    //             return { kColorable: false, color: [] };
-    //         }
-    //     }
+    public static kColoringBacktracking = (kColor: number, numberOfSteps: number, G: GraphImmut = GraphState.graph): kColorResult => {
 
-    //     for (let j=1; j <= kColor; j++) {
-    //         color[curNode] = j;
+        const kColoringBacktrackingRecursive = (kColor: number, curNode: number, color: number[], G: GraphImmut, totalSteps: number, maxHist: number, history: number[][]): kColorResultRecursive => {
+            
+            const V = G.getNumberOfNodes();
+            
+            // console.log("CurNode: " + curNode + " with colors " + color);
 
-    //         const recAnswer = this.kColoringBruteForceRecursive(kColor, curNode+1, color);
+            if (curNode === V) {
+                const check = graphHelpers.checkColoringByNumber(color, G);
+                totalSteps += 1;
+                if (totalSteps <= maxHist) {
+                    history.push([...color]);
+                }
+                if (check) {            
+                    return { kColorable: true, color, totalSteps, history};
+                }
+                else {
+                    return { kColorable: false, color: [], totalSteps, history};
+                }
+            }
+    
+            for (let j=1; j <= kColor; j++) {
+                color[curNode] = j;
+    
+                const recAnswer = kColoringBacktrackingRecursive(kColor, curNode+1, color, G, totalSteps, maxHist, history);
+    
+                if (recAnswer.kColorable) {
+                    return recAnswer;
+                }
+    
+                color[curNode] = 0;
+                totalSteps = recAnswer.totalSteps;
+                history = recAnswer.history;
+    
+            }
+    
+            return { kColorable: false, color: [], totalSteps, history};
+    
+        }
 
-    //         if (recAnswer.kColorable) {
-    //             return recAnswer;
-    //         }
+        // console.log("Graph " + G);
 
-    //         color[curNode] = 0;
+        const V = G.getNumberOfNodes();
 
-    //     }
+        // console.log(V);
 
-    //     return { kColorable: false, color: []};
+        const color = new Array(V).fill(0);
 
-    // }
+        const history : number[][] = [];
+
+
+        const recAnswer = kColoringBacktrackingRecursive(kColor, 0, color, G, 0, numberOfSteps, history);
+
+        // console.log("Finished Backtracking Algorithm");
+
+        if (recAnswer.kColorable) {
+            return { kColor, kColorable: true, color: recAnswer.color, totalSteps: recAnswer.totalSteps, history };
+        }
+
+        return { kColor, kColorable: false, color: [], totalSteps: recAnswer.totalSteps, history };
+    }
     
 
 
