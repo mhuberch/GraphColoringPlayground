@@ -26,6 +26,7 @@ interface GraphProperties {
     "Connected Components": number | null;
     "Strongly Connected Components": number | null;
     "Most recent k-color check": number | null;
+    "Current best guess of chromatic number": number | null;
     cyclic: boolean;
 
     [index: string]: boolean | number | null;
@@ -85,6 +86,9 @@ export default class GraphState {
         },
         {
             name: "Most recent k-color check", upToDate: false, type: "property"
+        },
+        {
+            name: "Current best guess of chromatic number", upToDate: false, type: "property"
         },
         {
             name: "colormode", upToDate: false, type: "property"
@@ -151,6 +155,7 @@ export default class GraphState {
         "Connected Components": null,
         "Strongly Connected Components": null,
         "Most recent k-color check": null,
+        "Current best guess of chromatic number": null,
         cyclic: false,
     };
 

@@ -24,9 +24,9 @@ export type ConnectedComponentResult = { components: { [key: number]: number }; 
 
 export type CheckingColorResult = { from: number[]; to: number[]; num: number; confList: number[][]};
 
-export type kColorResult = { kColor: number; kColorable: boolean; color: number[]};
+export type kColorResult = { kColor: number; kColorable: boolean; color: number[]; totalSteps: number; history: number[][]};
 
-export type kColorResultRecursive = { kColorable: boolean; color: number[]};
+export type kColorResultRecursive = { kColorable: boolean; color: number[]; totalSteps: number; history: number[][]};
 
 export default class GraphAlgorithms {
     public static graphPlainToGraphImmut = (gp: GraphPlain): GraphImmut => {
@@ -194,46 +194,6 @@ export default class GraphAlgorithms {
 
         }
 
-        // let currentColor = 0;
-        // while (vertexOrder.length > 0) {
-        //     const root = vertexOrder.shift()!;
-        //     colorIndex[root] = currentColor;
-
-        //     const myGroup = [];
-        //     myGroup.push(root);
-
-        //     // START: only generate step by step info
-        //     const vertexAdjacency = G.getNodeAdjacency(root);
-        //     const coloredAdjacencyList: { [key: number]: number } = {};
-        //     for (const neighbor in vertexAdjacency) {
-        //         coloredAdjacencyList[neighbor] = nodes[neighbor].getAttribute('color');
-        //     }
-        //     history.push({nodeToColor: root, colorsOfNeighbors: coloredAdjacencyList})
-        //     // END: only generate step by step info
-
-        //     for (let i = 0; i < vertexOrder.length; ) {
-        //         const p = vertexOrder[i];
-        //         let conflict = false;
-                
-        //         for (let j = 0; j < myGroup.length; j++) {
-        //             if (G.areAdjacent(p, myGroup[j])) {
-        //                 i++;
-        //                 conflict = true;
-        //                 break;
-        //             }
-        //         }
-        //         if (conflict) {
-        //             continue;
-        //         }
-
-        //         colorIndex[p] = currentColor;
-        //         myGroup.push(p);
-        //         vertexOrder.splice(i, 1);
-        //     }
-
-        //     currentColor++;
-        // }
-
         const chromaticNumber = genericH.max(genericH.flatten(colorIndex) as any[]) + 1;
         // return { colors: colorIndex, chromaticNumber, history};
         return { colors: colorIndex, chromaticNumber, history };
@@ -288,13 +248,16 @@ export default class GraphAlgorithms {
 
     
 
-    public static kColoringBruteForce = (kColor: number, G: GraphImmut = GraphState.graph): kColorResult => {
+    public static kColoringBruteForce = (kColor: number, numberOfSteps: number, G: GraphImmut = GraphState.graph): kColorResult => {
         // export type kColorResult = { kColor: number; kColorable: boolean; color: number[]};
     
         // console.log("Hi there. I'm kColoringBruteForce");
         // console.log(GraphState.state);
 
-        const kColoringBruteForceRecursive = (kColor: number, curNode: number, color: number[], G: GraphImmut): kColorResultRecursive => {
+        // export type kColorResult = { kColor: number; kColorable: boolean; color: number[]; totalSteps: number; history: number[][]};
+        // export type kColorResultRecursive = { kColorable: boolean; color: number[]; totalSteps: number; history: number[][]};
+
+        const kColoringBruteForceRecursive = (kColor: number, curNode: number, color: number[], G: GraphImmut, totalSteps: number, maxHist: number, history: number[][]): kColorResultRecursive => {
             //function graphColoring(graph,m,i,color)
             // {
             const V = G.getNumberOfNodes();
@@ -303,28 +266,34 @@ export default class GraphAlgorithms {
 
             if (curNode === V) {
                 const check = graphHelpers.checkColoringByNumber(color, G);
+                totalSteps += 1;
+                if (totalSteps <= maxHist) {
+                    history.push([...color]);
+                }
                 if (check) {            
-                    return { kColorable: true, color };
+                    return { kColorable: true, color, totalSteps, history};
                 }
                 else {
-                    return { kColorable: false, color: [] };
+                    return { kColorable: false, color: [], totalSteps, history};
                 }
             }
     
             for (let j=1; j <= kColor; j++) {
                 color[curNode] = j;
     
-                const recAnswer = kColoringBruteForceRecursive(kColor, curNode+1, color, G);
+                const recAnswer = kColoringBruteForceRecursive(kColor, curNode+1, color, G, totalSteps, maxHist, history);
     
                 if (recAnswer.kColorable) {
                     return recAnswer;
                 }
     
                 color[curNode] = 0;
+                totalSteps = recAnswer.totalSteps;
+                history = recAnswer.history;
     
             }
     
-            return { kColorable: false, color: []};
+            return { kColorable: false, color: [], totalSteps, history};
     
         }
 
@@ -336,15 +305,17 @@ export default class GraphAlgorithms {
 
         const color = new Array(V).fill(0);
 
+        const history : number[][] = [];
+
         // console.log("Soon starting the recursive algorithm. Start ")
 
-        const recAnswer = kColoringBruteForceRecursive(kColor, 0, color, G);
+        const recAnswer = kColoringBruteForceRecursive(kColor, 0, color, G, 0, numberOfSteps, history);
 
         if (recAnswer.kColorable) {
-            return { kColor, kColorable: true, color: recAnswer.color };
+            return { kColor, kColorable: true, color: recAnswer.color, totalSteps: recAnswer.totalSteps, history };
         }
 
-        return { kColor, kColorable: false, color: []};
+        return { kColor, kColorable: false, color: [], totalSteps: recAnswer.totalSteps, history };
     }
 
     // public static kColoringBruteForceRecursive = (kColor: number, curNode: number, color: number[], G: GraphImmut = GraphState.graph): kColorResultRecursive => {

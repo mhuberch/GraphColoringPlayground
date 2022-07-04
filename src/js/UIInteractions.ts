@@ -1,5 +1,5 @@
 import gHelp from "./util/graphHelpers";
-import help from "./util/genericHelpers";
+import help, { ModalFormRow } from './util/genericHelpers';
 import GraphState from "./graphState";
 import { FlowResult, kColorResult, MSTResult, ShortestPathResult } from "./GraphAlgorithms";
 //@ts-ignore
@@ -150,7 +150,7 @@ const makeAndPrintGreedyColoring = (): void => {
                 GraphState.setUpToDate(true, ["Approx. Chromatic Greedy", "graphColoringGreedy"]);
                 (GraphState.state.graphColoringGreedy as {}) = a.colors;
 
-                const colors = help.flatten(a.colors);
+                
 
                 // p += `\nApprox. Chromatic Number from Welsh algorithm: ${a.chromaticNumber}`;
 
@@ -159,6 +159,7 @@ const makeAndPrintGreedyColoring = (): void => {
 
                 p += "\n\n";
 
+                const colors = help.flatten(a.colors);
                 colors.forEach((v, i) => {
                     p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
                 });
@@ -181,7 +182,7 @@ const makeAndPrintGreedyColoring = (): void => {
                 // history.push({nodeToColor: vertexOrder[curPos], colorsOfNeighbors: coloredAdjacencyList});
 
                 if (historyToPrint != null && window.settings.getOption("stepByStepInfo")) {
-                    p += "Step-by-Step output:\n";
+                    p += "<h3>Step-by-Step output:</h3><hr>" + "\n";
 
                     for (let step = 0; step < historyToPrint.length; step++) {
 
@@ -269,11 +270,32 @@ const makeAndPrintkColoringBruteForce = (): void => {
     }
     UIInteractions.isRunning[myName] = true;
 
+    const options: ModalFormRow[] = [
+        {
+        type: "numeric", initialValue: 1, label: languages.current.NumberOfColors, validationFunc: (v) => {
+            return v > 0 || languages.current.NumberOfColorsPositiveError;}
+        }
+    ]
+    if (window.settings.getOption("stepByStepInfo")) {
+        options.push(
+            { 
+                type: "numeric", initialValue: 1, label: languages.current.NumberOfSteps, validationFunc: (v) => {
+                    return v > 0 || languages.current.NumberOfColorsPositiveError;}
+            }
+        );
+    }
+
     help.showFormModal(
         ($modal, values) => {
             $modal.modal("hide");
 
             const kColor = values[0];
+            let numberOfSteps = -1;
+
+            if (window.settings.getOption("stepByStepInfo")) {
+                numberOfSteps = values[1];
+            }
+            
 
             const iStartedProgress = UIInteractions.startLoadingAnimation();
             const w = UIInteractions.getWorkerIfPossible(e => {
@@ -289,6 +311,11 @@ const makeAndPrintkColoringBruteForce = (): void => {
                 // kColorable: null | { [key: number]: {boolean, number[]} };
                 // console.log("Finished Brute Force");
                 // console.log(a);
+
+                console.log(a.totalSteps);
+                console.log(a.history);
+
+                // return { kColor, kColorable: false, color: [], totalSteps: recAnswer.totalSteps, history };
 
                 GraphState.graphProperties.colormode = 1;
 
@@ -310,11 +337,23 @@ const makeAndPrintkColoringBruteForce = (): void => {
 
                 // console.log("Check a. kColorable: " + a.kColorable);
 
+                let p = "";
+
                 if (a.kColorable) {
                     
 
                     GraphState.graphProperties["Most recent k-color check"] = a.kColor;
-                    GraphState.setUpToDate(true, ["Most recent k-color check", "kColorable"]); // TODO: What about kColor dictionary if changing the graph?
+
+                    const bestChrNumber = GraphState.graphProperties["Current best guess of chromatic number"];
+                    if (bestChrNumber === null) {
+                        GraphState.graphProperties["Current best guess of chromatic number"] = a.kColor;
+                    }
+                    else {
+                        GraphState.graphProperties["Current best guess of chromatic number"] = Math.min(a.kColor, bestChrNumber);
+                    }
+
+
+                    GraphState.setUpToDate(true, ["Most recent k-color check", "kColorable", "Current best guess of chromatic number"]); // TODO: What about kColor dictionary if changing the graph?
                     (GraphState.state.kColorable[kColor] as {}) = a.color;
 
                     // console.log("Saving output from kColor-Algorithm");
@@ -324,23 +363,45 @@ const makeAndPrintkColoringBruteForce = (): void => {
                     
                     // console.log("Building output string");
 
-                    let p = help.stringReplacement(languages.current.kColoringSuccess, a.kColor + "");
+                    p += help.stringReplacement(languages.current.kColoringSuccess, a.kColor + "") + "\n";
+
+                    p += help.stringReplacement(languages.current.kColoringTerminated, a.totalSteps + "");
                     
                     p = `<h3>${languages.current.kColoringBruteForceTitle}</h3><hr>${help.htmlEncode(p)}`;
-                    p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
-
                     
+                    if (a.kColor > 6) {
+                        p += languages.current.ReColorInfo;
+                        p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
+                    }
 
-                    help.printout(p);
-                    window.main.applyColors();
                 }
                 else {
-                    let p = help.stringReplacement(languages.current.kColoringFail, a.kColor + "");
+                    p += help.stringReplacement(languages.current.kColoringFail, a.kColor + "") + "\n";
+                    p += help.stringReplacement(languages.current.kColoringCheckedAll, a.totalSteps + "");
 
                     GraphState.state.kColorable[kColor] = [];
 
-                    help.printout(p);
+                }
 
+                if (numberOfSteps > 0) {
+                    p += "\n\n";
+                    p += help.stringReplacement(languages.current.kColoringDocStep1, numberOfSteps + "") + "\n";
+                    p += languages.current.kColoringDocStep2;
+                    
+                    for (let i = 0; i < a.color.length; i++) {
+                        p += GraphState.nodeIDToLabel(i) + ", ";
+                    };
+                    p += "\n";
+
+                    for (let step = 0; step < a.history.length; step++) {
+                        p += languages.current.Step + step + ": " + a.history[step].toString() + "\n";
+                    }
+                }
+
+                help.printout(p);
+
+                if (a.kColorable) {
+                    window.main.applyColors();
                 }
 
                 
@@ -384,19 +445,14 @@ const makeAndPrintkColoringBruteForce = (): void => {
             });
             w.send({
                 type: "kColoringBruteForce",
-                args: [kColor],
+                args: [kColor, numberOfSteps],
                 graph: window.main.graphState.getGraphData(),
                 convertToGraphImmut: true
             });
         },
         languages.current.kColoringBruteForce,
         languages.current.Go,
-        [{
-            type: "numeric", initialValue: 1, label: languages.current.NumberOfColors, validationFunc: (v) => {
-                return v > 0 || languages.current.NumberOfColorsPositiveError;
-            }
-        }
-        ],
+        options,
         ($modal) => {
             UIInteractions.isRunning[myName] = false;
             $modal.modal("hide");
