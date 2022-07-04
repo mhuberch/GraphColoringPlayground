@@ -154,8 +154,21 @@ const makeAndPrintGreedyColoring = (): void => {
 
                 // p += `\nApprox. Chromatic Number from Welsh algorithm: ${a.chromaticNumber}`;
 
+
+                let p = "Greedy algorithm work with the following ordering of vertices: \n";
+
+                const order : number[] = a.vertexOrder;
+
+                console.log(order);
+
+                order.forEach((v, i) => {
+                    p += GraphState.nodeIDToLabel(v) + ", ";
+                })
+
+                p += "\n\n";
+
                 // let p = help.stringReplacement(languages.current.NumberOfVertices, colors.length + "");
-                let p = help.stringReplacement(languages.current.ApproxChromaticNumberIs, a.chromaticNumber + "");
+                p += help.stringReplacement(languages.current.ApproxChromaticNumberIs, a.chromaticNumber + "");
 
                 p += "\n\n";
 
@@ -163,6 +176,10 @@ const makeAndPrintGreedyColoring = (): void => {
                 colors.forEach((v, i) => {
                     p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
                 });
+
+
+
+                
 
                 /*help.printout(p)
                 if (!confirm("Do you want to continue")) {

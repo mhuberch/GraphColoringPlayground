@@ -389,6 +389,32 @@ export default class GraphImmut {
         return degrees;
     }
 
+    getAllInOutDegrees(): number[] {
+        const degrees: number[] = [];
+        this.nodes.forEach((_, i) => {
+            degrees[i] = 0;
+        });
+        this.edges.forEach((edge) => {
+            if (degrees.includes(edge.getFrom())) {
+                degrees[edge.getFrom()]++;
+            }
+            else {
+                degrees[edge.getFrom()] = 1;
+            }
+            
+            if (degrees.includes(edge.getTo())) {
+                degrees[edge.getTo()]++;
+            }
+            else {
+                degrees[edge.getTo()] = 1;
+            }
+            
+
+        });
+
+        return degrees;
+    }
+
     asWeighted(): GraphImmut {
         return new GraphImmut(this.nodes, this.edges.map((edge) => {
             return edge.editEdge(1);

@@ -77,16 +77,18 @@ export default class GraphAlgorithms {
 
     }
 
-    public static colorNetworkGreedy = (orderingMode: string, G: GraphImmut = GraphState.graph): { colors: {}; chromaticNumber: number; history: { nodeToColor: number; colorsOfNeighbors: { [key: number]: number; }; }[]} => {
+    public static colorNetworkGreedy = (orderingMode: string, G: GraphImmut = GraphState.graph): { colors: {}; vertexOrder: number[]; chromaticNumber: number; history: { nodeToColor: number; colorsOfNeighbors: { [key: number]: number; }; }[]} => {
         
         const V = G.getNumberOfNodes();
         
         // Get node ID's only
-        const nodes = G.getAllNodes(true) as NodeImmut[];
         const nodeArr: number[] = genericH.datasetToArray(G.getAllNodes(), "id") as number[];
 
-        const degrees = G.getAllOutDegrees();
+        const degrees = G.getAllInOutDegrees();
         const nodeArrLabel: string[] = genericH.datasetToArray(G.getAllNodes(), "label") as string[];
+
+        console.log(nodeArr);
+        console.log(degrees);
 
         // Put vertices in array in decreasing order of degree
         
@@ -111,18 +113,17 @@ export default class GraphAlgorithms {
             // console.log("Ordering 2");
         }
         else if (orderingMode === "3") {
-            // Put vertices in array in decreasing order of degree
-            
+            // Put vertices in array in decreasing order of degree            
             vertexOrder = genericH.sort(nodeArr, (a, b) => {
-                return degrees[a] < degrees[b] ? 1 : degrees[a] === degrees[b] ? 0 : -1;
+                return degrees[a] > degrees[b] ? 1 : (degrees[a] === degrees[b] ? 0 : -1);
             });
+            
             // console.log("Ordering 3");
         }
         else if (orderingMode === "4") {
             // Put vertices in array in decreasing order of degree
-            const degrees = G.getAllOutDegrees();
             vertexOrder = genericH.sort(nodeArr, (a, b) => {
-                return degrees[a] > degrees[b] ? 1 : degrees[a] === degrees[b] ? 0 : -1;
+                return degrees[a] < degrees[b] ? 1 : (degrees[a] === degrees[b] ? 0 : -1);
             });
             // console.log("Ordering 4");
         }
@@ -196,7 +197,7 @@ export default class GraphAlgorithms {
 
         const chromaticNumber = genericH.max(genericH.flatten(colorIndex) as any[]) + 1;
         // return { colors: colorIndex, chromaticNumber, history};
-        return { colors: colorIndex, chromaticNumber, history };
+        return { colors: colorIndex, vertexOrder, chromaticNumber, history };
     };
 
     // Welsh-Powell Algorithm
