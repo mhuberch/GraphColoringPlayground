@@ -106,6 +106,8 @@ export default {
     LoadPetersen: "Load Petersen Graph",
     LoadKonigsberg: "Load Königsberg Bridges Graph",
     LoadComplete: "Load Complete Graph",
+    LoadCycle: "Load Cycle Graph",
+    LoadWheel: "Load Wheel Graph",
     LoadHypercube: "Load Hypercube Graph",
     LoadCustom: "Load Custom Graph",
     Algorithms: "Algorithms",
@@ -147,6 +149,8 @@ export default {
 
     // Predefined Graphs
     ConfigurableCompleteGraph: "Configurable Complete Graph",
+    ConfigurableCycleGraph: "Configurable Cycle Graph",
+    ConfigurableWheelGraph: "Configurable Wheel Graph",
     NumberOfVerticesLabel: "Number of Vertices",
     NumberOfVerticesNonNegativeError: "Number of vertices must be non-negative",
     NumberOfColorsPositiveError: "Number of colors must be strictly positive",

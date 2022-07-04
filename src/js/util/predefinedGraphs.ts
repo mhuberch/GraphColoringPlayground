@@ -60,6 +60,40 @@ const completeGraph = (V: number): Readonly<GraphPlain> => {
     return help.deepFreeze({ nodes, edges, directed: false, weighted: false } as GraphPlain);
 };
 
+
+const cycleGraph = (V: number): Readonly<GraphPlain> => {
+    const edges = [];
+    const nodes = [];
+
+    for (let i = 0; i < V; i++) {
+        nodes.push({ id: i, label: gHelp.generateLabelFromNumber(i) });
+        edges.push({ from: i, to: (i+1)%V })
+    }
+
+    // MH: TODO NOT REALLY CLEAN
+    window.settings.changeOption("customColors", true);
+    return help.deepFreeze({ nodes, edges, directed: false, weighted: false } as GraphPlain);
+};
+
+const wheelGraph = (V: number): Readonly<GraphPlain> => {
+    const edges = [];
+    const nodes = [];
+
+    for (let i = 0; i < V; i++) {
+        nodes.push({ id: i, label: gHelp.generateLabelFromNumber(i) });
+        edges.push({ from: i, to: (i+1)%V });
+    }
+
+    nodes.push({ id: V, label: gHelp.generateLabelFromNumber(V) });
+    for (let i = 0; i < V; i++) {
+        edges.push({ from: i, to: V });
+    }
+
+    // MH: TODO NOT REALLY CLEAN
+    window.settings.changeOption("customColors", true);
+    return help.deepFreeze({ nodes, edges, directed: false, weighted: false } as GraphPlain);
+};
+
 const hypercubeGraph = (D: number): Readonly<GraphPlain> => {
     const edges: EdgeImmutPlain[] = [];
     const nodes: NodeImmutPlain[] = [];
@@ -115,6 +149,8 @@ export default class PredefinedGraphs {
     public static _complete = completeGraph;
     public static _custom = newCustomGraph;
     public static _hypercube = hypercubeGraph;
+    public static _cycle = cycleGraph;
+    // public static _wheel = wheelGraph;
 
     public static Petersen(): Readonly<GraphPlain> {
         return help.deepFreeze({
@@ -140,6 +176,32 @@ export default class PredefinedGraphs {
             window.main.setData(completeGraph(vals[0]), false, true, true);
         },
             languages.current.ConfigurableCompleteGraph, languages.current.Go,
+            [{
+                type: "numeric", initialValue: 5, label: languages.current.NumberOfVerticesLabel, validationFunc: (v) => {
+                    return v >= 0 || languages.current.NumberOfVerticesNonNegativeError;
+                }
+            }]);
+    }
+
+    public static Cycle(): void {
+        help.showFormModal(($modal, vals) => {
+            $modal.modal("hide");
+            window.main.setData(cycleGraph(vals[0]), false, true, true);
+        },
+            languages.current.ConfigurableCycleGraph, languages.current.Go,
+            [{
+                type: "numeric", initialValue: 5, label: languages.current.NumberOfVerticesLabel, validationFunc: (v) => {
+                    return v >= 0 || languages.current.NumberOfVerticesNonNegativeError;
+                }
+            }]);
+    }
+
+    public static Wheel(): void {
+        help.showFormModal(($modal, vals) => {
+            $modal.modal("hide");
+            window.main.setData(wheelGraph(vals[0]), false, true, true);
+        },
+            languages.current.ConfigurableWheelGraph, languages.current.Go,
             [{
                 type: "numeric", initialValue: 5, label: languages.current.NumberOfVerticesLabel, validationFunc: (v) => {
                     return v >= 0 || languages.current.NumberOfVerticesNonNegativeError;

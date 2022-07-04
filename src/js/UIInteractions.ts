@@ -647,6 +647,14 @@ export default class UIInteractions {
             const predefined = (await import("./util/predefinedGraphs")).default;
             predefined.Complete();
         });
+        makeSimpleClickListener("#load-cycle-link", async () => {
+            const predefined = (await import("./util/predefinedGraphs")).default;
+            predefined.Cycle();
+        });
+        makeSimpleClickListener("#load-wheel-link", async () => {
+            const predefined = (await import("./util/predefinedGraphs")).default;
+            predefined.Wheel();
+        });
         makeSimpleClickListener("#load-hypercube-link", async () => {
             const predefined = (await import("./util/predefinedGraphs")).default;
             predefined.Hypercube();
@@ -735,6 +743,8 @@ export default class UIInteractions {
         (document.querySelector("#load-petersen-link") as HTMLAnchorElement).innerText = languages.current.LoadPetersen;
         (document.querySelector("#load-konigsberg-link") as HTMLAnchorElement).innerText = languages.current.LoadKonigsberg;
         (document.querySelector("#load-complete-link") as HTMLAnchorElement).innerText = languages.current.LoadComplete;
+        (document.querySelector("#load-cycle-link") as HTMLAnchorElement).innerText = languages.current.LoadCycle;
+        (document.querySelector("#load-wheel-link") as HTMLAnchorElement).innerText = languages.current.LoadWheel;
         (document.querySelector("#load-hypercube-link") as HTMLAnchorElement).innerText = languages.current.LoadHypercube;
         (document.querySelector("#load-custom-link") as HTMLAnchorElement).innerText = languages.current.LoadCustom;
 
