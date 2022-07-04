@@ -294,12 +294,25 @@ const self: MainI = {
             return;
         }
 
-        const basicColors = ['#ff3f3f', '#ffbf64', '#ffff00', '#00ff80', '#00a0ff', '#f964ff'];
-        const addColors = randomColor({ count: chromaticNumber > 7 ? chromaticNumber - 6 : 1, luminosity: "light" });
+    //     "1: blue": "DEFAULT",
+    // "2: red": "#ff3f3f",
+    // "3: orange": "#ffbf64",
+    // "4: yellow": "#ffff00",
+    // "5: green": "#00ff80",
+    // "6: violet": "#f964ff"
+
+    // '#00a0ff'
+
+        const basicColors = ['#97c2fc', '#ff3f3f', '#ffbf64', '#ffff00', '#00ff80', '#f964ff'];
+        const addColors = randomColor({ count: chromaticNumber > 6 ? chromaticNumber - 6 : 1, luminosity: "light" });
 
         const colors = [...basicColors, ...addColors];
 
         // const colors = randomColor({ count: chromaticNumber, luminosity: "light" });
+
+        // console.log(graphColors);
+        // console.log(colors);
+
         let G = GraphState.graph;
         (G.getAllNodes() as NodeImmutPlain[]).forEach((v) => {
             G = G.editNode(v.id, { color: colors[graphColors[v.id]] });

@@ -87,8 +87,8 @@ export default class GraphAlgorithms {
         const degrees = G.getAllInOutDegrees();
         const nodeArrLabel: string[] = genericH.datasetToArray(G.getAllNodes(), "label") as string[];
 
-        console.log(nodeArr);
-        console.log(degrees);
+        // console.log(nodeArr);
+        // console.log(degrees);
 
         // Put vertices in array in decreasing order of degree
         

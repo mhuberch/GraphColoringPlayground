@@ -173,20 +173,9 @@ const makeAndPrintGreedyColoring = (): void => {
                 p += "\n\n";
 
                 const colors = help.flatten(a.colors);
-                colors.forEach((v, i) => {
-                    p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
-                });
-
-
-
-                
-
-                /*help.printout(p)
-                if (!confirm("Do you want to continue")) {
-                    window.main.applyColors();
-                    return;    
-                }*/
-                
+                // colors.forEach((v, i) => {
+                //     p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
+                // });
 
                 // p     += `\n${JSON.stringify(help.rotate(a.colors), null, 4)}\n\n`;
 
@@ -194,7 +183,7 @@ const makeAndPrintGreedyColoring = (): void => {
 
                 // console.log(historyToPrint);
 
-                p += "\n\n";
+                // p += "\n\n";
 
                 // history.push({nodeToColor: vertexOrder[curPos], colorsOfNeighbors: coloredAdjacencyList});
 
