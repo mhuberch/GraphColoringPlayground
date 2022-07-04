@@ -406,6 +406,114 @@ export default class GraphAlgorithms {
         return { kColor, kColorable: false, color: [], totalSteps: recAnswer.totalSteps, history };
     }
     
+    public static kColoringExact = (mode: number, kColor: number, numberOfSteps: number, G: GraphImmut = GraphState.graph): kColorResult => {
+
+        const kColoringBacktrackingRecursive = (kColor: number, curNode: number, color: number[], G: GraphImmut, totalSteps: number, maxHist: number, history: number[][]): kColorResultRecursive => {
+            
+            const V = G.getNumberOfNodes();
+            
+            // console.log("CurNode: " + curNode + " with colors " + color);
+
+            if (curNode === V) {
+                return { kColorable: true, color, totalSteps, history};
+            }
+
+            for (let j = 0; j < kColor; j++) {
+                
+                totalSteps++;
+
+                const check = graphHelpers.nextColorIsSafe(curNode, G, color, j);
+                let colorHistory = [...color];
+                colorHistory[curNode] = j;
+
+                if (totalSteps <= maxHist) {
+                    history.push([...colorHistory]);
+                }
+
+                if (check) {
+                    color[curNode] = j;
+
+                    const recAnswer = kColoringBacktrackingRecursive(kColor, curNode+1, color, G, totalSteps, maxHist, history);
+
+                    if (recAnswer.kColorable) {
+                        return recAnswer;
+                    }
+
+                    totalSteps = recAnswer.totalSteps;
+                    history = recAnswer.history;
+
+                }
+                    
+                color[curNode] = -1;
+
+            }
+    
+            return { kColorable: false, color: [], totalSteps, history};
+    
+        }
+
+        const kColoringBruteForceRecursive = (kColor: number, curNode: number, color: number[], G: GraphImmut, totalSteps: number, maxHist: number, history: number[][]): kColorResultRecursive => {
+            
+            const V = G.getNumberOfNodes();
+            
+            // console.log("CurNode: " + curNode + " with colors " + color);
+
+            if (curNode === V) {
+                const check = graphHelpers.checkColoringByNumber(color, G);
+                totalSteps += 1;
+                if (totalSteps <= maxHist) {
+                    history.push([...color]);
+                }
+                if (check) {            
+                    return { kColorable: true, color, totalSteps, history};
+                }
+                else {
+                    return { kColorable: false, color: [], totalSteps, history};
+                }
+            }
+    
+            for (let j=0; j < kColor; j++) {
+                color[curNode] = j;
+    
+                const recAnswer = kColoringBruteForceRecursive(kColor, curNode+1, color, G, totalSteps, maxHist, history);
+    
+                if (recAnswer.kColorable) {
+                    return recAnswer;
+                }
+    
+                color[curNode] = -1;
+                totalSteps = recAnswer.totalSteps;
+                history = recAnswer.history;
+    
+            }
+    
+            return { kColorable: false, color: [], totalSteps, history};
+    
+        }
+
+        const V = G.getNumberOfNodes();
+
+        const color = new Array(V).fill(-1);
+
+        const history : number[][] = [];
+
+        let recAnswer : kColorResultRecursive = {kColorable: false, color: [], totalSteps: 0, history: []};
+
+        if (mode === 0) {
+            recAnswer = kColoringBruteForceRecursive(kColor, 0, color, G, 0, numberOfSteps, history);
+        }
+        else if (mode === 1) {
+            recAnswer = kColoringBacktrackingRecursive(kColor, 0, color, G, 0, numberOfSteps, history);
+        }
+
+        console.log("Finished Exact Algorithm");
+
+        if (recAnswer.kColorable) {
+            return { kColor, kColorable: true, color: recAnswer.color, totalSteps: recAnswer.totalSteps, history };
+        }
+
+        return { kColor, kColorable: false, color: [], totalSteps: recAnswer.totalSteps, history };
+    }
 
 
     public static connectedComponents = (G: GraphImmut = GraphState.graph): ConnectedComponentResult => {
