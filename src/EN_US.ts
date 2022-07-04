@@ -64,6 +64,8 @@ export default {
     Step: "Step ",
     NumberOfColors: "Number of colors",
     NumberOfSteps: "Number of steps documented by step-by-step info",
+    CompleteColoring: "Complete the manually started coloring", //, i.e., all red, orange, yellow, green and violet (not blue!) vertices will not be modified",
+    CompleteColoringExplanation: "If you have already chosen manually the color of some vertices (red, orange, yellow, green or violet (but not blue), the backtracking algorithm can try to find a coloring, while not changing the already colored vertices.",
     CheckColoringTitle: "Checked admissibilty of the current node coloring",
     GetAllDegreesTitle: "The vertices have the following degree:",
     KruskalMSTTotalWeight: "Kruskal's Minimum Spanning Tree Total Weight: $1",

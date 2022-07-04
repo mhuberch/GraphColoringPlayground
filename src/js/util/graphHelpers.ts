@@ -76,14 +76,7 @@ export default {
 
     toggleNodeColor : (node: NodeImmut) : string | undefined => {
         
-        const customColorPalleteArray = ["DEFAULT", "#ff3f3f", "#ffbf64", "#ffff00", "#00ff80", "#f964ff"];
-        const customColorPalleteInverted = {
-            "#ff3f3f": 1,
-            "#ffbf64": 2,
-            "#ffff00": 3,
-            "#00ff80": 4,
-            "#f964ff": 5
-        };
+        const customColorPalleteArray = ["DEFAULT", "#ff3f3f", "#ffbf64", "#ffff00", "#00ff80", "#f964ff", '  ', '#97c2fc'];
 
         const currentColor = node.getAttribute('color');
 
@@ -99,6 +92,10 @@ export default {
 
         if (currentIndex === 5 || currentIndex < 0) {
             return undefined;
+        }
+
+        if (currentIndex === 6) {
+            currentIndex = 0;
         }
 
         return customColorPalleteArray[(currentIndex+1)%6];

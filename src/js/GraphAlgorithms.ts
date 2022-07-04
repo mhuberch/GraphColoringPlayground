@@ -262,9 +262,9 @@ export default class GraphAlgorithms {
 
     
 
-    public static kColoringExact = (mode: number, kColor: number, numberOfSteps: number, G: GraphImmut = GraphState.graph): kColorResult => {
+    public static kColoringExact = (mode: number, completeColoring: boolean, kColor: number, numberOfSteps: number, G: GraphImmut = GraphState.graph): kColorResult => {
 
-        const kColoringBacktrackingRecursive = (kColor: number, curNode: number, color: number[], G: GraphImmut, totalSteps: number, maxHist: number, history: number[][]): kColorResultRecursive => {
+        const kColoringBacktrackingRecursive = (kColor: number, curNode: number, color: number[], given: boolean[], G: GraphImmut, totalSteps: number, maxHist: number, history: number[][]): kColorResultRecursive => {
             
             const V = G.getNumberOfNodes();
             
@@ -278,6 +278,10 @@ export default class GraphAlgorithms {
                 
                 totalSteps++;
 
+                if (given[curNode] && j !== color[curNode]) {
+                    continue;
+                }
+
                 const check = graphHelpers.nextColorIsSafe(curNode, G, color, j);
                 let colorHistory = [...color];
                 colorHistory[curNode] = j;
@@ -289,7 +293,7 @@ export default class GraphAlgorithms {
                 if (check) {
                     color[curNode] = j;
 
-                    const recAnswer = kColoringBacktrackingRecursive(kColor, curNode+1, color, G, totalSteps, maxHist, history);
+                    const recAnswer = kColoringBacktrackingRecursive(kColor, curNode+1, color, given, G, totalSteps, maxHist, history);
 
                     if (recAnswer.kColorable) {
                         return recAnswer;
@@ -299,8 +303,14 @@ export default class GraphAlgorithms {
                     history = recAnswer.history;
 
                 }
-                    
-                color[curNode] = -1;
+                
+                if (curNode === 0) {
+                    console.log("Color of vertex 0: " + color[0]);
+                }
+
+                if (!given[curNode]) {
+                    color[curNode] = -1;
+                }
 
             }
     
@@ -348,8 +358,24 @@ export default class GraphAlgorithms {
         }
 
         const V = G.getNumberOfNodes();
-
         const color = new Array(V).fill(-1);
+        const given = new Array(V).fill(false);
+
+        if (completeColoring) {
+            const givenColorList : { [node: number] : number } = G.getNonDefaultColor();
+            Object.entries(givenColorList).forEach(
+                ([key, value]) =>  {
+                    let index = (key as unknown) as number;
+                    // console.log(key, value);
+                    color[index] = value;
+                    given[index] = true;
+                }
+              );
+        }
+
+        console.log("kColoringExact");
+        console.log(color);
+        console.log(given);
 
         const history : number[][] = [];
 
@@ -359,7 +385,7 @@ export default class GraphAlgorithms {
             recAnswer = kColoringBruteForceRecursive(kColor, 0, color, G, 0, numberOfSteps, history);
         }
         else if (mode === 1) {
-            recAnswer = kColoringBacktrackingRecursive(kColor, 0, color, G, 0, numberOfSteps, history);
+            recAnswer = kColoringBacktrackingRecursive(kColor, 0, color, given, G, 0, numberOfSteps, history);
         }
 
         // console.log("Finished Exact Algorithm");

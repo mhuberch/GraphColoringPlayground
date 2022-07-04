@@ -292,6 +292,18 @@ const makeAndPrintkColoringExact = (mode: number): void => {
             }
         );
     }
+    if (mode === 1) {
+        // options.push(
+        //     { 
+        //         type: "text", label: languages.current.CompleteColoringExplanation 
+        //     }
+        // );
+        options.push(
+            { 
+                type: "checkbox", initialValue: false, label: languages.current.CompleteColoringExplanation + languages.current.CompleteColoring
+            }
+        );
+    }
 
     help.showFormModal(
         ($modal, values) => {
@@ -299,9 +311,17 @@ const makeAndPrintkColoringExact = (mode: number): void => {
 
             const kColor = values[0];
             let numberOfSteps = -1;
+            let completeColoring = -1;
 
             if (window.settings.getOption("stepByStepInfo")) {
                 numberOfSteps = values[1];
+            }
+
+            if (mode === 1 && window.settings.getOption("stepByStepInfo")) {
+                completeColoring = values[2];
+            }
+            else if (mode === 1 && !window.settings.getOption("stepByStepInfo")) {
+                completeColoring = values[1];
             }
             
 
@@ -404,7 +424,7 @@ const makeAndPrintkColoringExact = (mode: number): void => {
             });
             w.send({
                 type: "kColoringExact",
-                args: [mode, kColor, numberOfSteps],
+                args: [mode, completeColoring, kColor, numberOfSteps],
                 graph: window.main.graphState.getGraphData(),
                 convertToGraphImmut: true
             });
