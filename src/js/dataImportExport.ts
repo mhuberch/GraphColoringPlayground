@@ -120,12 +120,18 @@ const self = {
             GraphState.repaint();
         }
         else if (whichone === 1) {
+            window.network.off("beforeDrawing");
+            GraphState.repaint();
             window.network.on("beforeDrawing", function(ctx) {
-                // var img = document.createElement("img");
-                // img.src = "./img/verkehrskreuzung.png";
-                // ctx.drawImage(img, -100, -100);
-                ctx.drawImage(document.getElementById("scream"), -100, -100);
-                
+                ctx.drawImage(document.getElementById("verkehr"), -350, -190);
+            });
+            GraphState.repaint();
+        }
+        else if (whichone === 2) {
+            window.network.off("beforeDrawing");
+            GraphState.repaint();
+            window.network.on("beforeDrawing", function(ctx) {
+                ctx.drawImage(document.getElementById("schweiz"), -400, -300);
             });
             GraphState.repaint();
         }

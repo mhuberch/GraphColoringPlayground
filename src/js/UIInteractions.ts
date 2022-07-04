@@ -731,6 +731,10 @@ export default class UIInteractions {
             const imp = (await import("./dataImportExport")).default;
             imp.setGraphBackground(1);
         });
+        makeSimpleClickListener("#import-schweiz", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.setGraphBackground(2);
+        });
 
         (document.querySelector("#fileDropdown") as HTMLAnchorElement).innerText = languages.current.File;
         (document.querySelector("#import-file-link") as HTMLAnchorElement).innerText = languages.current.ImportFile;
@@ -747,6 +751,7 @@ export default class UIInteractions {
         (document.querySelector("#setBackgroundDropdown") as HTMLAnchorElement).innerText = languages.current.SetBackground;
         (document.querySelector("#blank-background") as HTMLAnchorElement).innerText = "Reset";
         (document.querySelector("#import-verkehrskreuzung") as HTMLAnchorElement).innerText = "Verkehrskreuzung";
+        (document.querySelector("#import-schweiz") as HTMLAnchorElement).innerText = "Karte der Schweiz";
 
         (document.querySelector("#calculate-all-properties-link") as HTMLAnchorElement).innerText = languages.current.CalculateAllProperties;
         (document.querySelector("#new-graph-layout-link") as HTMLAnchorElement).innerText = languages.current.NewGraphLayout;

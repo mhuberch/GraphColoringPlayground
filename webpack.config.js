@@ -106,6 +106,10 @@ let webpackOptions = {
                     to: outputPath + "/fonts/[name][ext]"
                 },
                 {
+                    from: "./src/img/*",
+                    to: outputPath + "/img/[name][ext]"
+                },
+                {
                     from: "*.png"
                 },
                 {
