@@ -264,7 +264,7 @@ export default class GraphAlgorithms {
 
     public static kColoringExact = (mode: number, completeColoring: boolean, kColor: number, numberOfSteps: number, G: GraphImmut = GraphState.graph): kColorResult => {
 
-        const kColoringBacktrackingRecursive = (kColor: number, curNode: number, color: number[], given: boolean[], G: GraphImmut, totalSteps: number, maxHist: number, history: number[][]): kColorResultRecursive => {
+        const kColoringBacktrackingRecursive = (kColor: number, mode: number, curNode: number, color: number[], given: boolean[], G: GraphImmut, totalSteps: number, maxHist: number, history: number[][]): kColorResultRecursive => {
             
             const V = G.getNumberOfNodes();
             
@@ -274,13 +274,16 @@ export default class GraphAlgorithms {
                 return { kColorable: true, color, totalSteps, history};
             }
 
-            for (let j = 0; j < kColor; j++) {
+            for (let j = 0 + mode ; j < kColor + mode; j++) {
                 
-                totalSteps++;
+                console.log("CurNode: " + curNode + "; CurColor: " + j);
+                console.log(color);
 
                 if (given[curNode] && j !== color[curNode]) {
                     continue;
                 }
+
+                totalSteps++;
 
                 const check = graphHelpers.nextColorIsSafe(curNode, G, color, j);
                 let colorHistory = [...color];
@@ -293,7 +296,7 @@ export default class GraphAlgorithms {
                 if (check) {
                     color[curNode] = j;
 
-                    const recAnswer = kColoringBacktrackingRecursive(kColor, curNode+1, color, given, G, totalSteps, maxHist, history);
+                    const recAnswer = kColoringBacktrackingRecursive(kColor, mode, curNode+1, color, given, G, totalSteps, maxHist, history);
 
                     if (recAnswer.kColorable) {
                         return recAnswer;
@@ -381,11 +384,12 @@ export default class GraphAlgorithms {
 
         let recAnswer : kColorResultRecursive = {kColorable: false, color: [], totalSteps: 0, history: []};
 
-        if (mode === 0) {
+        if (mode !== 1) {
+            mode = 0;
             recAnswer = kColoringBruteForceRecursive(kColor, 0, color, G, 0, numberOfSteps, history);
         }
         else if (mode === 1) {
-            recAnswer = kColoringBacktrackingRecursive(kColor, 0, color, given, G, 0, numberOfSteps, history);
+            recAnswer = kColoringBacktrackingRecursive(kColor, mode, 0, color, given, G, 0, numberOfSteps, history);
         }
 
         // console.log("Finished Exact Algorithm");

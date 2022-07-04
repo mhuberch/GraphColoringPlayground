@@ -135,6 +135,14 @@ const self = {
             });
             GraphState.repaint();
         }
+        else if (whichone === 3) {
+            window.network.off("beforeDrawing");
+            GraphState.repaint();
+            window.network.on("beforeDrawing", function(ctx) {
+                ctx.drawImage(document.getElementById("sudoku4x4"), -350, -250);
+            });
+            GraphState.repaint();
+        }
         
     },
 
