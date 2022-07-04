@@ -3,15 +3,35 @@ interface SettingsList {
     nodePhysics: boolean;
     direction: boolean;
     weights: boolean;
+    smoothEdges: boolean;
+    fastColorChange: boolean;
+    stepByStepInfo: boolean;
 
     [index: string]: boolean;
 }
 
+// "smoothEdges"),
+//                     type: "checkbox"
+//                 },
+                
+//                 {
+//                     label: languages.current.FastColorChange,
+//                     initialValue: window.settings.getOption("fastColorChange"),
+//                     type: "checkbox"
+//                 },
+
+//                 {
+//                     label: languages.current.StepByStepInfo,
+//                     initialValue: window.settings.getOption("stepByStepInfo"),
+
 export default class Settings {
     private static readonly defaults: SettingsList = {
-        nodePhysics: true,
+        nodePhysics: false,
         direction: false,
-        weights: false
+        weights: false,
+        smoothEdges: false,
+        fastColorChange: false,
+        stepByStepInfo: false
     };
     private static current: any = {};
 
