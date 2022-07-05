@@ -178,7 +178,7 @@ const makeAndPrintGreedyColoring = (): void => {
                         const curNode: number = historyToPrint[step].nodeToColor;
                         const colAdjList: { [key: number]: number } = historyToPrint[step].colorsOfNeighbors as {};
 
-                        p2 += "Step " + (step+1) + " : " + "AL(" + GraphState.nodeIDToLabel(curNode) + ") : ";
+                        p2 += languages.current.Step + (step+1) + " : " + "AL(" + GraphState.nodeIDToLabel(curNode) + ") : ";
 
                         for (let neighbor in colAdjList) {
                             const nb: number = (neighbor as unknown) as number;
