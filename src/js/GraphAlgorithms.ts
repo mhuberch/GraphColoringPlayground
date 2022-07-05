@@ -132,7 +132,7 @@ export default class GraphAlgorithms {
 
         // initalize vertices as unassigned
         for (let i=0; i < V; i++) {
-            colorIndex[i] = -1;
+            colorIndex[i] = 0;
         }
 
         // only for history
@@ -143,8 +143,8 @@ export default class GraphAlgorithms {
         }
         history.push({nodeToColor: vertexOrder[0], colorsOfNeighbors: coloredAdjacencyList});
 
-        // set color for first node to 0
-        colorIndex[vertexOrder[0]] = 0;
+        // set color for first node to 1
+        colorIndex[vertexOrder[0]] = 1;
 
         for (let curPos=1; curPos < V; curPos++){
 
@@ -160,7 +160,7 @@ export default class GraphAlgorithms {
             const allUsedColors= Object.values(coloredAdjacencyList);
             const ref :{ [key: number]: boolean } = {};
     
-            let minimalMissingColor  = 0;
+            let minimalMissingColor  = 1;
             
             for (const value of allUsedColors) {
                 if (value < minimalMissingColor) {
@@ -195,7 +195,7 @@ export default class GraphAlgorithms {
         });
 
         const colorIndex: { [key: number]: number } = {};
-        let currentColor = 0;
+        let currentColor = 1;
         while (vertexOrder.length > 0) {
             const root = vertexOrder.shift()!;
             colorIndex[root] = currentColor;
@@ -234,7 +234,7 @@ export default class GraphAlgorithms {
 
     public static kColoringExact = (mode: number, constrainedColoring: boolean, kColor: number, numberOfSteps: number, G: GraphImmut = GraphState.graph): kColorResult => {
 
-        const kColoringBacktrackingRecursive = (kColor: number, mode: number, curNode: number, color: number[], given: boolean[], G: GraphImmut, totalSteps: number, maxHist: number, history: number[][]): kColorResultRecursive => {
+        const kColoringBacktrackingRecursive = (kColor: number, curNode: number, color: number[], given: boolean[], G: GraphImmut, totalSteps: number, maxHist: number, history: number[][]): kColorResultRecursive => {
             
             const V = G.getNumberOfNodes();
             
@@ -243,7 +243,7 @@ export default class GraphAlgorithms {
                 return { kColorable: true, color, totalSteps, history};
             }
 
-            for (let j = 0 + mode ; j < kColor + mode; j++) {
+            for (let j = 1 ; j <= kColor; j++) {
                 
                 if (given[curNode] && j !== color[curNode]) {
                     continue;
@@ -262,7 +262,7 @@ export default class GraphAlgorithms {
                 if (check) {
                     color[curNode] = j;
 
-                    const recAnswer = kColoringBacktrackingRecursive(kColor, mode, curNode+1, color, given, G, totalSteps, maxHist, history);
+                    const recAnswer = kColoringBacktrackingRecursive(kColor, curNode+1, color, given, G, totalSteps, maxHist, history);
 
                     if (recAnswer.kColorable) {
                         return recAnswer;
@@ -274,7 +274,7 @@ export default class GraphAlgorithms {
                 }
                 
                 if (!given[curNode]) {
-                    color[curNode] = -1;
+                    color[curNode] = 0;
                 }
 
             }
@@ -301,7 +301,7 @@ export default class GraphAlgorithms {
                 }
             }
     
-            for (let j=0; j < kColor; j++) {
+            for (let j=1; j <= kColor; j++) {
                 color[curNode] = j;
     
                 const recAnswer = kColoringBruteForceRecursive(kColor, curNode+1, color, G, totalSteps, maxHist, history);
@@ -310,7 +310,7 @@ export default class GraphAlgorithms {
                     return recAnswer;
                 }
     
-                color[curNode] = -1;
+                color[curNode] = 0;
                 totalSteps = recAnswer.totalSteps;
                 history = recAnswer.history;
     
@@ -321,7 +321,7 @@ export default class GraphAlgorithms {
         }
 
         const V = G.getNumberOfNodes();
-        const color = new Array(V).fill(-1);
+        const color = new Array(V).fill(0);
         const given = new Array(V).fill(false);
 
         if (constrainedColoring) {
@@ -344,7 +344,7 @@ export default class GraphAlgorithms {
             recAnswer = kColoringBruteForceRecursive(kColor, 0, color, G, 0, numberOfSteps, history);
         }
         else if (mode === 1) {
-            recAnswer = kColoringBacktrackingRecursive(kColor, mode, 0, color, given, G, 0, numberOfSteps, history);
+            recAnswer = kColoringBacktrackingRecursive(kColor, 0, color, given, G, 0, numberOfSteps, history);
         }
 
         if (recAnswer.kColorable) {
