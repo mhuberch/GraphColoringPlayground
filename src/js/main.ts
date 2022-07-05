@@ -271,19 +271,11 @@ const self: MainI = {
         let graphColors : any;
         let chromaticNumber : any;
 
-        // alert(coloring);
-
         if (coloring == 1) {
-            // console.log("Starting coloring in mode 1");
             chromaticNumber = await GraphState.getProperty("Most recent k-color check");
-            // console.log("Chromatic number is given by " + chromaticNumber);
             const graphKColorable = await GraphState.getProperty("kColorable", true);
-            // console.log("GraphKColorable is given by");
-            // console.log(graphKColorable);
-            graphColors = graphKColorable[chromaticNumber]; //GraphState.state.kColorable[3]
-            // console.log("Those are the loaded colors");
-            // console.log(graphColors);
-
+            graphColors = graphKColorable[chromaticNumber];
+            
         }
         else if (coloring === 2) {
             graphColors = await GraphState.getProperty("graphColoringGreedy", true);
@@ -294,24 +286,17 @@ const self: MainI = {
             return;
         }
 
-    //     "1: blue": "DEFAULT",
+    // "1: blue": "DEFAULT",
     // "2: red": "#ff3f3f",
     // "3: orange": "#ffbf64",
     // "4: yellow": "#ffff00",
     // "5: green": "#00ff80",
     // "6: violet": "#f964ff"
 
-    // '#00a0ff'
-
         const basicColors = ['#97c2fc', '#ff3f3f', '#ffbf64', '#ffff00', '#00ff80', '#f964ff'];
         const addColors = randomColor({ count: chromaticNumber > 6 ? chromaticNumber - 6 : 1, luminosity: "light" });
 
         const colors = [...basicColors, ...addColors];
-
-        // const colors = randomColor({ count: chromaticNumber, luminosity: "light" });
-
-        // console.log(graphColors);
-        // console.log(colors);
 
         let G = GraphState.graph;
         (G.getAllNodes() as NodeImmutPlain[]).forEach((v) => {
@@ -321,8 +306,6 @@ const self: MainI = {
     },
 
     setData: (data, recalcProps = false, graphChanged = true, rearrangeGraph = false) => {
-        
-        // console.log("Hi, I am 'setData'");
         
         // Store existing positions in the data if we're supposed to keep the layout
         if (rearrangeGraph) {
@@ -516,28 +499,12 @@ const self: MainI = {
                 const data = GraphState.graph.getNodeForColor(nodeId);
 
                 if (typeof data !== 'boolean') {
-                    //console.log(data);
                     const newColor = gHelp.toggleNodeColor(data);
                     GraphState.editNode(data.getID(), data.getLabel(), newColor);
                 }
                 else {
                     alert("Double-click selection of node doesn't work.")
                 }
-
-                
-
-                // if (typeof data === "String") {
-                //     gHelp.toggleNodeColor(data);
-                // }
-                
-
-                // console.log(data);
-
-
-
-                // const currentNode = GraphState.graph.getNode(p.nodes[0] as number, true);
-
-                // GraphState.editNode(data.id, data.label, data.color);
 
             }
             if ("nodes" in p && p.nodes.length === 1 && !window.settings.getOption("fastColorChange")) {
