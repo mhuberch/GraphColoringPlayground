@@ -126,14 +126,16 @@
                             <span class="icon-redo" aria-hidden="true"></span>
                         </a>
                     </li>
-
                     <li class="nav-item dropdown active">
-                        <a class="nav-link dropdown-toggle" href="#" id="fileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            File
+                        <a class="nav-link dropdown-toggle" href="#" id="graphDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Build New Graphs
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="fileDropdown">
-                            <a id="import-file-link" class="dropdown-item" href="#">Import File</a>
-                            <a id="export-file-link" class="dropdown-item" href="#">Export To File</a>
+                        <div class="dropdown-menu" aria-labelledby="graphDropdown">
+                            <a id="load-custom-link" class="dropdown-item" href="#">Build Custom Graph</a>
+                            <a id="load-complete-link" class="dropdown-item" href="#">Build Complete Graph</a>
+                            <a id="load-cycle-link" class="dropdown-item" href="#">Build Cycle Graph</a>
+                            <a id="load-wheel-link" class="dropdown-item" href="#">Build Wheel Graph</a>
+                            <a id="load-hypercube-link" class="dropdown-item" href="#">Build Hypercube Graph</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown active">
@@ -158,9 +160,15 @@
                             <a id="import-sudoku-4x4" class="dropdown-item" href="#">Sudoku 4x4</a>
                         </div>
                     </li>
-                    <!-- <li class="nav-item active">
-                        <a id="new-graph-layout-link" class="nav-link" href="#">New Graph Layout</a>
-                    </li> -->
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="fileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Import/Export
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="fileDropdown">
+                            <a id="import-file-link" class="dropdown-item" href="#">Import File</a>
+                            <a id="export-file-link" class="dropdown-item" href="#">Export To File</a>
+                        </div>
+                    </li>
                     <li class="nav-item active">
                         <a id="graph-options-link" class="nav-link" href="#">Options</a>
                     </li>
@@ -181,34 +189,16 @@
                 <div class="col-lg-2">
                     <div class="row col">
                         <div class="card-body">
-                            <h4 id="example-graphs-label">Example Graphs</h4>
+                            <h4 id="graph-tool-label">Graph Tools</h4>
                             <nav class="nav flex-lg-column flex-row">
-                                <a id="load-petersen-link" class="nav-link" href="#">
-                                    Load Petersen Graph
-                                </a>
-                                <a id="load-konigsberg-link" class="nav-link" href="#">
-                                    Load Königsberg Bridges Graph
-                                </a>
-                                <a id="load-complete-link" class="nav-link" href="#">
-                                    Load Complete Graph
-                                </a>
-                                <a id="load-cycle-link" class="nav-link" href="#">
-                                    Load Cycle Graph
-                                </a>
-                                <a id="load-wheel-link" class="nav-link" href="#">
-                                    Load Wheel Graph
-                                </a>
-                                <a id="load-hypercube-link" class="nav-link" href="#">
-                                    Load Hypercube Graph
-                                </a>
-                                <a id="load-custom-link" class="nav-link" href="#">
-                                    Make Custom Graph
-                                </a>
-                                <a id="load-default-color" class="nav-link" href="#">
-                                    Reset node color to default
+                                <a id="load-default-color-link" class="nav-link" href="#">
+                                    Reset Node Color
                                 </a>
                                 <a id="new-graph-layout-link" class="nav-link" href="#">
                                     New Graph Layout
+                                </a>
+                                <a id="get-vertex-degrees-link" class="nav-link" href="#">
+                                    Get Vertex Degrees
                                 </a>
                             </nav>
                         </div>

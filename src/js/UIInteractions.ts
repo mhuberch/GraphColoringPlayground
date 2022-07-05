@@ -361,6 +361,9 @@ const makeAndPrintkColoringExact = (mode: number, constrainedColoring: boolean):
                 if (a.kColorable) {
                     window.main.applyColors();
                 }
+                else{
+                    GraphState.resetColor();
+                }
 
             });
             w.send({
@@ -467,12 +470,6 @@ export default class UIInteractions {
     public static isRunning: { [index: string]: boolean } = {};
     static getAlgorithms(): AlgorithmI[] {
         return [
-            {
-                name: languages.current.GetAllDegrees,
-                directional: false,
-                applyFunc: UIInteractions.getAllDegrees,
-                display: true
-            },
             {
                 name: languages.current.CheckColoring,
                 directional: false,
@@ -604,14 +601,6 @@ export default class UIInteractions {
         makeSimpleClickListener("#print-about-link", UIInteractions.printAbout);
         makeSimpleClickListener("#stop-allworker-link", UIInteractions.terminateAllWebWorkers);
         makeSimpleClickListener("#graph-options-link", UIInteractions.printOptions);
-        makeSimpleClickListener("#load-petersen-link", async () => {
-            const predefined = (await import("./util/predefinedGraphs")).default;
-            window.main.setData(predefined.Petersen(), false, true, true);
-        });
-        makeSimpleClickListener("#load-konigsberg-link", async () => {
-            const predefined = (await import("./util/predefinedGraphs")).default;
-            window.main.setData(predefined.Konigsberg(), false, true, true);
-        });
         makeSimpleClickListener("#load-complete-link", async () => {
             const predefined = (await import("./util/predefinedGraphs")).default;
             predefined.Complete();
@@ -632,8 +621,11 @@ export default class UIInteractions {
             const predefined = (await import("./util/predefinedGraphs")).default;
             predefined.Custom();
         });
-        makeSimpleClickListener("#load-default-color", async () => {
+        makeSimpleClickListener("#load-default-color-link", async () => {
             GraphState.resetColor();
+        });
+        makeSimpleClickListener("#get-vertex-degrees-link", async () => {
+            UIInteractions.getAllDegrees();
         });
         makeSimpleClickListener("#undo-link", window.main.undo);
         makeSimpleClickListener("#redo-link", window.main.redo);
@@ -680,6 +672,7 @@ export default class UIInteractions {
         });
 
         (document.querySelector("#fileDropdown") as HTMLAnchorElement).innerText = languages.current.File;
+        (document.querySelector("#graphDropdown") as HTMLAnchorElement).innerText = languages.current.BuildGraphs;
         (document.querySelector("#import-file-link") as HTMLAnchorElement).innerText = languages.current.ImportFile;
         (document.querySelector("#export-file-link") as HTMLAnchorElement).innerText = languages.current.ExportFile;
 
@@ -696,12 +689,13 @@ export default class UIInteractions {
         (document.querySelector("#import-sudoku-4x4") as HTMLAnchorElement).innerText = "Sudoku 4x4";
 
         (document.querySelector("#new-graph-layout-link") as HTMLAnchorElement).innerText = languages.current.NewGraphLayout;
+        (document.querySelector("#load-default-color-link") as HTMLAnchorElement).innerText = languages.current.LoadDefaultColor;
+        (document.querySelector("#get-vertex-degrees-link") as HTMLAnchorElement).innerText = languages.current.GetAllDegrees;
+
         (document.querySelector("#graph-options-link") as HTMLAnchorElement).innerText = languages.current.Options;
         (document.querySelector("#print-about-link") as HTMLAnchorElement).innerText = languages.current.About;
 
-        (document.querySelector("#example-graphs-label") as HTMLHeadingElement).innerText = languages.current.ExampleGraphs;
-        (document.querySelector("#load-petersen-link") as HTMLAnchorElement).innerText = languages.current.LoadPetersen;
-        (document.querySelector("#load-konigsberg-link") as HTMLAnchorElement).innerText = languages.current.LoadKonigsberg;
+        (document.querySelector("#graph-tool-label") as HTMLHeadingElement).innerText = languages.current.GraphTools;
         (document.querySelector("#load-complete-link") as HTMLAnchorElement).innerText = languages.current.LoadComplete;
         (document.querySelector("#load-cycle-link") as HTMLAnchorElement).innerText = languages.current.LoadCycle;
         (document.querySelector("#load-wheel-link") as HTMLAnchorElement).innerText = languages.current.LoadWheel;
@@ -735,23 +729,6 @@ export default class UIInteractions {
                 if (window.settings.getOption("nodePhysics") !== vals[0]) {
                     window.settings.changeOption("nodePhysics", vals[0]); // Physics
                 }
-
-                // if (window.settings.getOption("direction") !== vals[1]) {
-                //     window.settings.changeOption("direction", vals[1]);
-                //     let G = GraphState.graph;
-                //     G = vals[1] ? G.asDirected(true) : G.asUndirected();
-                //     // Clear node coloring because graph color doesn't apply to directed graphs
-                //     window.main.setData(GraphState.getGraphData(G, true));
-                // }
-                // if (window.settings.getOption("weights") !== vals[2]) {
-                //     window.settings.changeOption("weights", vals[2]);
-                //     let G = GraphState.graph;
-                //     G = vals[2] ? G.asWeighted() : G.asUnweighted();
-                //     window.main.setData(GraphState.getGraphData(G));
-                // }
-                // if (window.settings.getOption("customColors") !== vals[1]) {
-                //     window.settings.changeOption("customColors", vals[1]);
-                // }
                 if (window.settings.getOption("smoothEdges") !== vals[1]) {
                     window.settings.changeOption("smoothEdges", vals[1]);
 
@@ -778,22 +755,6 @@ export default class UIInteractions {
                     initialValue: window.settings.getOption("nodePhysics"),
                     type: "checkbox"
                 },
-
-                // {
-                //     label: languages.current.DiGraph,
-                //     initialValue: window.settings.getOption("direction"),
-                //     type: "checkbox"
-                // },
-                // {
-                //     label: languages.current.WeightedGraph,
-                //     initialValue: window.settings.getOption("weights"),
-                //     type: "checkbox"
-                // },
-                // {
-                //     label: languages.current.CustomNodeColors,
-                //     initialValue: window.settings.getOption("customColors"),
-                //     type: "checkbox"
-                // }
                 {
                     label: languages.current.SmoothEdges,
                     initialValue: window.settings.getOption("smoothEdges"),

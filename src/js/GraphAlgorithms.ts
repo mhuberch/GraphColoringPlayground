@@ -351,7 +351,7 @@ export default class GraphAlgorithms {
             return { kColor, kColorable: true, color: recAnswer.color, totalSteps: recAnswer.totalSteps, history };
         }
 
-        return { kColor, kColorable: false, color: [], totalSteps: recAnswer.totalSteps, history };
+        return { kColor, kColorable: false, color: new Array(V).fill(0), totalSteps: recAnswer.totalSteps, history };
     }
 
 
