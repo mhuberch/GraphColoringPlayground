@@ -245,9 +245,9 @@ const makeAndPrintGreedyColoring = (): void => {
 };
 
 
-const makeAndPrintkColoringExact = (mode: number): void => {
+const makeAndPrintkColoringExact = (mode: number, constrainedColoring: boolean): void => {
     
-    const myName = (mode === 0) ? languages.current.kColoringBruteForce : languages.current.kColoringBacktracking;
+    const myName = (mode === 0) ? languages.current.kColoringBruteForce : (constrainedColoring ? languages.current.kColoringConstrainedBacktracking : languages.current.kColoringBacktracking);
 
     if (UIInteractions.isRunning[myName]) {
         UIInteractions.printAlreadyRunning(myName);
@@ -269,18 +269,6 @@ const makeAndPrintkColoringExact = (mode: number): void => {
             }
         );
     }
-    if (mode === 1) {
-        // options.push(
-        //     { 
-        //         type: "text", label: languages.current.CompleteColoringExplanation 
-        //     }
-        // );
-        options.push(
-            { 
-                type: "checkbox", initialValue: false, label: languages.current.CompleteColoringExplanation + " " + languages.current.CompleteColoring
-            }
-        );
-    }
 
     help.showFormModal(
         ($modal, values) => {
@@ -288,19 +276,10 @@ const makeAndPrintkColoringExact = (mode: number): void => {
 
             const kColor = values[0];
             let numberOfSteps = -1;
-            let completeColoring = -1;
 
             if (window.settings.getOption("stepByStepInfo")) {
                 numberOfSteps = values[1];
-            }
-
-            if (mode === 1 && window.settings.getOption("stepByStepInfo")) {
-                completeColoring = values[2];
-            }
-            else if (mode === 1 && !window.settings.getOption("stepByStepInfo")) {
-                completeColoring = values[1];
-            }
-            
+            }            
 
             const iStartedProgress = UIInteractions.startLoadingAnimation();
             const w = UIInteractions.getWorkerIfPossible(e => {
@@ -386,7 +365,7 @@ const makeAndPrintkColoringExact = (mode: number): void => {
             });
             w.send({
                 type: "kColoringExact",
-                args: [mode, completeColoring, kColor, numberOfSteps],
+                args: [mode, constrainedColoring, kColor, numberOfSteps],
                 graph: window.main.graphState.getGraphData(),
                 convertToGraphImmut: true
             });
@@ -513,7 +492,7 @@ export default class UIInteractions {
                 name: languages.current.kColoringBruteForce,
                 directional: false,
                 applyFunc: () => {
-                    makeAndPrintkColoringExact(0);
+                    makeAndPrintkColoringExact(0, false);
                 },
                 display: true
             },
@@ -521,7 +500,15 @@ export default class UIInteractions {
                 name: languages.current.kColoringBacktracking,
                 directional: false,
                 applyFunc: () => {
-                    makeAndPrintkColoringExact(1);
+                    makeAndPrintkColoringExact(1, false);
+                },
+                display: true
+            },
+            {
+                name: languages.current.kColoringConstrainedBacktracking,
+                directional: false,
+                applyFunc: () => {
+                    makeAndPrintkColoringExact(1, true);
                 },
                 display: true
             },

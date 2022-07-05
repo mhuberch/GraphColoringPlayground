@@ -232,7 +232,7 @@ export default class GraphAlgorithms {
 
     
 
-    public static kColoringExact = (mode: number, completeColoring: boolean, kColor: number, numberOfSteps: number, G: GraphImmut = GraphState.graph): kColorResult => {
+    public static kColoringExact = (mode: number, constrainedColoring: boolean, kColor: number, numberOfSteps: number, G: GraphImmut = GraphState.graph): kColorResult => {
 
         const kColoringBacktrackingRecursive = (kColor: number, mode: number, curNode: number, color: number[], given: boolean[], G: GraphImmut, totalSteps: number, maxHist: number, history: number[][]): kColorResultRecursive => {
             
@@ -324,7 +324,7 @@ export default class GraphAlgorithms {
         const color = new Array(V).fill(-1);
         const given = new Array(V).fill(false);
 
-        if (completeColoring) {
+        if (constrainedColoring) {
             const givenColorList : { [node: number] : number } = G.getNonDefaultColor();
             Object.entries(givenColorList).forEach(
                 ([key, value]) =>  {

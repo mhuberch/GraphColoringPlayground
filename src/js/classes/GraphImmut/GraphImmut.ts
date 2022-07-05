@@ -198,18 +198,18 @@ export default class GraphImmut {
         
         const customColorPalleteArrayNonDefault = ["....", "#ff3f3f", "#ffbf64", "#ffff00", "#00ff80", "#f964ff"];
 
-        const completeColoring : { [node: number] : number } = {};
+        const constrainedColoring : { [node: number] : number } = {};
 
         this.nodes.forEach((n) => {
             let curNode = n.getID();
             let currentColor = n.getAttribute('color');
             
             if ( !(currentColor === null || currentColor === undefined || currentColor === "DEFAULT") && customColorPalleteArrayNonDefault.includes(currentColor) ) {
-                completeColoring[curNode] = customColorPalleteArrayNonDefault.indexOf(currentColor);
+                constrainedColoring[curNode] = customColorPalleteArrayNonDefault.indexOf(currentColor);
             }
         });
 
-        return completeColoring;
+        return constrainedColoring;
 
     }
 
