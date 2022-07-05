@@ -100,42 +100,6 @@ export default class GraphState {
         },
         { name: "vertices", upToDate: true, always: true, type: "property" },
         { name: "edges", upToDate: true, always: true, type: "property" },
-        {
-            name: "eulerian", upToDate: false, type: "property",
-            applyFunc: (i) => {
-                return window.ui.makeAndPrintEulerian(i);
-            }
-        },
-        {
-            name: "Connected Components", upToDate: false, type: "property",
-            applyFunc: () => {
-                window.ui.getAlgorithms().find((v) => v.name === 'Connected Components')!.applyFunc();
-            }
-        },
-        {
-            name: "connectedComponents", upToDate: false, type: "state",
-            applyFunc: () => {
-                window.ui.getAlgorithms().find((v) => v.name === 'Connected Components')!.applyFunc();
-            }
-        },
-        {
-            name: "Strongly Connected Components", upToDate: false, type: "property",
-            applyFunc: () => {
-                window.ui.getAlgorithms().find((v) => v.name === 'Strongly Connected Components')!.applyFunc();
-            }
-        },
-        {
-            name: "stronglyConnectedComponents", upToDate: false, type: "state",
-            applyFunc: () => {
-                window.ui.getAlgorithms().find((v) => v.name === 'Strongly Connected Components')!.applyFunc();
-            }
-        },
-        {
-            name: "cyclic", upToDate: false, type: "property",
-            applyFunc: () => {
-                return window.ui.makeAndPrintIsCyclic();
-            }
-        },
     ];
     public static state: GraphStateData = {
         stronglyConnectedComponents: null,

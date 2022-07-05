@@ -471,13 +471,6 @@ export default class UIInteractions {
     static getAlgorithms(): AlgorithmI[] {
         return [
             {
-                name: languages.current.CheckColoring,
-                directional: false,
-                applyFunc: UIInteractions.checkGraphColoring,
-                display: true
-            },
-            {
-                //name: "Graph Coloring Welsh",
                 name: languages.current.GraphColoringGreedy,
                 directional: false,
                 applyFunc: () => {
@@ -508,84 +501,6 @@ export default class UIInteractions {
                     makeAndPrintkColoringExact(1, true);
                 },
                 display: true
-            },
-            {
-                name: languages.current.ConnectedComponents,
-                directional: false,
-                applyFunc: () => {
-                    makeAndPrintComponents(false);
-                },
-                display: true
-            },
-            {
-                name: languages.current.StronglyConnectedComponents,
-                directional: true,
-                display: true,
-                applyFunc: () => {
-                    makeAndPrintComponents(true);
-                }
-            },
-            {
-                name: languages.current.BFS,
-                directional: false,
-                applyFunc: () => {
-                    makeAndPrintShortestPath(languages.current.BFS, "breadthFirstSearch", false);
-                },
-                display: true
-            },
-            {
-                name: languages.current.Dijkstra,
-                applyFunc: () => {
-                    makeAndPrintShortestPath(languages.current.Dijkstra, "dijkstraSearch", true);
-                },
-                display: true
-            },
-            {
-                name: languages.current.BellmanFord,
-                weighted: true,
-                directional: true,
-                applyFunc: () => {
-                    makeAndPrintShortestPath(languages.current.BellmanFord, "bellmanFord", true);
-                },
-                display: true
-            },
-            {
-                name: languages.current.FordFulkerson,
-                weighted: true,
-                directional: true,
-                applyFunc: UIInteractions.makeAndPrintFFMCMF,
-                display: true
-            },
-            {
-                name: languages.current.KruskalMST,
-                weighted: true,
-                directional: false,
-                applyFunc: UIInteractions.makeAndPrintKruskal,
-                display: true
-            },
-            {
-                name: languages.current.Cyclic,
-                applyFunc: UIInteractions.makeAndPrintIsCyclic,
-                directional: true,
-                display: true
-            },
-            {
-                name: languages.current.TopoSort,
-                applyFunc: UIInteractions.makeAndPrintTopologicalSort,
-                directional: true,
-                display: true
-            },
-            {
-                name: languages.current.Eulerian,
-                directional: false,
-                display: false,
-                applyFunc: null
-            },
-            {
-                name: languages.current.Eulerian,
-                directional: true,
-                display: true,
-                applyFunc: UIInteractions.makeAndPrintDirectionalEulerian
             }
         ] as AlgorithmI[];
     }
@@ -626,6 +541,9 @@ export default class UIInteractions {
         });
         makeSimpleClickListener("#get-vertex-degrees-link", async () => {
             UIInteractions.getAllDegrees();
+        });
+        makeSimpleClickListener("#check-coloring-link", async () => {
+            UIInteractions.checkGraphColoring();
         });
         makeSimpleClickListener("#undo-link", window.main.undo);
         makeSimpleClickListener("#redo-link", window.main.redo);
@@ -691,6 +609,7 @@ export default class UIInteractions {
         (document.querySelector("#new-graph-layout-link") as HTMLAnchorElement).innerText = languages.current.NewGraphLayout;
         (document.querySelector("#load-default-color-link") as HTMLAnchorElement).innerText = languages.current.LoadDefaultColor;
         (document.querySelector("#get-vertex-degrees-link") as HTMLAnchorElement).innerText = languages.current.GetAllDegrees;
+        (document.querySelector("#check-coloring-link") as HTMLAnchorElement).innerText = languages.current.CheckColoring;
 
         (document.querySelector("#graph-options-link") as HTMLAnchorElement).innerText = languages.current.Options;
         (document.querySelector("#print-about-link") as HTMLAnchorElement).innerText = languages.current.About;
