@@ -159,33 +159,19 @@ const makeAndPrintGreedyColoring = (): void => {
 
                 const order : number[] = a.vertexOrder;
 
-                console.log(order);
-
                 order.forEach((v, i) => {
                     p += GraphState.nodeIDToLabel(v) + ", ";
                 })
 
                 p += "\n\n";
 
-                // let p = help.stringReplacement(languages.current.NumberOfVertices, colors.length + "");
                 p += help.stringReplacement(languages.current.ApproxChromaticNumberIs, a.chromaticNumber + "");
 
                 p += "\n\n";
 
                 const colors = help.flatten(a.colors);
-                // colors.forEach((v, i) => {
-                //     p += help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(i), v + "") + "\n";
-                // });
-
-                // p     += `\n${JSON.stringify(help.rotate(a.colors), null, 4)}\n\n`;
-
+                
                 const historyToPrint: {nodeToColor: number, colorsOfNeighbors: {[key: number]: number} }[] = a.history;
-
-                // console.log(historyToPrint);
-
-                // p += "\n\n";
-
-                // history.push({nodeToColor: vertexOrder[curPos], colorsOfNeighbors: coloredAdjacencyList});
 
                 if (historyToPrint != null && window.settings.getOption("stepByStepInfo")) {
                     p += "<h3>Step-by-Step output:</h3><hr>" + "\n";
@@ -194,14 +180,6 @@ const makeAndPrintGreedyColoring = (): void => {
 
                         const curNode: number = historyToPrint[step].nodeToColor;
                         const colAdjList: { [key: number]: number } = historyToPrint[step].colorsOfNeighbors as {};
-
-                        // console.log(historyToPrint[step]);
-                        // console.log("Current node: " + curNode);
-                        // console.log(GraphState.nodeIDToLabel(curNode));
-                        // console.log(colAdjList);
-                        // console.log(typeof colAdjList[0]);
-                        // console.log(typeof Object.keys(colAdjList))
-                        
 
                         p += "Step " + (step+1) + " : " + "AL(" + GraphState.nodeIDToLabel(curNode) + ") : ";
 
@@ -223,7 +201,6 @@ const makeAndPrintGreedyColoring = (): void => {
 
                     }
 
-                    // console.log(historyToPrint);
                 }
                 else {
                     p += "No step-by-step output. If desired, please ensure that the checkbox 'Step-by-Step Info' in the 'Graph Options' menu is chosen and rerun the coloring algorithm.";
@@ -300,7 +277,7 @@ const makeAndPrintkColoringExact = (mode: number): void => {
         // );
         options.push(
             { 
-                type: "checkbox", initialValue: false, label: languages.current.CompleteColoringExplanation + languages.current.CompleteColoring
+                type: "checkbox", initialValue: false, label: languages.current.CompleteColoringExplanation + " " + languages.current.CompleteColoring
             }
         );
     }
@@ -337,11 +314,6 @@ const makeAndPrintkColoringExact = (mode: number): void => {
                 
                 a = a as kColorResult;
 
-                // console.log(a.totalSteps);
-                // console.log(a.history);
-
-                // return { kColor, kColorable: false, color: [], totalSteps: recAnswer.totalSteps, history };
-
                 GraphState.graphProperties.colormode = 1;
 
                 
@@ -349,10 +321,7 @@ const makeAndPrintkColoringExact = (mode: number): void => {
                 if (GraphState.state.kColorable === null || GraphState.getProperty("Most recent k-color check") == null) {
                     GraphState.graphProperties["Most recent k-color check"] = -1;
                     GraphState.state.kColorable = {};
-                    console.log("Newly set up; kColorable and MostRecentKColorCheck");
                 }
-
-                // console.log("Check a. kColorable: " + a.kColorable);
 
                 let p = "";
 
@@ -372,13 +341,6 @@ const makeAndPrintkColoringExact = (mode: number): void => {
 
                     GraphState.setUpToDate(true, ["Most recent k-color check", "kColorable", "Current best guess of chromatic number"]); // TODO: What about kColor dictionary if changing the graph?
                     (GraphState.state.kColorable[kColor] as {}) = a.color;
-
-                    // console.log("Saving output from kColor-Algorithm");
-                    // console.log(a.color);
-                    // console.log(GraphState.state.kColorable[3]);
-                    // console.log(GraphState.getProperty("kColorable", true));
-                    
-                    // console.log("Building output string");
 
                     p += help.stringReplacement(languages.current.kColoringSuccess, a.kColor + "") + "\n";
 
@@ -1043,8 +1005,6 @@ export default class UIInteractions {
     }
 
     static resetgraphColoringGreedy(): Promise<void> {
-
-        // console.log("Hi, I'm resetgraphColoringGreedy");
 
         return new Promise<void>(async resolve => {
             GraphState.graphProperties["Approx. Chromatic Greedy"] = null;
