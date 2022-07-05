@@ -24,6 +24,9 @@ const possibleColorModes = {
     "Ordered by Degree (decreasing)": 4
 }
 
+const possibleColorModesArray = ["", "Ordered by Node Label (increasing)", "Ordered by Node Label (decreasing)", 
+                                "Ordered by Degree (increasing)", "Ordered by Degree (decreasing)"];
+
 const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean): void => {
     const myName = languages.current.ShortestPath;
     if (UIInteractions.isRunning[myName]) {
@@ -150,7 +153,7 @@ const makeAndPrintGreedyColoring = (): void => {
                 GraphState.setUpToDate(true, ["Approx. Chromatic Greedy", "graphColoringGreedy"]);
                 (GraphState.state.graphColoringGreedy as {}) = a.colors;
 
-                let p = languages.current.GreedyWorkedOrder + "\n";
+                let p = help.stringReplacement(languages.current.GreedyWorkedOrder, possibleColorModesArray[orderingMode] + "") + "\n";
 
                 const order : number[] = a.vertexOrder;
 
@@ -178,16 +181,11 @@ const makeAndPrintGreedyColoring = (): void => {
                         const curNode: number = historyToPrint[step].nodeToColor;
                         const colAdjList: { [key: number]: number } = historyToPrint[step].colorsOfNeighbors as {};
 
-                        p2 += languages.current.Step + (step+1) + " : " + "AL(" + GraphState.nodeIDToLabel(curNode) + ") : ";
+                        p2 += languages.current.Step + (step+1) + " : " + (step < 10 ? "\t\t": "\t") + "AL(" + GraphState.nodeIDToLabel(curNode) + ") : \t";
 
                         for (let neighbor in colAdjList) {
                             const nb: number = (neighbor as unknown) as number;
-                            if ( colAdjList[neighbor] === -1) {
-                                p2 += GraphState.nodeIDToLabel(nb) + " not yet colored; "
-                            }
-                            else {
-                                p2 += GraphState.nodeIDToLabel(nb) + " with color " + colAdjList[neighbor] + "; ";
-                            }
+                            p2 += GraphState.nodeIDToLabel(nb) + languages.current.Has + colAdjList[neighbor] + "; \t";
                         }
 
                         p2 += "--> " + help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(curNode), colors[curNode] + "");
@@ -307,6 +305,17 @@ const makeAndPrintkColoringExact = (mode: number, constrainedColoring: boolean):
                 GraphState.setUpToDate(true, ["Most recent k-color check", "kColorable"]); // TODO: What about kColor dictionary if changing the graph?
                 
 
+                if (constrainedColoring) {
+                    p += languages.current.FollowingConstraints + "\n";
+                    for (let i = 0; i < a.color.length; i++) {
+                        if (a.given[i]) {
+                            p += GraphState.nodeIDToLabel(i) + languages.current.MustBe + a.color[i].toString() + "\t";
+                        }
+                    };
+                    p += "\n\n";
+
+                }
+
                 if (a.kColorable) {
                     
                     const bestChrNumber = GraphState.graphProperties["Current best guess of chromatic number"];
@@ -325,12 +334,12 @@ const makeAndPrintkColoringExact = (mode: number, constrainedColoring: boolean):
 
                     p += help.stringReplacement(languages.current.kColoringTerminated, a.totalSteps + "");
                     
-                    p = (mode === 0) ? `<h3>${languages.current.kColoringBruteForceTitle}</h3><hr>${help.htmlEncode(p)}` : `<h3>${languages.current.kColoringBacktrackingTitle}</h3><hr>${help.htmlEncode(p)}`;
+                    // p = (mode === 0) ? `<h3>${languages.current.kColoringBruteForceTitle}</h3><hr>${help.htmlEncode(p)}` : `<h3>${languages.current.kColoringBacktrackingTitle}</h3><hr>${help.htmlEncode(p)}`;
                     
-                    if (a.kColor > 6) {
-                        p += languages.current.ReColorInfo;
-                        p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
-                    }
+                    // if (a.kColor > 6) {
+                    //     p += languages.current.ReColorInfo;
+                    //     p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
+                    // }
 
                 }
                 else {
@@ -341,24 +350,52 @@ const makeAndPrintkColoringExact = (mode: number, constrainedColoring: boolean):
 
                 }
 
+                let p2 = "";
+
                 if (numberOfSteps > 0) {
-                    p += "\n\n";
-                    p += help.stringReplacement(languages.current.kColoringDocStep1, numberOfSteps + "") + "\n";
-                    p += languages.current.kColoringDocStep2;
+                    p2 += help.stringReplacement(languages.current.kColoringDocStep1, numberOfSteps + "") + "\n";
+                    p2 += languages.current.kColoringDocStep2 + "\n";
                     
+                    p2 += languages.current.Vertex + "\t\t";
+
                     for (let i = 0; i < a.color.length; i++) {
-                        p += GraphState.nodeIDToLabel(i) + ", ";
+                        p2 += GraphState.nodeIDToLabel(i) + "\t";
                     };
-                    p += "\n";
+                    p2 += "\n";
+                                     
 
                     for (let step = 0; step < a.history.length; step++) {
-                        p += languages.current.Step + (step+1) + ": " + a.history[step].toString() + "\n";
+                        p2 += languages.current.Step + (step+1) + ": " + (step < 10 ? "\t\t": "\t") + a.history[step].toString().replace(/,/g, '\t') + "\n";
                     }
+                    
+
+                    p2  = `<hr><h6>${languages.current.StepByStepOutput}</h6>${help.htmlEncode(p2)}`;
+
+                }
+                else {
+                    p2 += `<hr>${languages.current.IfDesiredActiveStepByStep}${help.htmlEncode(p2)}`;
+                }
+
+                if (mode === 0) {
+                    p = `<h3>${languages.current.kColoringBruteForceTitle}</h3><hr>${help.htmlEncode(p)}` + p2;
+                }
+                else if (mode === 1 && !constrainedColoring) {
+                    p = `<h3>${languages.current.kColoringBacktrackingTitle}</h3><hr>${help.htmlEncode(p)}` + p2;
+                }
+                else if (mode === 1 && constrainedColoring) {
+                    p = `<h3>${languages.current.kColoringConstrainedTitle}</h3><hr>${help.htmlEncode(p)}` + p2;
+                }
+
+                if (a.kColor > 6) {
+                    p += `<hr>${languages.current.RecolorAddColors}` + "\n";
+                    p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
                 }
 
                 help.printout(p);
 
-                window.main.applyColors();
+                if (! (constrainedColoring && !a.kColorable)) {
+                    window.main.applyColors();
+                }
 
             });
             w.send({

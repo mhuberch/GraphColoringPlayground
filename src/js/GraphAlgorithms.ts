@@ -26,7 +26,7 @@ export type CheckingColorResult = { from: number[]; to: number[]; num: number; c
 
 export type GetDegreesResult = { degrees: number[], maxDegree: number };
 
-export type kColorResult = { kColor: number; kColorable: boolean; color: number[]; totalSteps: number; history: number[][]};
+export type kColorResult = { kColor: number; kColorable: boolean; color: number[]; given: boolean[]; totalSteps: number; history: number[][]};
 
 export type kColorResultRecursive = { kColorable: boolean; color: number[]; totalSteps: number; history: number[][]};
 
@@ -324,6 +324,7 @@ export default class GraphAlgorithms {
         const V = G.getNumberOfNodes();
         const color = new Array(V).fill(0);
         const given = new Array(V).fill(false);
+        
 
         if (constrainedColoring) {
             const givenColorList : { [node: number] : number } = G.getNonDefaultColor();
@@ -335,6 +336,8 @@ export default class GraphAlgorithms {
                 }
               );
         }
+
+        const colorBefore = [...color];
 
         const history : number[][] = [];
 
@@ -349,10 +352,10 @@ export default class GraphAlgorithms {
         }
 
         if (recAnswer.kColorable) {
-            return { kColor, kColorable: true, color: recAnswer.color, totalSteps: recAnswer.totalSteps, history };
+            return { kColor, kColorable: true, color: recAnswer.color, given, totalSteps: recAnswer.totalSteps, history };
         }
 
-        return { kColor, kColorable: false, color: new Array(V).fill(0), totalSteps: recAnswer.totalSteps, history };
+        return { kColor, kColorable: false, color: colorBefore, given, totalSteps: recAnswer.totalSteps, history };
     }
 
 
