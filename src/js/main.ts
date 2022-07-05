@@ -19,6 +19,11 @@ export interface MainI {
     visWeightEdgeEdit: (data: VisEditEdgeInternal, callback: Function) => void;
     visOptions: {
         edges: { smooth: boolean, color: {inherit: boolean}};
+        nodes: { color: { border: string, background: string, 
+                            highlight: { border: string, background: string}, 
+                            hover : { border: string, background: string}
+                        }
+                };
         interaction: { hover: boolean };
         manipulation: {
             addNode: (data: AddNodeI, callback: Function) => void;
@@ -73,11 +78,12 @@ interface VisEdgeInternal {
 }
 
 const customColorPallete = {
-    "1: blue": "DEFAULT",
-    "2: red": "#ff3f3f",
-    "3: orange": "#ffbf64",
-    "4: yellow": "#ffff00",
-    "5: green": "#00ff80",
+    "not colored": "DEFAULT",
+    "1: red": "#ff3f3f",
+    "2: orange": "#ffbf64",
+    "3: yellow": "#ffff00",
+    "4: green": "#00ff80",
+    "5: blue": "#66ccff",
     "6: violet": "#f964ff"
 };
   
@@ -106,6 +112,10 @@ const self: MainI = {
     },
     visOptions: {
         edges: { smooth: false, color: {inherit: false}},
+        nodes: { color: { border: "#000000", background: "#ffffff",
+                            highlight: { border: "#000000", background: "#e6e6e6" }, 
+                            hover : { border: "#000000", background: "#e6e6e6"}
+                }},
         interaction: { hover: true },
         manipulation: {
             addNode: async (data, callback) => {
@@ -286,14 +296,17 @@ const self: MainI = {
             return;
         }
 
-    // "1: blue": "DEFAULT",
-    // "2: red": "#ff3f3f",
-    // "3: orange": "#ffbf64",
-    // "4: yellow": "#ffff00",
-    // "5: green": "#00ff80",
-    // "6: violet": "#f964ff"
+        
+            // "not colored": "DEFAULT", --> white "#ffffff"
+            // "1: red": "#ff3f3f",
+            // "2: orange": "#ffbf64",
+            // "3: yellow": "#ffff00",
+            // "4: green": "#00ff80",
+            // "5: blue": "#66ccff",
+            // "6: violet": "#f964ff"
+        
 
-        const basicColors = ['#97c2fc', '#ff3f3f', '#ffbf64', '#ffff00', '#00ff80', '#f964ff'];
+        const basicColors = ['#ffffff', '#ff3f3f', '#ffbf64', '#ffff00', '#00ff80', "#66ccff", '#f964ff'];
         const addColors = randomColor({ count: chromaticNumber > 6 ? chromaticNumber - 6 : 1, luminosity: "light" });
 
         const colors = [...basicColors, ...addColors];

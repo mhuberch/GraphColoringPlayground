@@ -74,9 +74,17 @@ export default {
 
     },
 
+    // "not colored": "DEFAULT",
+    // "1: red": "#ff3f3f",
+    // "2: orange": "#ffbf64",
+    // "3: yellow": "#ffff00",
+    // "4: green": "#00ff80",
+    // "5: blue": "#66ccff",
+    // "6: violet": "#f964ff"
+
     toggleNodeColor : (node: NodeImmut) : string | undefined => {
         
-        const customColorPalleteArray = ["DEFAULT", "#ff3f3f", "#ffbf64", "#ffff00", "#00ff80", "#f964ff", '  ', '#97c2fc'];
+        const customColorPalleteArray = ["DEFAULT", "#ff3f3f", "#ffbf64", "#ffff00", "#00ff80", "#66ccff", "#f964ff"]; //'  ', '#97c2fc'];
 
         const currentColor = node.getAttribute('color');
 
@@ -90,15 +98,15 @@ export default {
             currentIndex = customColorPalleteArray.indexOf(currentColorString);
         }
 
-        if (currentIndex === 5 || currentIndex < 0) {
+        if (currentIndex === 6 || currentIndex < 0) {
             return undefined;
         }
 
-        if (currentIndex === 6) {
+        if (currentIndex === 7) {
             currentIndex = 0;
         }
 
-        return customColorPalleteArray[(currentIndex+1)%6];
+        return customColorPalleteArray[(currentIndex+1)%7];
     },
 
     checkColoringByNumber : (color: number[], G: GraphImmut): boolean => {
