@@ -302,13 +302,15 @@ const makeAndPrintkColoringExact = (mode: number, constrainedColoring: boolean):
                     GraphState.state.kColorable = {};
                 }
 
+                GraphState.graphProperties["Most recent k-color check"] = a.kColor;
+                (GraphState.state.kColorable[kColor] as {}) = a.color;
+
                 let p = "";
+                GraphState.setUpToDate(true, ["Most recent k-color check", "kColorable"]); // TODO: What about kColor dictionary if changing the graph?
+                
 
                 if (a.kColorable) {
                     
-
-                    GraphState.graphProperties["Most recent k-color check"] = a.kColor;
-
                     const bestChrNumber = GraphState.graphProperties["Current best guess of chromatic number"];
                     if (bestChrNumber === null) {
                         GraphState.graphProperties["Current best guess of chromatic number"] = a.kColor;
@@ -316,10 +318,10 @@ const makeAndPrintkColoringExact = (mode: number, constrainedColoring: boolean):
                     else {
                         GraphState.graphProperties["Current best guess of chromatic number"] = Math.min(a.kColor, bestChrNumber);
                     }
+                    GraphState.setUpToDate(true, ["Current best guess of chromatic number"]);
 
 
-                    GraphState.setUpToDate(true, ["Most recent k-color check", "kColorable", "Current best guess of chromatic number"]); // TODO: What about kColor dictionary if changing the graph?
-                    (GraphState.state.kColorable[kColor] as {}) = a.color;
+                    
 
                     p += help.stringReplacement(languages.current.kColoringSuccess, a.kColor + "") + "\n";
 
@@ -358,12 +360,7 @@ const makeAndPrintkColoringExact = (mode: number, constrainedColoring: boolean):
 
                 help.printout(p);
 
-                if (a.kColorable) {
-                    window.main.applyColors();
-                }
-                else{
-                    GraphState.resetColor();
-                }
+                window.main.applyColors();
 
             });
             w.send({
@@ -764,19 +761,22 @@ export default class UIInteractions {
                 return resolve();
             }
 
-            let a = { degrees: [] };
+            let a = { degrees: [], maxDegree: 0 };
 
             
 
             const printGAD = () => {
             
                 const degrees = a.degrees;
+                const maxDegrees = a.maxDegree;
 
                 let p = "";
                 
                 degrees.forEach((v,i) => {
-                    p += help.stringReplacement(languages.current.VertexHasDegree, GraphState.nodeIDToLabel(i) + "", v + "") + "\n";
+                    p += help.stringReplacement(languages.current.VertexHasDegree, GraphState.nodeIDToLabel(i) + "", v + "") + "\n\n";
                 });
+
+                p += help.stringReplacement(languages.current.GraphHasVertexDegree, maxDegrees + "");
 
                 p = `<h3>${languages.current.GetAllDegreesTitle}</h3><hr>${help.htmlEncode(p)}`;
 

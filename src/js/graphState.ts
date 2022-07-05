@@ -21,14 +21,10 @@ interface GraphProperties {
     vertices: number;
     edges: number;
     colormode: number;
-    eulerian: boolean;
     "Approx. Chromatic Greedy": number | null;
-    "Connected Components": number | null;
-    "Strongly Connected Components": number | null;
     "Most recent k-color check": number | null;
     "Current best guess of chromatic number": number | null;
-    cyclic: boolean;
-
+    
     [index: string]: boolean | number | null;
 }
 
@@ -112,13 +108,9 @@ export default class GraphState {
         vertices: 0,
         edges: 0,
         colormode: 0,
-        eulerian: false,
         "Approx. Chromatic Greedy": null,
-        "Connected Components": null,
-        "Strongly Connected Components": null,
         "Most recent k-color check": null,
         "Current best guess of chromatic number": null,
-        cyclic: false,
     };
 
     static setUpToDate(value = false, listOptions?: string[]) {
@@ -158,14 +150,19 @@ export default class GraphState {
     static async makeAndPrintProperties(recalcLong = false) {
         const directional = window.settings.getOption("direction");
 
+        // console.log("Hi, I'm makeAndPrintProperties");
+
         GraphState.graphProperties.vertices = GraphState.graph.getNumberOfNodes();
         GraphState.graphProperties.edges = GraphState.graph.getNumberOfEdges();
 
-        if (!directional) {
-            await GraphState.getProperty("eulerian", true, true);
-        }
+        // if (!directional) {
+        //     await GraphState.getProperty("eulerian", true, true);
+        // }
 
         const p = Object.keys(GraphState.graphProperties);
+
+        // console.log(p);
+
         if (recalcLong) {
             p.forEach(async (v) => {
                 await GraphState.getProperty(v, true);
@@ -177,11 +174,27 @@ export default class GraphState {
             printableProperties[v] = await GraphState.getProperty(v);
         }));
 
-        GraphState.printGraphProperties(printableProperties);
+        // GraphState.printGraphProperties(printableProperties);
+        GraphState.printGraphPropertiesSimple(printableProperties);
+    }
+
+    static printGraphPropertiesSimple(properties: any) {
+        let p = "";
+        const simpleProperties = ["vertices", "edges"];
+        simpleProperties.forEach((k) => {
+            if (properties[k] !== null) {
+                p += `${help.toTitleCase(k)}: ${properties[k]}\n`;
+            }
+        });
+        p = p.trim();
+        p = help.htmlEncode(p);
+        document.getElementById("graphProps")!.innerHTML = `<p class='nav-link'>${p}</p>`;
     }
 
     static printGraphProperties(properties: any) {
         let p = "";
+        console.log(Object.keys(properties));
+
         Object.keys(properties).forEach((k) => {
             if (properties[k] !== null) {
                 p += `${help.toTitleCase(k)}: ${properties[k]}\n`;

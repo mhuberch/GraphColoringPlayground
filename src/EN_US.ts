@@ -44,6 +44,7 @@ export default {
     NodeIsInConflictWith: "$1.) Colors of node $2 and node $3 are in conflict.",
     VertexIsInConnectedComponentNumber: "Vertex $1 is in connected component #$2",
     VertexHasDegree: "Vertex $1 has degree $2",
+    GraphHasVertexDegree: "Graph has maximal vertex degree $1",
     BuildGraphs: "Build New Graphs",
     LoadGraphs: "Load Exercise Graphs",
     SetBackground: "Load Background",
@@ -69,7 +70,7 @@ export default {
     NumberOfSteps: "Number of steps documented by step-by-step info",
     CompleteColoring: "Complete the manually started coloring",
     CompleteColoringExplanation: "If you have already chosen manually the color of some vertices (red, orange, yellow, green or violet (BUT NOT blue), the backtracking algorithm can try to find a coloring, while not changing the already colored vertices. AGAIN: In this mode BLUE means NOT COLORED",
-    CheckColoringTitle: "Checked admissibilty of the current node coloring",
+    CheckColoringTitle: "Checked admissibilty of the current vertex coloring",
     GetAllDegreesTitle: "The vertices have the following degree:",
     KruskalMSTTotalWeight: "Kruskal's Minimum Spanning Tree Total Weight: $1",
 
@@ -80,7 +81,7 @@ export default {
     SinkNode: "Sink Node",
     Go: "Go",
     Help: "Help",
-    About: "About",
+    About: "About Graph Coloring Playground",
     TaskAlreadyRunning: "Task Already Running",
     TaskAlreadyRunningBody: "$1 is already running, please wait for it to finish first.",
     Options: "Options",
@@ -89,15 +90,16 @@ export default {
         "<a href='https://github.com/MikeDombo/graphPlayground' target='_blank'>GitHub repository</a>" +
         " for guides</h4> <h4>See <a href='https://github.com/MikeDombo/graphPlayground/issues' target='_blank'>" +
         "GitHub issues</a> to submit bugs or feature requests.</h4>",
-    AboutHTML: "<i>Electronic tool for learning Graph coloring, based <a href='https://github.com/MikeDombo/graphPlayground' target='_blank'>GraphPlayground</a>" + 
+    AboutHTML: "<i>Electronic tool for learning Graph coloring, based on <a href='https://github.com/MikeDombo/graphPlayground' target='_blank'>GraphPlayground</a>" + 
         " by Michael Dombrowski. For school material see " +
-        "<a href='https://www.abz.inf.ethz.ch/maturitatsschulen/unterrichtsmaterialien/' target='_blank'>ABZ Webpage</a>. </i>",
+        "<a href='https://www.abz.inf.ethz.ch/maturitatsschulen/unterrichtsmaterialien/' target='_blank'>ABZ Webpage</a>. </i>" +
+        " Martin Huber, 2022",
     GraphPhysics: "Graph Physics",
     DiGraph: "Directed Graph",
     WeightedGraph: "Weighted Graph",
     CustomNodeColors: "Customize Node Colors",
     SmoothEdges: "Smooth Edges",
-    FastColorChange: "Change node color by double click",
+    FastColorChange: "Change vertex color by double click",
     StepByStepInfo: "Get step-by-step info for coloring algorithms",
     ThisTask: "This task",
     ReColor: "Generate new non-standard colors",
