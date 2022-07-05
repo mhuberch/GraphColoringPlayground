@@ -150,12 +150,7 @@ const makeAndPrintGreedyColoring = (): void => {
                 GraphState.setUpToDate(true, ["Approx. Chromatic Greedy", "graphColoringGreedy"]);
                 (GraphState.state.graphColoringGreedy as {}) = a.colors;
 
-                
-
-                // p += `\nApprox. Chromatic Number from Welsh algorithm: ${a.chromaticNumber}`;
-
-
-                let p = "Greedy algorithm work with the following ordering of vertices: \n";
+                let p = languages.current.GreedyWorkedOrder + "\n";
 
                 const order : number[] = a.vertexOrder;
 
@@ -167,51 +162,54 @@ const makeAndPrintGreedyColoring = (): void => {
 
                 p += help.stringReplacement(languages.current.ApproxChromaticNumberIs, a.chromaticNumber + "");
 
-                p += "\n\n";
+                p += "\n";
 
                 const colors = help.flatten(a.colors);
                 
                 const historyToPrint: {nodeToColor: number, colorsOfNeighbors: {[key: number]: number} }[] = a.history;
 
-                if (historyToPrint != null && window.settings.getOption("stepByStepInfo")) {
-                    p += "<h3>Step-by-Step output:</h3><hr>" + "\n";
+                let p2 = "";
 
+                if (historyToPrint != null && window.settings.getOption("stepByStepInfo")) {
+                    
+                    
                     for (let step = 0; step < historyToPrint.length; step++) {
 
                         const curNode: number = historyToPrint[step].nodeToColor;
                         const colAdjList: { [key: number]: number } = historyToPrint[step].colorsOfNeighbors as {};
 
-                        p += "Step " + (step+1) + " : " + "AL(" + GraphState.nodeIDToLabel(curNode) + ") : ";
+                        p2 += "Step " + (step+1) + " : " + "AL(" + GraphState.nodeIDToLabel(curNode) + ") : ";
 
                         for (let neighbor in colAdjList) {
                             const nb: number = (neighbor as unknown) as number;
                             if ( colAdjList[neighbor] === -1) {
-                                // p += neighbor + " not yet colored; "
-                                p += GraphState.nodeIDToLabel(nb) + " not yet colored; "
+                                p2 += GraphState.nodeIDToLabel(nb) + " not yet colored; "
                             }
                             else {
-                                p += GraphState.nodeIDToLabel(nb) + " with color " + colAdjList[neighbor] + "; ";
+                                p2 += GraphState.nodeIDToLabel(nb) + " with color " + colAdjList[neighbor] + "; ";
                             }
-                            // p += GraphState.nodeIDToLabel(neighbor) + " with color " + colAdjList[neighbor].toString() + "; ";
                         }
 
-                        p += "--> " + help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(curNode), colors[curNode] + "");
-                        //p += "--> " + help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(curNode), 0colors[curNode].toString()) + "\n";
-                        p += "\n";
+                        p2 += "--> " + help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(curNode), colors[curNode] + "");
+                        p2 += "\n";
 
                     }
 
+                    p2  = `<hr><h6>${languages.current.StepByStepOutput}</h6>${help.htmlEncode(p2)}`;
+
+                    
+
                 }
                 else {
-                    p += "No step-by-step output. If desired, please ensure that the checkbox 'Step-by-Step Info' in the 'Options' menu is chosen and rerun the coloring algorithm.";
+                    p2 += `<hr>${languages.current.IfDesiredActiveStepByStep}${help.htmlEncode(p2)}`;
                 }
 
-                p = `<h3>${languages.current.GraphColoringGreedyTitle}</h3><hr>${help.htmlEncode(p)}`;
+                p = `<h3>${languages.current.GraphColoringGreedyTitle}</h3><hr>${help.htmlEncode(p)}` + p2;
                 
 
 
                 if (a.chromaticNumber > 6) {
-                    p += "As the coloring needs more than the six standard colors additional randomly chosen colors are used. To change their appearence press the button."
+                    p += `<hr>${languages.current.RecolorAddColors}` + "\n";
                     p += `<br/><button class='btn btn-primary' onclick='main.applyColors()'>${languages.current.ReColor}</button>`;
                 }
 
@@ -609,7 +607,7 @@ export default class UIInteractions {
         (document.querySelector("#check-coloring-link") as HTMLAnchorElement).innerText = languages.current.CheckColoring;
 
         (document.querySelector("#graph-options-link") as HTMLAnchorElement).innerText = languages.current.Options;
-        (document.querySelector("#print-about-link") as HTMLAnchorElement).innerText = languages.current.About;
+        (document.querySelector("#print-about-link") as HTMLAnchorElement).innerText = languages.current.AboutShort;
 
         (document.querySelector("#graph-tool-label") as HTMLHeadingElement).innerText = languages.current.GraphTools;
         (document.querySelector("#load-complete-link") as HTMLAnchorElement).innerText = languages.current.LoadComplete;
@@ -773,10 +771,11 @@ export default class UIInteractions {
                 let p = "";
                 
                 degrees.forEach((v,i) => {
-                    p += help.stringReplacement(languages.current.VertexHasDegree, GraphState.nodeIDToLabel(i) + "", v + "") + "\n\n";
+                    p += help.stringReplacement(languages.current.VertexHasDegree, GraphState.nodeIDToLabel(i) + "", v + "") + "\n";
                 });
 
-                p += help.stringReplacement(languages.current.GraphHasVertexDegree, maxDegrees + "");
+
+                p += "\n" + help.stringReplacement(languages.current.GraphHasVertexDegree, maxDegrees + "");
 
                 p = `<h3>${languages.current.GetAllDegreesTitle}</h3><hr>${help.htmlEncode(p)}`;
 
