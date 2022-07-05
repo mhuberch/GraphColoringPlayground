@@ -174,6 +174,23 @@ const self = {
             ], null, false);
     },
 
+    makeExportFileModalJSON: (): void => {
+        help.showFormModal(null, languages.current.ExportGraphToFile, null,
+            [{
+                type: "button",
+                initialValue: languages.current.ExportToJson,
+                onclick: () => {
+                    self.exportToFile("json");
+                },
+                extraAttrs: {
+                    class: "btn btn-sm btn-primary m-1"
+
+                },
+                clickDismiss: true
+            }
+            ], null, false);
+    },
+
     makeExportTextModal: (): void => {
         help.showFormModal(null, languages.current.ExportGraphToText, null,
             [{

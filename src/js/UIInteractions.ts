@@ -203,7 +203,7 @@ const makeAndPrintGreedyColoring = (): void => {
 
                 }
                 else {
-                    p += "No step-by-step output. If desired, please ensure that the checkbox 'Step-by-Step Info' in the 'Graph Options' menu is chosen and rerun the coloring algorithm.";
+                    p += "No step-by-step output. If desired, please ensure that the checkbox 'Step-by-Step Info' in the 'Options' menu is chosen and rerun the coloring algorithm.";
                 }
 
                 p = `<h3>${languages.current.GraphColoringGreedyTitle}</h3><hr>${help.htmlEncode(p)}`;
@@ -601,7 +601,7 @@ export default class UIInteractions {
             });
         };
 
-        makeSimpleClickListener("#print-help-link", UIInteractions.printHelp);
+        makeSimpleClickListener("#print-about-link", UIInteractions.printAbout);
         makeSimpleClickListener("#stop-allworker-link", UIInteractions.terminateAllWebWorkers);
         makeSimpleClickListener("#graph-options-link", UIInteractions.printOptions);
         makeSimpleClickListener("#load-petersen-link", async () => {
@@ -637,25 +637,14 @@ export default class UIInteractions {
         });
         makeSimpleClickListener("#undo-link", window.main.undo);
         makeSimpleClickListener("#redo-link", window.main.redo);
-        makeSimpleClickListener("#calculate-all-properties-link", async () => {
-            return GraphState.makeAndPrintProperties(true);
-        });
         makeSimpleClickListener("#new-graph-layout-link", window.main.shuffleNetworkLayout);
         makeSimpleClickListener("#import-file-link", async () => {
             const imp = (await import("./dataImportExport")).default;
             imp.makeImportFileModal();
         });
-        makeSimpleClickListener("#import-text-link", async () => {
-            const imp = (await import("./dataImportExport")).default;
-            imp.makeImportTextModal();
-        });
         makeSimpleClickListener("#export-file-link", async () => {
             const imp = (await import("./dataImportExport")).default;
-            imp.makeExportFileModal();
-        });
-        makeSimpleClickListener("#export-text-link", async () => {
-            const imp = (await import("./dataImportExport")).default;
-            imp.makeExportTextModal();
+            imp.makeExportFileModalJSON();
         });
         makeSimpleClickListener("#import-graph-g1", async () => {
             const imp = (await import("./dataImportExport")).default;
@@ -692,9 +681,7 @@ export default class UIInteractions {
 
         (document.querySelector("#fileDropdown") as HTMLAnchorElement).innerText = languages.current.File;
         (document.querySelector("#import-file-link") as HTMLAnchorElement).innerText = languages.current.ImportFile;
-        (document.querySelector("#import-text-link") as HTMLAnchorElement).innerText = languages.current.ImportText;
         (document.querySelector("#export-file-link") as HTMLAnchorElement).innerText = languages.current.ExportFile;
-        (document.querySelector("#export-text-link") as HTMLAnchorElement).innerText = languages.current.ExportText;
 
         (document.querySelector("#graphloadDropdown") as HTMLAnchorElement).innerText = languages.current.LoadGraphs;
         (document.querySelector("#import-graph-g1") as HTMLAnchorElement).innerText = "Graph G1";
@@ -708,10 +695,9 @@ export default class UIInteractions {
         (document.querySelector("#import-schweiz") as HTMLAnchorElement).innerText = "Karte der Schweiz";
         (document.querySelector("#import-sudoku-4x4") as HTMLAnchorElement).innerText = "Sudoku 4x4";
 
-        (document.querySelector("#calculate-all-properties-link") as HTMLAnchorElement).innerText = languages.current.CalculateAllProperties;
         (document.querySelector("#new-graph-layout-link") as HTMLAnchorElement).innerText = languages.current.NewGraphLayout;
-        (document.querySelector("#graph-options-link") as HTMLAnchorElement).innerText = languages.current.GraphOptions;
-        (document.querySelector("#print-help-link") as HTMLAnchorElement).innerText = languages.current.Help;
+        (document.querySelector("#graph-options-link") as HTMLAnchorElement).innerText = languages.current.Options;
+        (document.querySelector("#print-about-link") as HTMLAnchorElement).innerText = languages.current.About;
 
         (document.querySelector("#example-graphs-label") as HTMLHeadingElement).innerText = languages.current.ExampleGraphs;
         (document.querySelector("#load-petersen-link") as HTMLAnchorElement).innerText = languages.current.LoadPetersen;
@@ -732,6 +718,13 @@ export default class UIInteractions {
         help.showSimpleModal(
             languages.current.Help,
             languages.current.IssuesHTML
+        );
+    }
+
+    static printAbout(): void {
+        help.showSimpleModal(
+            languages.current.About,
+            languages.current.AboutHTML
         );
     }
 

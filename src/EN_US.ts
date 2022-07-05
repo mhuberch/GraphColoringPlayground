@@ -45,7 +45,7 @@ export default {
     VertexIsInConnectedComponentNumber: "Vertex $1 is in connected component #$2",
     VertexHasDegree: "Vertex $1 has degree $2",
     LoadGraphs: "Load Exercise Graphs",
-    SetBackground: "Set Background",
+    SetBackground: "Load Background",
     
     NumberOfVertices: "Number of Vertices: $1",
     ChromaticNumberIs: "Chromatic Number: $1",
@@ -78,6 +78,7 @@ export default {
     SinkNode: "Sink Node",
     Go: "Go",
     Help: "Help",
+    About: "About",
     TaskAlreadyRunning: "Task Already Running",
     TaskAlreadyRunningBody: "$1 is already running, please wait for it to finish first.",
     Options: "Options",
@@ -86,7 +87,9 @@ export default {
         "<a href='https://github.com/MikeDombo/graphPlayground' target='_blank'>GitHub repository</a>" +
         " for guides</h4> <h4>See <a href='https://github.com/MikeDombo/graphPlayground/issues' target='_blank'>" +
         "GitHub issues</a> to submit bugs or feature requests.</h4>",
-
+    AboutHTML: "<i>Electronic tool for learning Graph coloring, based <a href='https://github.com/MikeDombo/graphPlayground' target='_blank'>GraphPlayground</a>" + 
+        " by Michael Dombrowski. For school material see " +
+        "<a href='https://www.abz.inf.ethz.ch/maturitatsschulen/unterrichtsmaterialien/' target='_blank'>ABZ Webpage</a>. </i>",
     GraphPhysics: "Graph Physics",
     DiGraph: "Directed Graph",
     WeightedGraph: "Weighted Graph",
@@ -104,7 +107,6 @@ export default {
     ExportText: "Export Text",
     CalculateAllProperties: "Calculate All Properties",
     NewGraphLayout: "New Graph Layout",
-    GraphOptions: "Graph Options",
     ExampleGraphs: "Example Graphs",
     LoadPetersen: "Load Petersen Graph",
     LoadKonigsberg: "Load Königsberg Bridges Graph",
