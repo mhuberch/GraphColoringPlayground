@@ -77,14 +77,24 @@ interface VisEdgeInternal {
     label?: string
 }
 
+// const customColorPallete = {
+//     "not colored": "DEFAULT",
+//     "1: red": "#ff3f3f",
+//     "2: orange": "#ffbf64",
+//     "3: yellow": "#ffff00",
+//     "4: green": "#00ff80",
+//     "5: blue": "#66ccff",
+//     "6: violet": "#f964ff"
+// };
+
 const customColorPallete = {
-    "not colored": "DEFAULT",
-    "1: red": "#ff3f3f",
+    "ohne Farbe": "DEFAULT",
+    "1: rot": "#ff3f3f",
     "2: orange": "#ffbf64",
-    "3: yellow": "#ffff00",
-    "4: green": "#00ff80",
-    "5: blue": "#66ccff",
-    "6: violet": "#f964ff"
+    "3: gelb": "#ffff00",
+    "4: grün": "#00ff80",
+    "5: blau": "#66ccff",
+    "6: violett": "#f964ff"
 };
   
 
