@@ -188,7 +188,7 @@ const makeAndPrintGreedyColoring = (): void => {
                             p2 += GraphState.nodeIDToLabel(nb) + languages.current.Has + colAdjList[neighbor] + "; \t";
                         }
 
-                        p2 += "--> " + help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(curNode), colors[curNode] + "");
+                        p2 += "&rarr " + help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(curNode), colors[curNode] + "");
                         p2 += "\n";
 
                     }
