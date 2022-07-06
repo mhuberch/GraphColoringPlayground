@@ -49,7 +49,7 @@ export default {
     BuildGraphs: "Neuen Graph erstellen",
     LoadGraphs: "Graph aus Aufgaben laden",
     SetBackground: "Hintergrund laden",
-    GraphTools: "Graph Tools",
+    GraphTools: "Graphwerkzeuge",
     StopTasks: "Prozesse anhalten",
 
     IncNodeLabel: "Aufsteigend sortiert nach Namen",
