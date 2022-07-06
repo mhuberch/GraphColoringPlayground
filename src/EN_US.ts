@@ -50,6 +50,9 @@ export default {
     LoadGraphs: "Load Exercise Graphs",
     SetBackground: "Load Background",
     GraphTools: "Graph Tools",
+    StopTasks: "Stop Tasks",
+
+    IncNodeLabel: "Ordered by Node Label (increasing)",
     
     NumberOfVertices: "Number of Vertices: $1",
     ChromaticNumberIs: "Chromatic Number: $1",

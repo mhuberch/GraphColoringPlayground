@@ -5,9 +5,9 @@ export default {
     GraphColoringGreedy: "Greedy Färbung",
     ColoringMode: "Reihenfolge der Knoten für die Färbung:",
     GraphColoringWelsh: "Knotenfärbung Welsh-Powell",
-    kColoringBruteForce: "k-Färbbarkeit Bruteforce",
-    kColoringBacktracking: "k-Färbbarkeit Backtracking",
-    kColoringConstrainedBacktracking: "k-Färbbarkeit mit Vorgaben",
+    kColoringBruteForce: "k-Färbung Bruteforce",
+    kColoringBacktracking: "k-Färbung Backtracking",
+    kColoringConstrainedBacktracking: "k-Färbung mit Vorgaben",
     ConnectedComponents: "Zusammenhangskomponenten",
     StronglyConnectedComponents: "Starke Zusammenhangskomponenten",
     BFS: "Kürzester Weg Breitensuche",
@@ -50,6 +50,9 @@ export default {
     LoadGraphs: "Graph aus Aufgaben laden",
     SetBackground: "Hintergrund laden",
     GraphTools: "Graph Tools",
+    StopTasks: "Prozesse anhalten",
+
+    IncNodeLabel: "Aufsteigend sortiert nach Namen",
     
     NumberOfVertices: "Anzahl Knoten: $1",
     ChromaticNumberIs: "Chromatische Zahl: $1",
@@ -90,8 +93,8 @@ export default {
     SinkNode: "Senke",
     Go: "Los",
     Help: "Hilfe",
-    AboutShort: "About",
-    About: "About Graph Coloring Playground",
+    AboutShort: "Über",
+    About: "Über Graph Coloring Playground",
     TaskAlreadyRunning: "Algorithmus läuft noch/schon",
     TaskAlreadyRunningBody: "$1 läuft noch/schon. Bitte zuerst warten, bis er fertig ist.",
     Options: "Optionen",
@@ -102,7 +105,7 @@ export default {
         "GitHub issues</a> um Fehler oder Vorschläge zu melden..</h4>",
     AboutHTML: "<i>Elektronische Lernumgebung für Knotenfärbung basierend auf <a href='https://github.com/MikeDombo/graphPlayground' target='_blank'>GraphPlayground</a>" + 
         " von Michael Dombrowski. Das dazugehörige Unterrichtsmaterial findet sich unter " +
-        "<a href='https://www.abz.inf.ethz.ch/maturitatsschulen/unterrichtsmaterialien/' target='_blank'>ABZ Webpage</a>. </i>" +
+        "<a href='https://www.abz.inf.ethz.ch/maturitatsschulen/unterrichtsmaterialien/' target='_blank'>ABZ Webpage</a>. Kompletter Quellcode und Kontakt auf <a href='https://github.com/mhuberch/GraphColoringPlayground' target='_blank'>GitHub</a> </i>" +
         " Martin Huber, 2022",
     GraphPhysics: "Darstellung mit minimaler potentieller Energie",
     DiGraph: "Gerichteter Graph",

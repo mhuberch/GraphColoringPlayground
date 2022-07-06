@@ -1,13 +1,13 @@
-import EN_US from "src/EN_US";
+import DE from "src/DE";
 
 export enum Languages {
-    EN_US = "EN_US",
+    DE = "DE",
 
 }
 
-export let current = {} as typeof EN_US;
+export let current = {} as typeof DE;
 
 
 export const setLanguage = async () => {
-    current = (await import(`../${window.settings.getOption("language") || Languages.EN_US}.ts`)).default;
+    current = (await import(`../${window.settings.getOption("language") || Languages.DE}.ts`)).default;
 };
