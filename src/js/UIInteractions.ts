@@ -114,7 +114,7 @@ const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean):
             });
         },
         title,
-        languages.current.Go,
+        languages.current.Go, languages.current.Cancel,
         [
             {
                 label: languages.current.StartNode,
@@ -233,7 +233,7 @@ const makeAndPrintGreedyColoring = (): void => {
             });
         },
         languages.current.GraphColoringGreedy,
-        languages.current.Go,
+        languages.current.Go, languages.current.Cancel,
         [
             {
                 type: "select",
@@ -416,7 +416,7 @@ const makeAndPrintkColoringExact = (mode: number, constrainedColoring: boolean):
             });
         },
         (mode === 0) ? languages.current.kColoringBruteForce : languages.current.kColoringBacktracking,
-        languages.current.Go,
+        languages.current.Go, languages.current.Cancel,
         options,
         ($modal) => {
             UIInteractions.isRunning[myName] = false;
@@ -710,7 +710,7 @@ export default class UIInteractions {
 
             },
             languages.current.Options,
-            languages.current.Save,
+            languages.current.Save, languages.current.Cancel,
             [
                 {
                     label: languages.current.GraphPhysics,
@@ -1143,7 +1143,7 @@ export default class UIInteractions {
                 });
             },
             languages.current.FordFulkersonMaxFlowMinCut,
-            languages.current.Go,
+            languages.current.Go, languages.current.Cancel,
             [
                 {
                     label: languages.current.SourceNode,
