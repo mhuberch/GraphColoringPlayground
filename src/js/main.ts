@@ -77,30 +77,15 @@ interface VisEdgeInternal {
     label?: string
 }
 
-// const customColorPallete = {
-//     "not colored": "DEFAULT",
-//     "1: red": "#ff3f3f",
-//     "2: orange": "#ffbf64",
-//     "3: yellow": "#ffff00",
-//     "4: green": "#00ff80",
-//     "5: blue": "#66ccff",
-//     "6: violet": "#f964ff"
-// };
-
 const customColorPallete = {
-    "ohne Farbe": "DEFAULT",
-    "1: rot": "#ff3f3f",
-    "2: orange": "#ffbf64",
-    "3: gelb": "#ffff00",
-    "4: grün": "#00ff80",
-    "5: blau": "#66ccff",
-    "6: violett": "#f964ff"
+    [languages.current.Color0]: "DEFAULT",
+    [languages.current.Color1]: "#ff3f3f",
+    [languages.current.Color2]: "#ffbf64",
+    [languages.current.Color3]: "#ffff00",
+    [languages.current.Color4]: "#00ff80",
+    [languages.current.Color5]: "#66ccff",
+    [languages.current.Color6]: "#f964ff"
 };
-  
-
- //    { type: "select", label: "Color", optionValues: [0, 1, 2, 3, 4, 5], optionText: ["red", "orange", "yellow", "green", "blue", "violet"], initialValue: 0}
-                //]);
-// const basicColors = ['#ff3f3f ', '#ffbf64', '#ffff00', '#00ff80', '#00a0ff', '#f964ff'];
 
 const self: MainI = {
     graphState: GraphState,

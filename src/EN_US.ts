@@ -53,6 +53,17 @@ export default {
     StopTasks: "Stop Tasks",
 
     IncNodeLabel: "Ordered by Node Label (increasing)",
+    DecNodeLabel: "Ordered by Node Label (decreasing)",
+    IncDegree: "Ordered by Degree (increasing)",
+    DecDegree: "Ordered by Degree (decreasing)",
+
+    Color0: "not colored",
+    Color1: "1: red",
+    Color2: "2: orange",
+    Color3: "3: yellow",
+    Color4: "4: green",
+    Color5: "5: blue",
+    Color6: "6: violet",
     
     NumberOfVertices: "Number of Vertices: $1",
     ChromaticNumberIs: "Chromatic Number: $1",

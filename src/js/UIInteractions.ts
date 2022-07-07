@@ -17,25 +17,15 @@ interface AlgorithmI {
     display: boolean;
 }
 
-// const possibleColorModes = {
-//     "Ordered by Node Label (increasing)": 1,
-//     "Ordered by Node Label (decreasing)": 2,
-//     "Ordered by Degree (increasing)": 3,
-//     "Ordered by Degree (decreasing)": 4
-// }
-
-// const possibleColorModesArray = ["", "Ordered by Node Label (increasing)", "Ordered by Node Label (decreasing)", 
-//                                 "Ordered by Degree (increasing)", "Ordered by Degree (decreasing)"];
-
 const possibleColorModes = {
-    "Aufsteigend sortiert nach Namen": 1,
-    "Absteigend sortiert nach Namen": 2,
-    "Aufsteigend sortiert nach Knotengrad": 3,
-    "Absteigend sortiert nach Knotengrad": 4
+    [languages.current.IncNodeLabel]: 1,
+    [languages.current.DecNodeLabel]: 2,
+    [languages.current.IncDegree]: 3,
+    [languages.current.DecDegree]: 4
 }
 
-const possibleColorModesArray = ["", "Aufsteigend sortiert nach Namen", "Absteigend sortiert nach Namen", 
-                                    "Aufsteigend sortiert nach Knotengrad", "Absteigend sortiert nach Knotengrad"];
+const possibleColorModesArray = ["", languages.current.IncNodeLabel, languages.current.DecNodeLabel, languages.current.IncDegree, languages.current.DecDegree];
+
 
 const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean): void => {
     const myName = languages.current.ShortestPath;

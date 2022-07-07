@@ -53,6 +53,17 @@ export default {
     StopTasks: "Prozesse anhalten",
 
     IncNodeLabel: "Aufsteigend sortiert nach Namen",
+    DecNodeLabel: "Absteigend sortiert nach Namen",
+    IncDegree: "Aufsteigend sortiert nach Knotengrad",
+    DecDegree: "Absteigend sortiert nach Knotengrad",
+
+    Color0: "ohne Farbe",
+    Color1: "1: rot",
+    Color2: "2: orange",
+    Color3: "3: gelb",
+    Color4: "4: grün",
+    Color5: "5: blau",
+    Color6: "6: violett",
     
     NumberOfVertices: "Anzahl Knoten: $1",
     ChromaticNumberIs: "Chromatische Zahl: $1",
