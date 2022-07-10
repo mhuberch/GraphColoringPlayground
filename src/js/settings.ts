@@ -10,20 +10,6 @@ interface SettingsList {
     [index: string]: boolean;
 }
 
-// "smoothEdges"),
-//                     type: "checkbox"
-//                 },
-                
-//                 {
-//                     label: languages.current.FastColorChange,
-//                     initialValue: window.settings.getOption("fastColorChange"),
-//                     type: "checkbox"
-//                 },
-
-//                 {
-//                     label: languages.current.StepByStepInfo,
-//                     initialValue: window.settings.getOption("stepByStepInfo"),
-
 export default class Settings {
     private static readonly defaults: SettingsList = {
         nodePhysics: false,

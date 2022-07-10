@@ -151,10 +151,6 @@ const self: MainI = {
                     },
                     { type: "text", label: languages.current.LabelLabel, initialValue: data.label },
 
-                //    { type: "select", label: "Color", optionValues: [0, 1, 2, 3, 4, 5], optionText: ["red", "orange", "yellow", "green", "blue", "violet"], initialValue: 0}
-                //]);
-
-
                 ];
                 if (customColors) {
                     options.push({ type: "select", label: languages.current.Color, optionText: Object.keys(customColorPallete), optionValues: Object.values(customColorPallete), initialValue: initialColor });
