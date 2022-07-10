@@ -7,7 +7,6 @@ import GraphImmut from './classes/GraphImmut/GraphImmut';
 import { EdgeImmutPlain } from "./classes/GraphImmut/EdgeImmut";
 import NodeImmut, { NodeImmutPlain } from "./classes/GraphImmut/NodeImmut";
 import { GraphPlain } from "./util/predefinedGraphs";
-import * as languages from "./languages";
 
 interface UpToDateProperties {
     name: string;
@@ -182,10 +181,10 @@ export default class GraphState {
     static printGraphPropertiesSimple(properties: any) {
         let p = "";
         if (properties["vertices"] !== null) {
-            p +=`${help.toTitleCase(languages.current.Vertex)}: ${properties["vertices"]}\n`
+            p +=`${help.toTitleCase("Knoten")}: ${properties["vertices"]}\n`
         }
         if (properties["edges"] !== null) {
-            p +=`${help.toTitleCase(languages.current.Edges)}: ${properties["edges"]}\n`
+            p +=`${help.toTitleCase("Kanten")}: ${properties["edges"]}\n`
         }
         p = p.trim();
         p = help.htmlEncode(p);
