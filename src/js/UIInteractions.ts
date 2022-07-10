@@ -17,16 +17,6 @@ interface AlgorithmI {
     display: boolean;
 }
 
-const possibleColorModes = {
-    [languages.current.IncNodeLabel]: 1,
-    [languages.current.DecNodeLabel]: 2,
-    [languages.current.IncDegree]: 3,
-    [languages.current.DecDegree]: 4
-}
-
-const possibleColorModesArray = ["", languages.current.IncNodeLabel, languages.current.DecNodeLabel, languages.current.IncDegree, languages.current.DecDegree];
-
-
 const makeAndPrintShortestPath = (title: string, fn: string, weighted: boolean): void => {
     const myName = languages.current.ShortestPath;
     if (UIInteractions.isRunning[myName]) {
@@ -132,6 +122,16 @@ const makeAndPrintGreedyColoring = (): void => {
         return;
     }
     UIInteractions.isRunning[myName] = true;
+
+    const possibleColorModes = {
+        [languages.current.IncNodeLabel]: 1,
+        [languages.current.DecNodeLabel]: 2,
+        [languages.current.IncDegree]: 3,
+        [languages.current.DecDegree]: 4
+    }
+    
+    const possibleColorModesArray = ["", languages.current.IncNodeLabel, languages.current.DecNodeLabel, languages.current.IncDegree, languages.current.DecDegree];
+    
 
     help.showFormModal(
         ($modal, values) => {
