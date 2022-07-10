@@ -64,6 +64,9 @@ export default {
     Color4: "4: green",
     Color5: "5: blue",
     Color6: "6: violet",
+
+    Vertices: "Vertices",
+    Edges: "Edges",
     
     NumberOfVertices: "Number of Vertices: $1",
     ChromaticNumberIs: "Chromatic Number: $1",

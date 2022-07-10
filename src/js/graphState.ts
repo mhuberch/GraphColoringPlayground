@@ -7,6 +7,7 @@ import GraphImmut from './classes/GraphImmut/GraphImmut';
 import { EdgeImmutPlain } from "./classes/GraphImmut/EdgeImmut";
 import NodeImmut, { NodeImmutPlain } from "./classes/GraphImmut/NodeImmut";
 import { GraphPlain } from "./util/predefinedGraphs";
+import * as languages from "./languages";
 
 interface UpToDateProperties {
     name: string;
@@ -180,12 +181,12 @@ export default class GraphState {
 
     static printGraphPropertiesSimple(properties: any) {
         let p = "";
-        const simpleProperties = ["vertices", "edges"];
-        simpleProperties.forEach((k) => {
-            if (properties[k] !== null) {
-                p += `${help.toTitleCase(k)}: ${properties[k]}\n`;
-            }
-        });
+        if (properties["vertices"] !== null) {
+            p +=`${help.toTitleCase(languages.current.Vertex)}: ${properties["vertices"]}\n`
+        }
+        if (properties["edges"] !== null) {
+            p +=`${help.toTitleCase(languages.current.Edges)}: ${properties["edges"]}\n`
+        }
         p = p.trim();
         p = help.htmlEncode(p);
         document.getElementById("graphProps")!.innerHTML = `<p class='nav-link'>${p}</p>`;

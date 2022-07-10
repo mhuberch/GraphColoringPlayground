@@ -64,6 +64,9 @@ export default {
     Color4: "4: grün",
     Color5: "5: blau",
     Color6: "6: violett",
+
+    Vertices: "Knoten",
+    Edges: "Kanten",
     
     NumberOfVertices: "Anzahl Knoten: $1",
     ChromaticNumberIs: "Chromatische Zahl: $1",
