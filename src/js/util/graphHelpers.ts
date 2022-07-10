@@ -5,7 +5,6 @@ import help from './genericHelpers';
 import {EdgeImmutPlain} from "../classes/GraphImmut/EdgeImmut";
 import NodeImmut, {NodeImmutPlain} from "../classes/GraphImmut/NodeImmut";
 import GraphImmut from '../classes/GraphImmut/GraphImmut';
-import * as languages from "../languages";
 
 interface Degree {
     in: number;
@@ -61,20 +60,6 @@ export default {
             return prelabel.toString();
         }
     },
-
-    getCostumColorPallete : () => {
-        return  {
-            [languages.current.Color0]: "DEFAULT",
-            [languages.current.Color1]: "#ff3f3f",
-            [languages.current.Color2]: "#ffbf64",
-            [languages.current.Color3]: "#ffff00",
-            [languages.current.Color4]: "#00ff80",
-            [languages.current.Color5]: "#66ccff",
-            [languages.current.Color6]: "#f964ff"
-        };             
-    },
-    
-
 
     compareColor : (color1: string | undefined | null, color2: string | undefined | null) => {
         if (color1 === null || color1 === undefined) {

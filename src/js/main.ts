@@ -116,7 +116,15 @@ const self: MainI = {
 
                 ];
                 if (customColors) {
-                    const customColorPallete = gHelp.getCostumColorPallete();
+                    const customColorPallete = {
+                        [languages.current.Color0]: "DEFAULT",
+                        [languages.current.Color1]: "#ff3f3f",
+                        [languages.current.Color2]: "#ffbf64",
+                        [languages.current.Color3]: "#ffff00",
+                        [languages.current.Color4]: "#00ff80",
+                        [languages.current.Color5]: "#66ccff",
+                        [languages.current.Color6]: "#f964ff"
+                    }; 
                     options.push({ type: "select", label: languages.current.Color, optionText: Object.keys(customColorPallete), optionValues: Object.values(customColorPallete) });
                 }
                 const $popup = help.makeFormModal(languages.current.AddNode, languages.current.Save, languages.current.Cancel, options);
@@ -145,7 +153,15 @@ const self: MainI = {
 
                 ];
                 if (customColors) {
-                    const customColorPallete = gHelp.getCostumColorPallete();
+                    const customColorPallete = {
+                            [languages.current.Color0]: "DEFAULT",
+                            [languages.current.Color1]: "#ff3f3f",
+                            [languages.current.Color2]: "#ffbf64",
+                            [languages.current.Color3]: "#ffff00",
+                            [languages.current.Color4]: "#00ff80",
+                            [languages.current.Color5]: "#66ccff",
+                            [languages.current.Color6]: "#f964ff"
+                    };  
                     options.push({ type: "select", label: languages.current.Color, optionText: Object.keys(customColorPallete), optionValues: Object.values(customColorPallete), initialValue: initialColor });
                 }
                 const $popup = help.makeFormModal(languages.current.EditNode, languages.current.Save, languages.current.Cancel, options);
