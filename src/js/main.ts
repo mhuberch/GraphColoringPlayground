@@ -77,21 +77,6 @@ interface VisEdgeInternal {
     label?: string
 }
 
-const customColorPallete = {
-    "not colored": "DEFAULT",
-    "1: red": "#ff3f3f",
-    "2: orange": "#ffbf64",
-    "3: yellow": "#ffff00",
-    "4: green": "#00ff80",
-    "5: blue": "#66ccff",
-    "6: violet": "#f964ff"
-};
-  
-
- //    { type: "select", label: "Color", optionValues: [0, 1, 2, 3, 4, 5], optionText: ["red", "orange", "yellow", "green", "blue", "violet"], initialValue: 0}
-                //]);
-// const basicColors = ['#ff3f3f ', '#ffbf64', '#ffff00', '#00ff80', '#00a0ff', '#f964ff'];
-
 const self: MainI = {
     graphState: GraphState,
     container: document.getElementById('network')!,
@@ -102,7 +87,7 @@ const self: MainI = {
             $modal.modal("hide");
             const value = parseFloat(vals[0]);
             GraphState.editEdge(data.from.id, data.to.id, value, parseFloat(data.label!));
-        }, languages.current.EditEdge, languages.current.Save, [
+        }, languages.current.EditEdge, languages.current.Save, languages.current.Cancel, [
             {
                 type: "numeric",
                 label: languages.current.WeightCapacity,
@@ -120,6 +105,7 @@ const self: MainI = {
         manipulation: {
             addNode: async (data, callback) => {
                 const customColors = window.settings.getOption("customColors");
+           
                 const options: ModalFormRow[] = [
                     {
                         type: "html",
@@ -130,9 +116,18 @@ const self: MainI = {
 
                 ];
                 if (customColors) {
+                    const customColorPallete = {
+                        [languages.current.Color0]: "DEFAULT",
+                        [languages.current.Color1]: "#ff3f3f",
+                        [languages.current.Color2]: "#ffbf64",
+                        [languages.current.Color3]: "#ffff00",
+                        [languages.current.Color4]: "#00ff80",
+                        [languages.current.Color5]: "#66ccff",
+                        [languages.current.Color6]: "#f964ff"
+                    }; 
                     options.push({ type: "select", label: languages.current.Color, optionText: Object.keys(customColorPallete), optionValues: Object.values(customColorPallete) });
                 }
-                const $popup = help.makeFormModal(languages.current.AddNode, languages.current.Save, options);
+                const $popup = help.makeFormModal(languages.current.AddNode, languages.current.Save, languages.current.Cancel, options);
 
                 $popup.on("click", ".btn-success", () => {
                     $popup.modal("hide");
@@ -156,15 +151,20 @@ const self: MainI = {
                     },
                     { type: "text", label: languages.current.LabelLabel, initialValue: data.label },
 
-                //    { type: "select", label: "Color", optionValues: [0, 1, 2, 3, 4, 5], optionText: ["red", "orange", "yellow", "green", "blue", "violet"], initialValue: 0}
-                //]);
-
-
                 ];
                 if (customColors) {
+                    const customColorPallete = {
+                            [languages.current.Color0]: "DEFAULT",
+                            [languages.current.Color1]: "#ff3f3f",
+                            [languages.current.Color2]: "#ffbf64",
+                            [languages.current.Color3]: "#ffff00",
+                            [languages.current.Color4]: "#00ff80",
+                            [languages.current.Color5]: "#66ccff",
+                            [languages.current.Color6]: "#f964ff"
+                    };  
                     options.push({ type: "select", label: languages.current.Color, optionText: Object.keys(customColorPallete), optionValues: Object.values(customColorPallete), initialValue: initialColor });
                 }
-                const $popup = help.makeFormModal(languages.current.EditNode, languages.current.Save, options);
+                const $popup = help.makeFormModal(languages.current.EditNode, languages.current.Save, languages.current.Cancel, options);
 
                 $popup.on("click", ".btn-success", () => {
                     $popup.modal("hide");

@@ -61,7 +61,6 @@ export default {
         }
     },
 
-
     compareColor : (color1: string | undefined | null, color2: string | undefined | null) => {
         if (color1 === null || color1 === undefined) {
             color1 = "DEFAULT";

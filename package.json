@@ -1,7 +1,7 @@
 {
     "name": "graphPlayground",
     "version": "2.0.0",
-    "description": "A single-page webapp to build graphs and run algorithms on them with no server-side components.",
+    "description": "A single-page webapp to build graphs and run coloring algorithms on them with no server-side components.",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/MikeDombo/graphPlayground.git"

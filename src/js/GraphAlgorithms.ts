@@ -24,9 +24,9 @@ export type ConnectedComponentResult = { components: { [key: number]: number }; 
 
 export type CheckingColorResult = { from: number[]; to: number[]; num: number; confList: number[][]};
 
-export type GetDegreesResult = { degrees: number[] };
+export type GetDegreesResult = { degrees: number[], maxDegree: number };
 
-export type kColorResult = { kColor: number; kColorable: boolean; color: number[]; totalSteps: number; history: number[][]};
+export type kColorResult = { kColor: number; kColorable: boolean; color: number[]; given: boolean[]; totalSteps: number; history: number[][]};
 
 export type kColorResultRecursive = { kColorable: boolean; color: number[]; totalSteps: number; history: number[][]};
 
@@ -78,9 +78,10 @@ export default class GraphAlgorithms {
 
     public static getAllDegreesWrapper = (G: GraphImmut = GraphState.graph): GetDegreesResult => {
         
-        const arr1 = G.getAllInOutDegrees();
-        
-        return { degrees: arr1 };
+        const allDegrees = G.getAllInOutDegrees();
+        const maxDegree = Math.max(...allDegrees);
+
+        return { degrees: allDegrees, maxDegree };
     }
 
     public static colorNetworkGreedy = (orderingMode: string, G: GraphImmut = GraphState.graph): { colors: {}; vertexOrder: number[]; chromaticNumber: number; history: { nodeToColor: number; colorsOfNeighbors: { [key: number]: number; }; }[]} => {
@@ -178,7 +179,7 @@ export default class GraphAlgorithms {
 
         }
 
-        const chromaticNumber = genericH.max(genericH.flatten(colorIndex) as any[]) + 1;
+        const chromaticNumber = genericH.max(genericH.flatten(colorIndex) as any[]);
 
         return { colors: colorIndex, vertexOrder, chromaticNumber, history };
     };
@@ -323,6 +324,7 @@ export default class GraphAlgorithms {
         const V = G.getNumberOfNodes();
         const color = new Array(V).fill(0);
         const given = new Array(V).fill(false);
+        
 
         if (constrainedColoring) {
             const givenColorList : { [node: number] : number } = G.getNonDefaultColor();
@@ -334,6 +336,8 @@ export default class GraphAlgorithms {
                 }
               );
         }
+
+        const colorBefore = [...color];
 
         const history : number[][] = [];
 
@@ -348,10 +352,10 @@ export default class GraphAlgorithms {
         }
 
         if (recAnswer.kColorable) {
-            return { kColor, kColorable: true, color: recAnswer.color, totalSteps: recAnswer.totalSteps, history };
+            return { kColor, kColorable: true, color: recAnswer.color, given, totalSteps: recAnswer.totalSteps, history };
         }
 
-        return { kColor, kColorable: false, color: [], totalSteps: recAnswer.totalSteps, history };
+        return { kColor, kColorable: false, color: colorBefore, given, totalSteps: recAnswer.totalSteps, history };
     }
 
 
