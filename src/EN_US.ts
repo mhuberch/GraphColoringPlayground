@@ -75,6 +75,7 @@ export default {
     IfDesiredActiveStepByStep: "If desired, activate 'Step-by-Step Info' in the 'Options' and rerun the coloring algorithm.",
     StepByStepOutput: "Step-by-Step output: ('color 0' means not yet colored)",
     VertexGetsColor: "Vertex $1 gets color $2",
+    VertexGetsThereforeColor: "Vertex $1 gets thus color $2",
     RecolorAddColors: "The coloring needs more than the six standard colors. Choose randomly new variantes of the additional colors by pressing the button.",
     GraphColoringTitle: "Graph Coloring Using Welsh-Powell Algorithm",
     GraphColoringGreedyTitle: "Graph Coloring Using Greedy Algorithm",

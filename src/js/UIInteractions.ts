@@ -188,7 +188,7 @@ const makeAndPrintGreedyColoring = (): void => {
                             p2 += GraphState.nodeIDToLabel(nb) + languages.current.Has + colAdjList[neighbor] + "; \t";
                         }
 
-                        p2 += "&rarr " + help.stringReplacement(languages.current.VertexGetsColor, GraphState.nodeIDToLabel(curNode), colors[curNode] + "");
+                        p2 += "\u2192 " + help.stringReplacement(languages.current.VertexGetsThereforeColor, GraphState.nodeIDToLabel(curNode), colors[curNode] + "");
                         p2 += "\n";
 
                     }
@@ -365,7 +365,7 @@ const makeAndPrintkColoringExact = (mode: number, constrainedColoring: boolean):
                                      
 
                     for (let step = 0; step < a.history.length; step++) {
-                        p2 += languages.current.Step + (step+1) + ": " + (step < 10 ? "\t\t": "\t") + a.history[step].toString().replace(/,/g, '\t') + "\n";
+                        p2 += languages.current.Step + (step+1) + ": " + (step > 100 ? "": "\t") + a.history[step].toString().replace(/,/g, '\t') + "\n";
                     }
                     
 
