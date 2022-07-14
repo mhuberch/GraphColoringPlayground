@@ -149,7 +149,7 @@ export default {
     LoadWheel: "Radgraphen erstellen",
     LoadHypercube: "Hyperwürfel-Graphen erstellen",
     LoadCustom: "Eigenen Graphen erstellen",
-    LoadRandom: "Zufälligen Graph erstellen",
+    LoadRandom: "Zufälligen Graphen erstellen",
     Algorithms: "Algorithmen",
     GraphProperties: "Grapheigenschaften",
     Results: "Resultate",
