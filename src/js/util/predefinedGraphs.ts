@@ -94,6 +94,27 @@ const wheelGraph = (V: number): Readonly<GraphPlain> => {
     return help.deepFreeze({ nodes, edges, directed: false, weighted: false } as GraphPlain);
 };
 
+const randomGraph = (V: number, p: number): Readonly<GraphPlain> => {
+    const edges = [];
+    const nodes = [];
+
+    for (let i = 0; i < V; i++) {
+        nodes.push({ id: i, label: gHelp.generateLabelFromNumber(i) });
+    }
+
+    for (let i = 0; i < V; i++) {
+        for (let j = 0; j < i; j++) {
+            if (Math.random() < p/100) {
+                edges.push({ from: i, to: j });
+            }
+        }
+    }
+
+    // MH: TODO NOT REALLY CLEAN
+    window.settings.changeOption("customColors", true);
+    return help.deepFreeze({ nodes, edges, directed: false, weighted: false } as GraphPlain);
+};
+
 const hypercubeGraph = (D: number): Readonly<GraphPlain> => {
     const edges: EdgeImmutPlain[] = [];
     const nodes: NodeImmutPlain[] = [];
@@ -207,6 +228,29 @@ export default class PredefinedGraphs {
                     return v >= 0 || languages.current.NumberOfVerticesNonNegativeError;
                 }
             }]);
+    }
+
+    public static WheelDefault(): Readonly<GraphPlain> {
+        return wheelGraph(6);
+    }
+
+    public static RandomGraph(): void {
+        help.showFormModal(($modal, vals) => {
+            $modal.modal("hide");
+            window.main.setData(randomGraph(vals[0], vals[1]), false, true, true);
+        },
+            languages.current.ConfigurableRandomGraph, languages.current.Go, languages.current.Cancel,
+            [{
+                type: "numeric", initialValue: 5, label: languages.current.NumberOfVerticesLabel, validationFunc: (v) => {
+                    return v >= 0 || languages.current.NumberOfVerticesNonNegativeError;
+                }
+            },
+            {
+                type: "numeric", initialValue: 50, label: languages.current.PercentageOfVerticesLabel, validationFunc: (v) => {
+                    return (v >= 0 && v <= 100) || languages.current.NumberOfPercentageError;
+                }
+            },
+            ]);
     }
 
     public static Hypercube(): void {

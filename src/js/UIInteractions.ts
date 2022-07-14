@@ -560,6 +560,10 @@ export default class UIInteractions {
             const predefined = (await import("./util/predefinedGraphs")).default;
             predefined.Wheel();
         });
+        makeSimpleClickListener("#load-random-link", async () => {
+            const predefined = (await import("./util/predefinedGraphs")).default;
+            predefined.RandomGraph();
+        });
         makeSimpleClickListener("#load-hypercube-link", async () => {
             const predefined = (await import("./util/predefinedGraphs")).default;
             predefined.Hypercube();
@@ -653,6 +657,7 @@ export default class UIInteractions {
         (document.querySelector("#load-wheel-link") as HTMLAnchorElement).innerText = languages.current.LoadWheel;
         (document.querySelector("#load-hypercube-link") as HTMLAnchorElement).innerText = languages.current.LoadHypercube;
         (document.querySelector("#load-custom-link") as HTMLAnchorElement).innerText = languages.current.LoadCustom;
+        (document.querySelector("#load-random-link") as HTMLAnchorElement).innerText = languages.current.LoadRandom;
 
         (document.querySelector("#algorithms-label") as HTMLHeadElement).innerText = languages.current.Algorithms;
 

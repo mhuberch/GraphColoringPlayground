@@ -149,6 +149,7 @@ export default {
     LoadWheel: "Build Wheel Graph",
     LoadHypercube: "Build Hypercube Graph",
     LoadCustom: "Build Custom Graph",
+    LoadRandom: "Build Random Graph",
     Algorithms: "Algorithms",
     GraphProperties: "Graph Properties",
     Results: "Results",
@@ -194,10 +195,13 @@ export default {
     NumberOfVerticesNonNegativeError: "Number of vertices must be non-negative",
     NumberOfColorsPositiveError: "Number of colors must be strictly positive",
     NumberOfStepsPositiveError: "Number of documented steps must be strictly positive",
+    ConfigurableRandomGraph: "Configurable Random Graph",
+    PercentageOfVerticesLabel: "Probability in percents for an edge between two nodes",
     ConfigurableGraph: "Configurable Graph",
     ConfigurableHypercubeGraph: "Configurable Hypercube Graph",
     NumberOfDimensionsLabel: "Number of Dimensions",
     NumberOfDimensionsNonNegativeError: "Number of dimensions must be non-negative",
+    NumberOfPercentageError: "Percentage has to be between 0 and 100",
 
     // VisJS locale
     VisLocale: {

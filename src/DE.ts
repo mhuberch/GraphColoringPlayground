@@ -149,6 +149,7 @@ export default {
     LoadWheel: "Radgraphen erstellen",
     LoadHypercube: "Hyperwürfel-Graphen erstellen",
     LoadCustom: "Eigenen Graphen erstellen",
+    LoadRandom: "Zufälligen Graph erstellen",
     Algorithms: "Algorithmen",
     GraphProperties: "Grapheigenschaften",
     Results: "Resultate",
@@ -194,10 +195,13 @@ export default {
     NumberOfVerticesNonNegativeError: "Anzahl Knoten muss nicht-negativ sein",
     NumberOfColorsPositiveError: "Anzahl Farben muss grösser als null sein",
     NumberOfStepsPositiveError: "Anzal dokumentierter Schritte muss strikt positiv sein",
+    ConfigurableRandomGraph: "Konfigurierbarer zufälliger Graph",
+    PercentageOfVerticesLabel: "Wahrscheinlichkeit in Prozent für eine Kante zwischen zwei Knoten",
     ConfigurableGraph: "Konfigurierbarer Graph",
     ConfigurableHypercubeGraph: "Konfigurierbarer Hyperwürfel-Graph",
     NumberOfDimensionsLabel: "Dimension",
     NumberOfDimensionsNonNegativeError: "Dimension muss nicht-negativ sein",
+    NumberOfPercentageError: "Prozentsatz muss zwischen 0 und 100 sein",
 
     // VisJS locale
     VisLocale: {

@@ -46,7 +46,7 @@ languages.setLanguage().then(() => {
     if (loadDefault) {
         (async () => {
             const predefined = (await import("./util/predefinedGraphs")).default;
-            main.setData(predefined.Petersen(), false, true, true);
+            main.setData(predefined.WheelDefault(), false, true, true);
         })();
     }
 });
