@@ -224,7 +224,7 @@ export default class PredefinedGraphs {
         },
             languages.current.ConfigurableWheelGraph, languages.current.Go, languages.current.Cancel,
             [{
-                type: "numeric", initialValue: 5, label: languages.current.NumberOfVerticesLabel, validationFunc: (v) => {
+                type: "numeric", initialValue: 5, label: languages.current.NumberOfOuterVerticesLabel, validationFunc: (v) => {
                     return v >= 0 || languages.current.NumberOfVerticesNonNegativeError;
                 }
             }]);

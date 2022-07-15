@@ -192,6 +192,7 @@ export default {
     ConfigurableCycleGraph: "Configurable Cycle Graph",
     ConfigurableWheelGraph: "Configurable Wheel Graph",
     NumberOfVerticesLabel: "Number of Vertices",
+    NumberOfOuterVerticesLabel: "Number of Outer Vertices",
     NumberOfVerticesNonNegativeError: "Number of vertices must be non-negative",
     NumberOfColorsPositiveError: "Number of colors must be strictly positive",
     NumberOfStepsPositiveError: "Number of documented steps must be strictly positive",

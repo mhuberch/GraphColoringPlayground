@@ -608,6 +608,10 @@ export default class UIInteractions {
             const imp = (await import("./dataImportExport")).default;
             imp.makeImportGraphExercise(3);
         });
+        makeSimpleClickListener("#import-graph-g5", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.makeImportGraphExercise(4);
+        });
         makeSimpleClickListener("#blank-background", async () => {
             const imp = (await import("./dataImportExport")).default;
             imp.setGraphBackground(0);
@@ -635,6 +639,7 @@ export default class UIInteractions {
         (document.querySelector("#import-graph-g2") as HTMLAnchorElement).innerText = "Graph G2";
         (document.querySelector("#import-graph-g3") as HTMLAnchorElement).innerText = "Graph G3";
         (document.querySelector("#import-graph-g4") as HTMLAnchorElement).innerText = "Graph G4";
+        (document.querySelector("#import-graph-g5") as HTMLAnchorElement).innerText = "Graph G5";
 
         (document.querySelector("#setBackgroundDropdown") as HTMLAnchorElement).innerText = languages.current.SetBackground;
         (document.querySelector("#blank-background") as HTMLAnchorElement).innerText = "Reset";
