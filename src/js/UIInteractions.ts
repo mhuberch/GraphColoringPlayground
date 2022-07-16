@@ -612,7 +612,7 @@ export default class UIInteractions {
             const imp = (await import("./dataImportExport")).default;
             imp.makeImportGraphExercise(4);
         });
-        makeSimpleClickListener("#import-graph-g5", async () => {
+        makeSimpleClickListener("#import-graph-g6", async () => {
             const imp = (await import("./dataImportExport")).default;
             imp.makeImportGraphExercise(5);
         });
@@ -628,9 +628,17 @@ export default class UIInteractions {
             const imp = (await import("./dataImportExport")).default;
             imp.setGraphBackground(2);
         });
-        makeSimpleClickListener("#import-sudoku-4x4", async () => {
+        makeSimpleClickListener("#import-sudoku-3x3", async () => {
             const imp = (await import("./dataImportExport")).default;
             imp.setGraphBackground(3);
+        });
+        makeSimpleClickListener("#import-sudoku-4x4", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.setGraphBackground(4);
+        });
+        makeSimpleClickListener("#import-sudoku-5x5", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.setGraphBackground(5);
         });
 
         (document.querySelector("#fileDropdown") as HTMLAnchorElement).innerText = languages.current.File;
@@ -650,7 +658,9 @@ export default class UIInteractions {
         (document.querySelector("#blank-background") as HTMLAnchorElement).innerText = "Reset";
         (document.querySelector("#import-verkehrskreuzung") as HTMLAnchorElement).innerText = "Verkehrskreuzung";
         (document.querySelector("#import-schweiz") as HTMLAnchorElement).innerText = "Karte der Schweiz";
+        (document.querySelector("#import-sudoku-3x3") as HTMLAnchorElement).innerText = "Sudoku 3x3";
         (document.querySelector("#import-sudoku-4x4") as HTMLAnchorElement).innerText = "Sudoku 4x4";
+        (document.querySelector("#import-sudoku-5x5") as HTMLAnchorElement).innerText = "Sudoku 5x5";
 
         (document.querySelector("#new-graph-layout-link") as HTMLAnchorElement).innerText = languages.current.NewGraphLayout;
         (document.querySelector("#load-default-color-link") as HTMLAnchorElement).innerText = languages.current.LoadDefaultColor;

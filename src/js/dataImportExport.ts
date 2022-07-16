@@ -110,7 +110,7 @@ const self = {
                           '{"nodes":[{"id":0,"label":"A","x":0,"y":0},{"id":1,"label":"B","x":-70,"y":-70},{"id":2,"label":"C","x":0,"y":-110},{"id":3,"label":"D","x":70,"y":-70},{"id":4,"label":"E","x":70,"y":70},{"id":5,"label":"F","x":-70,"y":70},{"id":6,"label":"G","x":0,"y":-170}],"edges":[{"from":5,"to":4,"weight":1},{"from":5,"to":0,"weight":1},{"from":0,"to":3,"weight":1},{"from":3,"to":1,"weight":1},{"from":1,"to":5,"weight":1},{"from":1,"to":0,"weight":1},{"from":0,"to":4,"weight":1},{"from":4,"to":3,"weight":1},{"from":1,"to":2,"weight":1},{"from":2,"to":3,"weight":1},{"from":1,"to":6,"weight":1},{"from":6,"to":3,"weight":1}],"directed":false,"weighted":false}',
                           '{"nodes":[{"id":0,"label":"A","x":-50,"y":0},{"id":1,"label":"B","x":50,"y":0},{"id":2,"label":"C","x":-100,"y":70},{"id":3,"label":"D","x":100,"y":70},{"id":4,"label":"E","x":-100,"y":-70},{"id":5,"label":"F","x":0,"y":-70},{"id":6,"label":"G","x":100,"y":-70}],"edges":[{"from":2,"to":3,"weight":1},{"from":4,"to":2,"weight":1},{"from":4,"to":5,"weight":1},{"from":5,"to":6,"weight":1},{"from":6,"to":3,"weight":1},{"from":1,"to":3,"weight":1},{"from":1,"to":6,"weight":1},{"from":2,"to":0,"weight":1},{"from":4,"to":0,"weight":1},{"from":0,"to":5,"weight":1},{"from":5,"to":1,"weight":1},{"from":0,"to":6,"weight":1},{"from":4,"to":1,"weight":1},{"from":0,"to":3,"weight":1},{"from":1,"to":2,"weight":1}],"directed":false,"weighted":false}',
                           '{"nodes":[{"id":0,"label":"A","x":-100,"y":-200},{"id":1,"label":"B","x":-100,"y":-100},{"id":2,"label":"C","x":0,"y":-200},{"id":3,"label":"D","x":0,"y":-100}],"edges":[{"from":0,"to":1,"weight":1},{"from":1,"to":3,"weight":1},{"from":3,"to":0,"weight":1},{"from":1,"to":2,"weight":1},{"from":2,"to":0,"weight":1}],"directed":false,"weighted":false}',
-                          '{"nodes":[{"id":0,"label":"C","x":100,"y":0},{"id":1,"label":"B","x":0,"y":-100},{"id":2,"label":"A","x":-100,"y":0},{"id":3,"label":"D","x":0,"y":100},{"id":4,"label":"E","x":-11,"y":0}],"edges":[{"from":0,"to":1,"weight":1},{"from":2,"to":3,"weight":1},{"from":4,"to":3,"weight":1},{"from":4,"to":1,"weight":1},{"from":2,"to":1,"weight":1},{"from":0,"to":3,"weight":1}],"directed":false,"weighted":false}'];
+                          '{"nodes":[{"id":0,"label":"C","x":100,"y":0},{"id":1,"label":"B","x":0,"y":-100},{"id":2,"label":"A","x":-100,"y":0},{"id":3,"label":"D","x":0,"y":100},{"id":4,"label":"E","x":0,"y":0}],"edges":[{"from":0,"to":1,"weight":1},{"from":2,"to":3,"weight":1},{"from":4,"to":3,"weight":1},{"from":4,"to":1,"weight":1},{"from":2,"to":1,"weight":1},{"from":0,"to":3,"weight":1}],"directed":false,"weighted":false}'];
 
         self.importByString(gstrings[exercisegraph], "json");
 
@@ -141,7 +141,23 @@ const self = {
             window.network.off("beforeDrawing");
             GraphState.repaint();
             window.network.on("beforeDrawing", function(ctx) {
+                ctx.drawImage(document.getElementById("sudoku3x3"), -350, -250);
+            });
+            GraphState.repaint();
+        }
+        else if (whichone === 4) {
+            window.network.off("beforeDrawing");
+            GraphState.repaint();
+            window.network.on("beforeDrawing", function(ctx) {
                 ctx.drawImage(document.getElementById("sudoku4x4"), -350, -250);
+            });
+            GraphState.repaint();
+        }
+        else if (whichone === 5) {
+            window.network.off("beforeDrawing");
+            GraphState.repaint();
+            window.network.on("beforeDrawing", function(ctx) {
+                ctx.drawImage(document.getElementById("sudoku5x5"), -350, -250);
             });
             GraphState.repaint();
         }
