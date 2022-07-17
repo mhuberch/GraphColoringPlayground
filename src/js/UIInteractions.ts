@@ -616,6 +616,30 @@ export default class UIInteractions {
             const imp = (await import("./dataImportExport")).default;
             imp.makeImportGraphExercise(5);
         });
+        makeSimpleClickListener("#import-graph-g7", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.makeImportGraphExercise(6);
+        });
+        makeSimpleClickListener("#import-graph-g8", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.makeImportGraphExercise(7);
+        });
+        makeSimpleClickListener("#import-graph-g9", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.makeImportGraphExercise(8);
+        });
+        makeSimpleClickListener("#import-graph-g10", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.makeImportGraphExercise(9);
+        });
+        makeSimpleClickListener("#import-graph-gch", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.makeImportGraphExercise(10);
+        });
+        makeSimpleClickListener("#import-graph-g4x4", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.makeImportGraphExercise(11);
+        });
         makeSimpleClickListener("#blank-background", async () => {
             const imp = (await import("./dataImportExport")).default;
             imp.setGraphBackground(0);
@@ -653,6 +677,12 @@ export default class UIInteractions {
         (document.querySelector("#import-graph-g4") as HTMLAnchorElement).innerText = "Graph G4";
         (document.querySelector("#import-graph-g5") as HTMLAnchorElement).innerText = "Graph G5";
         (document.querySelector("#import-graph-g6") as HTMLAnchorElement).innerText = "Graph G6";
+        (document.querySelector("#import-graph-g7") as HTMLAnchorElement).innerText = "Graph G7";
+        (document.querySelector("#import-graph-g8") as HTMLAnchorElement).innerText = "Graph G8";
+        (document.querySelector("#import-graph-g9") as HTMLAnchorElement).innerText = "Graph G9";
+        (document.querySelector("#import-graph-g10") as HTMLAnchorElement).innerText = "Graph G10";
+        (document.querySelector("#import-graph-gch") as HTMLAnchorElement).innerText = "Graph CH";
+        (document.querySelector("#import-graph-g4x4") as HTMLAnchorElement).innerText = "Graph 4x4";
 
         (document.querySelector("#setBackgroundDropdown") as HTMLAnchorElement).innerText = languages.current.SetBackground;
         (document.querySelector("#blank-background") as HTMLAnchorElement).innerText = "Reset";
