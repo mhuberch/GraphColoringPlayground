@@ -521,6 +521,7 @@ const self: MainI = {
 
             }
             if ("nodes" in p && p.nodes.length === 1 && !window.settings.getOption("fastColorChange")) {
+                lastNetworkClickEvent = null;
                 network.editNode();
             }
         });
