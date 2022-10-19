@@ -49,6 +49,14 @@
             .icon-undo:before {
                 content: "\f0e2";
             }
+            .tooltip-inner {
+                max-width: 200px;
+                padding: 3px 8px;
+                color: #fff;
+                text-align: center;
+                background-color: #000;
+                border-radius: .25rem;
+            }
         </style>
 
         <!-- Tracking Codes -->
@@ -117,7 +125,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a id="undo-link" class="nav-link" href="#" data-toggle="tooltip" data-placement="auto" title="Letzte Veränderung an den Knoten und Kanten den Graphen rückgängig machen. Beachte: Knotenfärbungen können nicht rückgängig gemacht werden.">
+                        <a id="undo-link" class="nav-link" href="#" 
+                        data-toggle="tooltip" data-placement="auto" title="Letzte Veränderung an den Knoten und Kanten den Graphen rückgängig machen. Beachte: Knotenfärbungen können nicht rückgängig gemacht werden.">
                             <span class="icon-undo" aria-hidden="true"></span>
                         </a>
                     </li>
@@ -194,6 +203,11 @@
                     <li class="nav-item active">
                         <a id="graph-options-link" class="nav-link" href="#">Options</a>
                     </li>
+                    <li class="nav-item active">
+                        <a id="help-link" class="nav-link" href="#"
+                        data-toggle="tooltip" data-placement="auto" title="Hilfe durch Tooltips"
+                        >Help</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav mr-sm-2">
                     <li class="nav-item active">
@@ -211,7 +225,9 @@
                 <div class="col-lg-2">
                     <div class="row col">
                         <div class="card-body">
-                            <h4 id="graph-tool-label">Graph Tools</h4>
+                            <h4 id="graph-tool-label"
+                            data-toggle="tooltip" data-placement="auto" title="Verschiedene grundlegende Eigenschaften und Färbungswerkzeuge."
+                            >Graph Tools</h4>
                             <nav class="nav flex-lg-column flex-row">
                                 <a id="load-default-color-link" class="nav-link" href="#">
                                     Reset Node Color
