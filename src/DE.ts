@@ -50,7 +50,7 @@ export default {
     LoadGraphs: "Graph aus Aufgaben laden",
     SetBackground: "Hintergrund laden",
     GraphTools: "Graphwerkzeuge",
-    StopTasks: "Prozesse anhalten",
+    StopTasks: "Prozesse stoppen",
 
     IncNodeLabel: "Aufsteigend sortiert nach Namen",
     DecNodeLabel: "Absteigend sortiert nach Namen",
