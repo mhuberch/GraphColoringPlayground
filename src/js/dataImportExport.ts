@@ -140,7 +140,7 @@ const self = {
             window.network.off("beforeDrawing");
             GraphState.repaint();
             window.network.on("beforeDrawing", function(ctx) {
-                ctx.drawImage(document.getElementById("schweiz"), -400, -300);
+                ctx.drawImage(document.getElementById("bundeslaender"), -250, -300);
             });
             GraphState.repaint();
         }
@@ -148,7 +148,7 @@ const self = {
             window.network.off("beforeDrawing");
             GraphState.repaint();
             window.network.on("beforeDrawing", function(ctx) {
-                ctx.drawImage(document.getElementById("sudoku3x3"), -350, -250);
+                ctx.drawImage(document.getElementById("schweiz"), -400, -300);
             });
             GraphState.repaint();
         }
@@ -156,11 +156,19 @@ const self = {
             window.network.off("beforeDrawing");
             GraphState.repaint();
             window.network.on("beforeDrawing", function(ctx) {
-                ctx.drawImage(document.getElementById("sudoku4x4"), -350, -250);
+                ctx.drawImage(document.getElementById("sudoku3x3"), -350, -250);
             });
             GraphState.repaint();
         }
         else if (whichone === 5) {
+            window.network.off("beforeDrawing");
+            GraphState.repaint();
+            window.network.on("beforeDrawing", function(ctx) {
+                ctx.drawImage(document.getElementById("sudoku4x4"), -350, -250);
+            });
+            GraphState.repaint();
+        }
+        else if (whichone === 6) {
             window.network.off("beforeDrawing");
             GraphState.repaint();
             window.network.on("beforeDrawing", function(ctx) {

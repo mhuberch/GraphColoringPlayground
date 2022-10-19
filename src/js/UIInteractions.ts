@@ -644,21 +644,25 @@ export default class UIInteractions {
             const imp = (await import("./dataImportExport")).default;
             imp.setGraphBackground(1);
         });
-        makeSimpleClickListener("#import-schweiz", async () => {
+        makeSimpleClickListener("#import-bundeslaender", async () => {
             const imp = (await import("./dataImportExport")).default;
             imp.setGraphBackground(2);
         });
-        makeSimpleClickListener("#import-sudoku-3x3", async () => {
+        makeSimpleClickListener("#import-schweiz", async () => {
             const imp = (await import("./dataImportExport")).default;
             imp.setGraphBackground(3);
         });
-        makeSimpleClickListener("#import-sudoku-4x4", async () => {
+        makeSimpleClickListener("#import-sudoku-3x3", async () => {
             const imp = (await import("./dataImportExport")).default;
             imp.setGraphBackground(4);
         });
-        makeSimpleClickListener("#import-sudoku-5x5", async () => {
+        makeSimpleClickListener("#import-sudoku-4x4", async () => {
             const imp = (await import("./dataImportExport")).default;
             imp.setGraphBackground(5);
+        });
+        makeSimpleClickListener("#import-sudoku-5x5", async () => {
+            const imp = (await import("./dataImportExport")).default;
+            imp.setGraphBackground(6);
         });
 
         (document.querySelector("#fileDropdown") as HTMLAnchorElement).innerText = languages.current.File;
@@ -683,6 +687,7 @@ export default class UIInteractions {
         (document.querySelector("#setBackgroundDropdown") as HTMLAnchorElement).innerText = languages.current.SetBackground;
         (document.querySelector("#blank-background") as HTMLAnchorElement).innerText = "Reset";
         (document.querySelector("#import-verkehrskreuzung") as HTMLAnchorElement).innerText = "Verkehrskreuzung";
+        (document.querySelector("#import-bundeslaender") as HTMLAnchorElement).innerText = "Karte der Bundesländer";
         (document.querySelector("#import-schweiz") as HTMLAnchorElement).innerText = "Karte der Schweiz";
         (document.querySelector("#import-sudoku-3x3") as HTMLAnchorElement).innerText = "Sudoku 3x3";
         (document.querySelector("#import-sudoku-4x4") as HTMLAnchorElement).innerText = "Sudoku 4x4";
