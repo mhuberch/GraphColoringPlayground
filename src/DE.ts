@@ -123,7 +123,7 @@ export default {
         " von Michael Dombrowski. Das dazugehörige Unterrichtsmaterial findet sich unter " +
         "<a href='https://www.abz.inf.ethz.ch/maturitatsschulen/unterrichtsmaterialien/' target='_blank'>ABZ Webpage</a>. Kompletter Quellcode und Kontakt auf <a href='https://github.com/mhuberch/GraphColoringPlayground' target='_blank'>GitHub</a> </i>" +
         " Martin Huber, 2022",
-    GraphPhysics: "Darstellung mit minimaler potentieller Energie",
+    GraphPhysics: "Automatisch optimierte Darstellung",
     DiGraph: "Gerichteter Graph",
     WeightedGraph: "Gewichteter Graph",
     CustomNodeColors: "Wählbare Knotenfarbe",

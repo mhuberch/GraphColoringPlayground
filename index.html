@@ -117,25 +117,36 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a id="undo-link" class="nav-link" href="#">
+                        <a id="undo-link" class="nav-link" href="#" data-toggle="tooltip" data-placement="auto" title="Letzte Veränderung an den Knoten und Kanten den Graphen rückgängig machen. Beachte: Knotenfärbungen können nicht rückgängig gemacht werden.">
                             <span class="icon-undo" aria-hidden="true"></span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a id="redo-link" class="nav-link" href="#">
+                        <a id="redo-link" class="nav-link" href="#" data-toggle="tooltip" data-placement="auto" title="Rückgängig gemachte Veränderungen wiederherstellen.">
                             <span class="icon-redo" aria-hidden="true"></span>
                         </a>
                     </li>
                     <li class="nav-item dropdown active">
-                        <a class="nav-link dropdown-toggle" href="#" id="graphDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="graphDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
+                            data-toggle="tooltip" data-placement="auto" title="Öffnen des Menüs, um neue (eigene oder vorkonfigurierte) Graphen zu erstellen.">
                             Build New Graphs
                         </a>
                         <div class="dropdown-menu" aria-labelledby="graphDropdown">
-                            <a id="load-custom-link" class="dropdown-item" href="#">Build Custom Graph</a>
-                            <a id="load-complete-link" class="dropdown-item" href="#">Build Complete Graph</a>
-                            <a id="load-cycle-link" class="dropdown-item" href="#">Build Cycle Graph</a>
-                            <a id="load-wheel-link" class="dropdown-item" href="#">Build Wheel Graph</a>
-                            <a id="load-random-link" class="dropdown-item" href="#">Build Random Graph</a>
+                            <a id="load-custom-link" class="dropdown-item" href="#" 
+                            data-toggle="tooltip" data-placement="auto" title="Falls Du einen eigenen Graphen zeichnen möchtest, kannst Du hier angeben, mit wie vielen Knoten Du starten möchtest. Falls Du mit einer leeren Arbeitsfläche starten möchtest, kannst Du hier einen Graphen mit 0 Knoten erstellen. Die Kanten erstellst Du anschliessend interaktiv in der graphischen Darstellung."
+                            >Build Custom Graph</a>
+                            <a id="load-complete-link" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Damit kannst Du einen vollständigen Graphen (d.h. jeder Knoten ist mit jedem anderen verbunden) zeichnen lassen."
+                            >Build Complete Graph</a>
+                            <a id="load-cycle-link" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Kreisgraphen bestehen aus Knoten, die auf einem Kreis angeordnet sind und jeweils nur mit den zwei Nachbarn verbunden sind. Die graphische Repräsentation entspricht meist einem regelmässigen Vieleck."
+                            >Build Cycle Graph</a>
+                            <a id="load-wheel-link" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Damit lässt sich ein Radgraph zeichnen, der daraus entsteht, dass ein Kreisgraph zusätzlich einen Zentrumsknoten erhält, der mit allen anderen verbunden ist. BEACHTE: Eine optimale Darstellung wird häufig erreicht, wenn unter 'Optionen' die Variante 'Automatisch optimierte Darstellung' aktiviert ist."
+                            >Build Wheel Graph</a>
+                            <a id="load-random-link" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Einen Graphen generieren lassen, der eine konfigurierbare Anzahl an Knoten besitzt, welche zu einem vorgegebenen Wahrscheinlichkeit mit einer Kante verbunden werden. Damit lassen sich bequem grössere Graphen ohne spezielle Topologie generieren."
+                            >Build Random Graph</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown active">
