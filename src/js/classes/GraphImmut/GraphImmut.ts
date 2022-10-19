@@ -414,20 +414,27 @@ export default class GraphImmut {
             degrees[i] = 0;
         });
         this.edges.forEach((edge) => {
-            if (degrees.includes(edge.getFrom())) {
-                degrees[edge.getFrom()]++;
-            }
-            else {
-                degrees[edge.getFrom()] = 1;
-            }
             
-            if (degrees.includes(edge.getTo())) {
-                degrees[edge.getTo()]++;
-            }
-            else {
-                degrees[edge.getTo()] = 1;
-            }
+            degrees[edge.getFrom()]++;
+            degrees[edge.getTo()]++;
             
+            // console.log(edge, " ", edge.getFrom(), " ", edge.getTo());
+            // if (degrees.includes(edge.getFrom())) {
+            //     degrees[edge.getFrom()]++;
+            // }
+            // else {
+            //     degrees[edge.getFrom()] = 1;
+            // }
+            
+            // if (degrees.includes(edge.getTo())) {
+            //     degrees[edge.getTo()]++;
+            // }
+            // else {
+            //     degrees[edge.getTo()] = 1;
+            // }
+            
+            // console.log(degrees);
+            // console.log();
 
         });
 
