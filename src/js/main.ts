@@ -18,7 +18,6 @@ export interface MainI {
     container: HTMLElement;
     visWeightEdgeEdit: (data: VisEditEdgeInternal, callback: Function) => void;
     visOptions: {
-        // autoResize: true;
         edges: { smooth: boolean, color: {inherit: boolean}};
         nodes: { color: { border: string, background: string, 
                             highlight: { border: string, background: string}, 
