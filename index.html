@@ -145,13 +145,13 @@
                             data-toggle="tooltip" data-placement="auto" title="Falls Du einen eigenen Graphen zeichnen möchtest, kannst Du hier angeben, mit wie vielen Knoten Du starten möchtest. Falls Du mit einer leeren Arbeitsfläche starten möchtest, kannst Du hier einen Graphen mit 0 Knoten erstellen. Die Kanten erstellst Du anschliessend interaktiv in der graphischen Darstellung."
                             >Build Custom Graph</a>
                             <a id="load-complete-link" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Damit kannst Du einen vollständigen Graphen (d.h. jeder Knoten ist mit jedem anderen verbunden) zeichnen lassen."
+                            data-toggle="tooltip" data-placement="auto" title="Damit kannst Du einen vollständigen Graphen K_n (d.h. jeder Knoten ist mit jedem anderen verbunden) zeichnen lassen."
                             >Build Complete Graph</a>
                             <a id="load-cycle-link" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Kreisgraphen bestehen aus Knoten, die auf einem Kreis angeordnet sind und jeweils nur mit den zwei Nachbarn verbunden sind. Die graphische Repräsentation entspricht meist einem regelmässigen Vieleck."
+                            data-toggle="tooltip" data-placement="auto" title="Kreisgraphen C_n bestehen aus Knoten, die auf einem Kreis angeordnet sind und jeweils nur mit den zwei Nachbarn verbunden sind. Die graphische Repräsentation entspricht meist einem regelmässigen Vieleck."
                             >Build Cycle Graph</a>
                             <a id="load-wheel-link" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Damit lässt sich ein Radgraph zeichnen, der daraus entsteht, dass ein Kreisgraph zusätzlich einen Zentrumsknoten erhält, der mit allen anderen verbunden ist. BEACHTE: Eine optimale Darstellung wird häufig erreicht, wenn unter 'Optionen' die Variante 'Automatisch optimierte Darstellung' aktiviert ist."
+                            data-toggle="tooltip" data-placement="auto" title="Damit lässt sich ein Radgraph W_n zeichnen, der daraus entsteht, dass ein Kreisgraph zusätzlich einen Zentrumsknoten erhält, der mit allen anderen verbunden ist. BEACHTE: Eine optimale Darstellung wird häufig erreicht, wenn unter 'Optionen' die Variante 'Automatisch optimierte Darstellung' aktiviert ist."
                             >Build Wheel Graph</a>
                             <a id="load-random-link" class="dropdown-item" href="#"
                             data-toggle="tooltip" data-placement="auto" title="Einen Graphen generieren lassen, der eine konfigurierbare Anzahl an Knoten besitzt, welche zu einem vorgegebenen Wahrscheinlichkeit mit einer Kante verbunden werden. Damit lassen sich bequem grössere Graphen ohne spezielle Topologie generieren."
@@ -159,36 +159,81 @@
                         </div>
                     </li>
                     <li class="nav-item dropdown active">
-                        <a class="nav-link dropdown-toggle" href="#" id="graphloadDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="graphloadDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        data-toggle="tooltip" data-placement="auto" title="Unter diesem Menüpunkt können die Graphen aus verschiedenen Aufgaben der Unterrichtsmaterialien geladen werden.
+
+BEACHTE: Damit die Knoten nicht automatisch verschoben werden, sollte die Option 'Automatisch optimierte Darstellung' unter 'Optionen' deaktiviert sein.">
                             Load Exercise Graphs
                         </a>
                         <div class="dropdown-menu" aria-labelledby="graphloadDropdown">
-                            <a id="import-graph-g1" class="dropdown-item" href="#">Graph G1</a>
-                            <a id="import-graph-g2" class="dropdown-item" href="#">Graph G2</a>
-                            <a id="import-graph-g3" class="dropdown-item" href="#">Graph G3</a>
-                            <a id="import-graph-g4" class="dropdown-item" href="#">Graph G4</a>
-                            <a id="import-graph-g5" class="dropdown-item" href="#">Graph G5</a>
-                            <a id="import-graph-g6" class="dropdown-item" href="#">Graph G6</a>
-                            <a id="import-graph-g7" class="dropdown-item" href="#">Graph G7</a>
-                            <a id="import-graph-g8" class="dropdown-item" href="#">Graph G8</a>
-                            <a id="import-graph-g9" class="dropdown-item" href="#">Graph G9</a>
-                            <a id="import-graph-g10" class="dropdown-item" href="#">Graph G10</a>
-                            <a id="import-graph-gch" class="dropdown-item" href="#">Graph CH</a>
-                            <a id="import-graph-g4x4" class="dropdown-item" href="#">Graph 4x4</a>
+                            <a id="import-graph-g1" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G1 aus den Unterrichtsmaterialien"
+                            >Graph G1</a>
+                            <a id="import-graph-g2" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G2 aus den Unterrichtsmaterialien"
+                            >Graph G2</a>
+                            <a id="import-graph-g3" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G3 aus den Unterrichtsmaterialien"
+                            >Graph G3</a>
+                            <a id="import-graph-g4" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G4 aus den Unterrichtsmaterialien"
+                            >Graph G4</a>
+                            <a id="import-graph-g5" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G5 aus den Unterrichtsmaterialien"
+                            >Graph G5</a>
+                            <a id="import-graph-g6" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G6 aus den Unterrichtsmaterialien"
+                            >Graph G6</a>
+                            <a id="import-graph-g7" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G7 aus den Unterrichtsmaterialien"
+                            >Graph G7</a>
+                            <a id="import-graph-g8" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G8 aus den Unterrichtsmaterialien"
+                            >Graph G8</a>
+                            <a id="import-graph-g9" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G9 aus den Unterrichtsmaterialien"
+                            >Graph G9</a>
+                            <a id="import-graph-g10" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G10 aus den Unterrichtsmaterialien"
+                            >Graph G10</a>
+                            <a id="import-graph-gch" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen für die Färbung der Schweizer Kantone aus den Unterrichtsmaterialien"
+                            >Graph CH</a>
+                            <a id="import-graph-g4x4" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen für das Lösen des (4x4)-Sudokus aus den Unterrichtsmaterialien"
+                            >Graph 4x4</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown active">
-                        <a class="nav-link dropdown-toggle" href="#" id="setBackgroundDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="setBackgroundDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        data-toggle="tooltip" data-placement="auto" title="Um Graphen für bildlich repräsentierte Probleme zu lösen (z.B. Färbung von Karten), können diese als Hintergrundbild im Fenster für die Graphen geladen werden. So können die Graphen direkt mithilfe der Vorlage aus dem Problem gelöst werden. Diese Option ist nur für ausgewählte Aufgaben der Unterrichtsmaterialien verfügbar. Zur Zeit können keine eigene Bilder als Hintegrundbild geladen werden.
+
+BEACHTE: Soll das Hintergrundbild wieder ausgeblendet werden, so ist der Menüpunkt 'Reset' auszuwählen."
+                        >
                             Load Background
                         </a>
                         <div class="dropdown-menu" aria-labelledby="setBackgroundDropdown">
-                            <a id="blank-background" class="dropdown-item" href="#">Reset</a>
-                            <a id="import-verkehrskreuzung" class="dropdown-item" href="#">Verkehrskreuzung</a>
-                            <a id="import-bundeslaender" class="dropdown-item" href="#">Karte der Bundesländer</a>
-                            <a id="import-schweiz" class="dropdown-item" href="#">Karte der Schweiz</a>
-                            <a id="import-sudoku-3x3" class="dropdown-item" href="#">Sudoku 3x3</a>
-                            <a id="import-sudoku-4x4" class="dropdown-item" href="#">Sudoku 4x4</a>
-                            <a id="import-sudoku-5x5" class="dropdown-item" href="#">Sudoku 5x5</a>
+                            <a id="blank-background" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Hintegrundbild ausblenden und wieder mit 'leerem' weissem Hintergrund arbeiten."
+                            >Reset</a>
+                            <a id="import-verkehrskreuzung" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Hintergrundbild für die Verkehrskreuzung aus den Vertiefungsaufgaben aus dem ersten Kapitel"
+                            >Verkehrskreuzung</a>
+                            <a id="import-bundeslaender" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Karte der Bundesländer Deutschlands aus den Unterrichtsmaterialien"
+                            >Karte der Bundesländer</a>
+                            <a id="import-schweiz" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Karte der Schweizer Kantone aus den Unterrichtsmaterialien"
+                            >Karte der Schweiz</a>
+                            <a id="import-sudoku-3x3" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="(3x3)-Sudoku aus den Unterrichtsmaterialien"
+                            >Sudoku 3x3</a>
+                            <a id="import-sudoku-4x4" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="(4x4)-Sudoku aus den Unterrichtsmaterialien"
+                            >Sudoku 4x4</a>
+                            <a id="import-sudoku-5x5" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="(5x5)-Sudoku aus den Unterrichtsmaterialien"
+                            >Sudoku 5x5</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown active">
