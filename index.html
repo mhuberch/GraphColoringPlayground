@@ -126,162 +126,147 @@
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a id="undo-link" class="nav-link" href="#" 
-                        data-toggle="tooltip" data-placement="auto" title="Letzte Veränderung an den Knoten und Kanten den Graphen rückgängig machen. Beachte: Knotenfärbungen können nicht rückgängig gemacht werden.">
+                        data-toggle="tooltip" data-placement="auto" data-html="true" title="Letzte Veränderung an den Knoten und Kanten den Graphen rückgängig machen. Beachte: Knotenfärbungen können nicht rückgängig gemacht werden.">
                             <span class="icon-undo" aria-hidden="true"></span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a id="redo-link" class="nav-link" href="#" data-toggle="tooltip" data-placement="auto" title="Rückgängig gemachte Veränderungen wiederherstellen.">
+                        <a id="redo-link" class="nav-link" href="#" data-toggle="tooltip" data-placement="auto" data-html="true" title="Rückgängig gemachte Veränderungen wiederherstellen.">
                             <span class="icon-redo" aria-hidden="true"></span>
                         </a>
                     </li>
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="graphDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" 
-                            data-toggle="tooltip" data-placement="auto" title="Öffnen des Menüs, um neue (eigene oder vorkonfigurierte) Graphen zu erstellen.">
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Öffnen des Menüs, um neue (eigene oder vorkonfigurierte) Graphen zu erstellen.">
                             Build New Graphs
                         </a>
                         <div class="dropdown-menu" aria-labelledby="graphDropdown">
                             <a id="load-custom-link" class="dropdown-item" href="#" 
-                            data-toggle="tooltip" data-placement="auto" title="Falls Du einen eigenen Graphen zeichnen möchtest, kannst Du hier angeben, mit wie vielen Knoten Du starten möchtest. Falls Du mit einer leeren Arbeitsfläche starten möchtest, kannst Du hier einen Graphen mit 0 Knoten erstellen. Die Kanten erstellst Du anschliessend interaktiv in der graphischen Darstellung."
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Falls Du einen eigenen Graphen zeichnen möchtest, kannst Du hier angeben, mit wie vielen Knoten Du starten möchtest. Falls Du mit einer leeren Arbeitsfläche starten möchtest, kannst Du hier einen Graphen mit 0 Knoten erstellen. Die Kanten erstellst Du anschliessend interaktiv in der graphischen Darstellung."
                             >Build Custom Graph</a>
                             <a id="load-complete-link" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Damit kannst Du einen vollständigen Graphen K_n (d.h. jeder Knoten ist mit jedem anderen verbunden) zeichnen lassen."
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Damit kannst Du einen vollständigen Graphen K_n (d.h. jeder Knoten ist mit jedem anderen verbunden) zeichnen lassen."
                             >Build Complete Graph</a>
                             <a id="load-cycle-link" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Kreisgraphen C_n bestehen aus Knoten, die auf einem Kreis angeordnet sind und jeweils nur mit den zwei Nachbarn verbunden sind. Die graphische Repräsentation entspricht meist einem regelmässigen Vieleck."
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Kreisgraphen C_n bestehen aus Knoten, die auf einem Kreis angeordnet sind und jeweils nur mit den zwei Nachbarn verbunden sind. Die graphische Repräsentation entspricht meist einem regelmässigen Vieleck."
                             >Build Cycle Graph</a>
                             <a id="load-wheel-link" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Damit lässt sich ein Radgraph W_n zeichnen, der daraus entsteht, dass ein Kreisgraph zusätzlich einen Zentrumsknoten erhält, der mit allen anderen verbunden ist. BEACHTE: Eine optimale Darstellung wird häufig erreicht, wenn unter 'Optionen' die Variante 'Automatisch optimierte Darstellung' aktiviert ist."
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Damit lässt sich ein Radgraph W_n zeichnen, der daraus entsteht, dass ein Kreisgraph zusätzlich einen Zentrumsknoten erhält, der mit allen anderen verbunden ist. BEACHTE: Eine optimale Darstellung wird häufig erreicht, wenn unter 'Optionen' die Variante 'Automatisch optimierte Darstellung' aktiviert ist."
                             >Build Wheel Graph</a>
                             <a id="load-random-link" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Einen Graphen generieren lassen, der eine konfigurierbare Anzahl an Knoten besitzt, welche zu einem vorgegebenen Wahrscheinlichkeit mit einer Kante verbunden werden. Damit lassen sich bequem grössere Graphen ohne spezielle Topologie generieren."
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Einen Graphen generieren lassen, der eine konfigurierbare Anzahl an Knoten besitzt, welche zu einem vorgegebenen Wahrscheinlichkeit mit einer Kante verbunden werden. Damit lassen sich bequem grössere Graphen ohne spezielle Topologie generieren."
                             >Build Random Graph</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="graphloadDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        data-toggle="tooltip" data-placement="auto" title="Unter diesem Menüpunkt können die Graphen aus verschiedenen Aufgaben der Unterrichtsmaterialien geladen werden.
-
-BEACHTE: Damit die Knoten nicht automatisch verschoben werden, sollte die Option 'Automatisch optimierte Darstellung' unter 'Optionen' deaktiviert sein.">
+                        data-toggle="tooltip" data-placement="auto" data-html="true" title="Unter diesem Menüpunkt können die Graphen aus verschiedenen Aufgaben der Unterrichtsmaterialien geladen werden.\n\nBEACHTE: Damit die Knoten nicht automatisch verschoben werden, sollte die Option 'Automatisch optimierte Darstellung' unter 'Optionen' deaktiviert sein.">
                             Load Exercise Graphs
                         </a>
                         <div class="dropdown-menu" aria-labelledby="graphloadDropdown">
                             <a id="import-graph-g1" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G1 aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Lade den Graphen G1 aus den Unterrichtsmaterialien"
                             >Graph G1</a>
                             <a id="import-graph-g2" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G2 aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Lade den Graphen G2 aus den Unterrichtsmaterialien"
                             >Graph G2</a>
                             <a id="import-graph-g3" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G3 aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Lade den Graphen G3 aus den Unterrichtsmaterialien"
                             >Graph G3</a>
                             <a id="import-graph-g4" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G4 aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Lade den Graphen G4 aus den Unterrichtsmaterialien"
                             >Graph G4</a>
                             <a id="import-graph-g5" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G5 aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Lade den Graphen G5 aus den Unterrichtsmaterialien"
                             >Graph G5</a>
                             <a id="import-graph-g6" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G6 aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Lade den Graphen G6 aus den Unterrichtsmaterialien"
                             >Graph G6</a>
                             <a id="import-graph-g7" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G7 aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Lade den Graphen G7 aus den Unterrichtsmaterialien"
                             >Graph G7</a>
                             <a id="import-graph-g8" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G8 aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Lade den Graphen G8 aus den Unterrichtsmaterialien"
                             >Graph G8</a>
                             <a id="import-graph-g9" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G9 aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Lade den Graphen G9 aus den Unterrichtsmaterialien"
                             >Graph G9</a>
                             <a id="import-graph-g10" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen G10 aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Lade den Graphen G10 aus den Unterrichtsmaterialien"
                             >Graph G10</a>
                             <a id="import-graph-gch" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen für die Färbung der Schweizer Kantone aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Lade den Graphen für die Färbung der Schweizer Kantone aus den Unterrichtsmaterialien"
                             >Graph CH</a>
                             <a id="import-graph-g4x4" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Lade den Graphen für das Lösen des (4x4)-Sudokus aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Lade den Graphen für das Lösen des (4x4)-Sudokus aus den Unterrichtsmaterialien"
                             >Graph 4x4</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="setBackgroundDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        data-toggle="tooltip" data-placement="auto" title="Um Graphen für bildlich repräsentierte Probleme zu lösen (z.B. Färbung von Karten), können diese als Hintergrundbild im Fenster für die Graphen geladen werden. So können die Graphen direkt mithilfe der Vorlage aus dem Problem gelöst werden. Diese Option ist nur für ausgewählte Aufgaben der Unterrichtsmaterialien verfügbar. Zur Zeit können keine eigene Bilder als Hintegrundbild geladen werden.
-
-BEACHTE: Soll das Hintergrundbild wieder ausgeblendet werden, so ist der Menüpunkt 'Reset' auszuwählen."
+                        data-toggle="tooltip" data-placement="auto" data-html="true" title="Um Graphen für bildlich repräsentierte Probleme zu lösen (z.B. Färbung von Karten), können diese als Hintergrundbild im Fenster für die Graphen geladen werden. So können die Graphen direkt mithilfe der Vorlage aus dem Problem gelöst werden. Diese Option ist nur für ausgewählte Aufgaben der Unterrichtsmaterialien verfügbar. Zur Zeit können keine eigene Bilder als Hintegrundbild geladen werden.\n\nBEACHTE: Soll das Hintergrundbild wieder ausgeblendet werden, so ist der Menüpunkt 'Reset' auszuwählen."
                         >
                             Load Background
                         </a>
                         <div class="dropdown-menu" aria-labelledby="setBackgroundDropdown">
                             <a id="blank-background" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Hintegrundbild ausblenden und wieder mit 'leerem' weissem Hintergrund arbeiten."
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Hintegrundbild ausblenden und wieder mit 'leerem' weissem Hintergrund arbeiten."
                             >Reset</a>
                             <a id="import-verkehrskreuzung" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Hintergrundbild für die Verkehrskreuzung aus den Vertiefungsaufgaben aus dem ersten Kapitel"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Hintergrundbild für die Verkehrskreuzung aus den Vertiefungsaufgaben aus dem ersten Kapitel"
                             >Verkehrskreuzung</a>
                             <a id="import-bundeslaender" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Karte der Bundesländer Deutschlands aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Karte der Bundesländer Deutschlands aus den Unterrichtsmaterialien"
                             >Karte der Bundesländer</a>
                             <a id="import-schweiz" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Karte der Schweizer Kantone aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Karte der Schweizer Kantone aus den Unterrichtsmaterialien"
                             >Karte der Schweiz</a>
                             <a id="import-sudoku-3x3" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="(3x3)-Sudoku aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="(3x3)-Sudoku aus den Unterrichtsmaterialien"
                             >Sudoku 3x3</a>
                             <a id="import-sudoku-4x4" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="(4x4)-Sudoku aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="(4x4)-Sudoku aus den Unterrichtsmaterialien"
                             >Sudoku 4x4</a>
                             <a id="import-sudoku-5x5" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="(5x5)-Sudoku aus den Unterrichtsmaterialien"
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="(5x5)-Sudoku aus den Unterrichtsmaterialien"
                             >Sudoku 5x5</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="fileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        data-toggle="tooltip" data-placement="auto" title="Erstelle Graphen können mit dieser Funktion als Dateien lokal auf dem Computer abgespeichert werden und später wieder in die Lernumgebung geladen werden."
+                        data-toggle="tooltip" data-placement="auto" data-html="true" title="Erstelle Graphen können mit dieser Funktion als Dateien lokal auf dem Computer abgespeichert werden und später wieder in die Lernumgebung geladen werden."
                         >
                             Import/Export
                         </a>
                         <div class="dropdown-menu" aria-labelledby="fileDropdown">
                             <a id="import-file-link" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Bei Auswahl dieses Menüpunkts öffnet sich das Menü, um eine Datei auszuwählen, in welcher ein Graph von vorigen Arbeiten abgespeichert wurde."
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Bei Auswahl dieses Menüpunkts öffnet sich das Menü, um eine Datei auszuwählen, in welcher ein Graph von vorigen Arbeiten abgespeichert wurde."
                             >Import File</a>
                             <a id="export-file-link" class="dropdown-item" href="#"
-                            data-toggle="tooltip" data-placement="auto" title="Der momentan gezeichnete Graph wird inkl. absoluter Positionierung der Knoten sowie Knotenfärbung in eine Datei des Formats JSON abgespeichert. Die Datei wird in den 'Downloads'-Bereich des Browsers heruntergeladen."
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Der momentan gezeichnete Graph wird inkl. absoluter Positionierung der Knoten sowie Knotenfärbung in eine Datei des Formats JSON abgespeichert. Die Datei wird in den 'Downloads'-Bereich des Browsers heruntergeladen."
                             >Export To File</a>
                         </div>
                     </li>
                     <li class="nav-item active">
                         <a id="graph-options-link" class="nav-link" href="#"
-                        data-toggle="tooltip" data-placement="auto" title="In diesem Menü können Einstellungen zur Bedienung und zur Darstellung von Graphen konfiguriert werden:
-
-1.) Automatisch optimierte Darstellung: Die Knoten werden automatisch so platziert, dass die Länge aller Kanten möglichst minimal ist. Diese Platzierung geschieht bei jeder Veränderung des Graphen. Dadurch kann man durch Verschieben eines einzelnen Punktes erreichen, dass die Anordnung in eine gewünschte Richtung geht. In einigen Fällen funktioniert dies ganz gut, in anderen ist man mit manuellem Umherschieben der Knoten effizienter. BEACHTE: Diese Option muss deaktiviert sein, wenn sich die Darstellung nicht mehr verändern sollte.
-
-2.) Gerundete Kanten: Standardmässig sind die Kanten als Strecken gezeichnet. Durch Aktivieren dieser Option werden kannten automatisch angepasst auch gebogen dargestellt (Krümmung kann manuell nicht verändert werden).
-
-3.) Knotenfarbe durch Doppelklick ändern: Damit für das Ändern der Knotenfarbe nicht stets das Menü für den Knoten aufgerufen werden muss (via Doppelklick), erlaubt es diese Option, mittels Doppelklick auf den Knoten durch die sechs Standardfarben zu wechseln.
-
-4.) Schritt-für-Schritt Info: Für die implementierten Färbungsalgorithmen kann man sich detaillierte Infos im unteren Teil 'Resultate' ausgeben lassen. Wenn dies gewünscht ist, ist diese Box zu aktivieren.
-                        "
+                        data-toggle="tooltip" data-placement="auto" data-html="true" title="In diesem Menü können Einstellungen zur Bedienung und zur Darstellung von Graphen konfiguriert werden:\n\n1.) Automatisch optimierte Darstellung: Die Knoten werden automatisch so platziert, dass die Länge aller Kanten möglichst minimal ist. Diese Platzierung geschieht bei jeder Veränderung des Graphen. Dadurch kann man durch Verschieben eines einzelnen Punktes erreichen, dass die Anordnung in eine gewünschte Richtung geht. In einigen Fällen funktioniert dies ganz gut, in anderen ist man mit manuellem Umherschieben der Knoten effizienter. BEACHTE: Diese Option muss deaktiviert sein, wenn sich die Darstellung nicht mehr verändern sollte.\n\n2.) Gerundete Kanten: Standardmässig sind die Kanten als Strecken gezeichnet. Durch Aktivieren dieser Option werden kannten automatisch angepasst auch gebogen dargestellt (Krümmung kann manuell nicht verändert werden).\n\n3.) Knotenfarbe durch Doppelklick ändern: Damit für das Ändern der Knotenfarbe nicht stets das Menü für den Knoten aufgerufen werden muss (via Doppelklick), erlaubt es diese Option, mittels Doppelklick auf den Knoten durch die sechs Standardfarben zu wechseln.\n\n4.) Schritt-für-Schritt Info: Für die implementierten Färbungsalgorithmen kann man sich detaillierte Infos im unteren Teil 'Resultate' ausgeben lassen. Wenn dies gewünscht ist, ist diese Box zu aktivieren."
                         >Options</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav mr-sm-2">
                     <li class="nav-item active">
                         <a id="stop-allworker-link" class="nav-link" href="#"
-                        data-toggle="tooltip" data-placement="auto" title="Sollte ein gestarteter Prozess zu lange dauern, d.h., am unteren Ende des Fensters wird andauernd der blaue Balken angezeigt, dass ein Prozess noch laufe, so können durch Drücken dieses Buttons jegliche aktiven Prozesse gestoppt und abgebrochen werden."
+                        data-toggle="tooltip" data-placement="auto" data-html="true" title="Sollte ein gestarteter Prozess zu lange dauern, d.h., am unteren Ende des Fensters wird andauernd der blaue Balken angezeigt, dass ein Prozess noch laufe, so können durch Drücken dieses Buttons jegliche aktiven Prozesse gestoppt und abgebrochen werden."
                         >Stop Tasks</a>
                     </li>
                     <li class="nav-item active">
                         <a id="print-about-link" class="nav-link" href="#"
-                        data-toggle="tooltip" data-placement="auto" title="Kurzhilfen werden angezeigt, wenn der Mauszeiger über Buttons gehalten wird.
-
-Links zu Tutorials, Sourcecodes und den Unterrichtsmaterialien finden sich im Menü, das sich durch Klicken auf diesen Button öffnet."
+                        data-toggle="tooltip" data-placement="auto" data-html="true" title="Kurzhilfen werden angezeigt, wenn der Mauszeiger über Buttons gehalten wird.\n\nLinks zu Tutorials, Sourcecodes und den Unterrichtsmaterialien finden sich im Menü, das sich durch Klicken auf diesen Button öffnet."
                         >Help</a>
                     </li>
                     <!-- <li class="nav-item active">
                         <a id="help-link" class="nav-link" href="#"
-                        data-toggle="tooltip" data-placement="auto" title="Hilfe durch Tooltips"
+                        data-toggle="tooltip" data-placement="auto" data-html="true" title="Hilfe durch Tooltips"
                         ><p style="color:red"><b>Help</b></p></a>
                     </li> -->
                 </ul>
@@ -294,26 +279,26 @@ Links zu Tutorials, Sourcecodes und den Unterrichtsmaterialien finden sich im Me
                     <div class="row col">
                         <div class="card-body">
                             <h4 id="graph-tool-label"
-                            data-toggle="tooltip" data-placement="auto" title="Verschiedene grundlegende Eigenschaften und Färbungswerkzeuge."
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Verschiedene grundlegende Eigenschaften und Färbungswerkzeuge."
                             >Graph Tools</h4>
                             <nav class="nav flex-lg-column flex-row">
                                 <a id="load-default-color-link" class="nav-link" href="#"
-                                data-toggle="tooltip" data-placement="auto" title="Knotenfarbe alle Knoten entfernen und auf 'ohne Farbe' stellen. Somit werden anschliessend alle Knoten weiss dargestellt."
+                                data-toggle="tooltip" data-placement="auto" data-html="true" title="Knotenfarbe alle Knoten entfernen und auf 'ohne Farbe' stellen. Somit werden anschliessend alle Knoten weiss dargestellt."
                                 >
                                     Reset Node Color
                                 </a>
                                 <a id="new-graph-layout-link" class="nav-link" href="#"
-                                data-toggle="tooltip" data-placement="auto" title="Die Knoten des Graphen auf eine neue Arte und Weise zufällig platzieren lassen. Durch mehrmaliges Ausprobieren findet sich häufig eine einigermassen gute Darstellung, ohne dass sich die Knoten und Kanten zu stark überdecken."
+                                data-toggle="tooltip" data-placement="auto" data-html="true" title="Die Knoten des Graphen auf eine neue Arte und Weise zufällig platzieren lassen. Durch mehrmaliges Ausprobieren findet sich häufig eine einigermassen gute Darstellung, ohne dass sich die Knoten und Kanten zu stark überdecken."
                                 >
                                     New Graph Layout
                                 </a>
                                 <a id="get-vertex-degrees-link" class="nav-link" href="#"
-                                data-toggle="tooltip" data-placement="auto" title="Für alle Knoten den Knotengrad (Anzahl ein-/ausgehender Kanten) berechnen lassen. Die Resultate werden im unteren Teil 'Resultate' als Text ausgegeben."
+                                data-toggle="tooltip" data-placement="auto" data-html="true" title="Für alle Knoten den Knotengrad (Anzahl ein-/ausgehender Kanten) berechnen lassen. Die Resultate werden im unteren Teil 'Resultate' als Text ausgegeben."
                                 >
                                     Get Vertex Degrees
                                 </a>
                                 <a id="check-coloring-link" class="nav-link" href="#"
-                                data-toggle="tooltip" data-placement="auto" title="Damit kann man überprüfen, ob die aktuelle Färbung der Knoten zulässig ist. Das Resultat und eventuelle Konflikte werden im unteren Teil 'Resultate' ausgegeben."
+                                data-toggle="tooltip" data-placement="auto" data-html="true" title="Damit kann man überprüfen, ob die aktuelle Färbung der Knoten zulässig ist. Das Resultat und eventuelle Konflikte werden im unteren Teil 'Resultate' ausgegeben."
                                 >
                                     Check Coloring
                                 </a>
@@ -324,7 +309,7 @@ Links zu Tutorials, Sourcecodes und den Unterrichtsmaterialien finden sich im Me
                     <div class="row col">
                         <div class="card-body">
                             <h4 id="algorithms-label"
-                            data-toggle="tooltip" data-placement="auto" title="Ausgewählte Algorithmen zur Färbung von Knoten stehen zur Auswahl."
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Ausgewählte Algorithmen zur Färbung von Knoten stehen zur Auswahl."
                             >Algorithms</h4>
                             <nav class="nav flex-lg-column flex-row" id="algorithms-pane"></nav>
                         </div>
@@ -333,7 +318,7 @@ Links zu Tutorials, Sourcecodes und den Unterrichtsmaterialien finden sich im Me
                     <div class="row col">
                         <div class="card-body">
                             <h4 id="graph-properties-label"
-                            data-toggle="tooltip" data-placement="auto" title="Anzeige der Anzahl von Knoten und Kanten des akutellen Graphen."
+                            data-toggle="tooltip" data-placement="auto" data-html="true" title="Anzeige der Anzahl von Knoten und Kanten des akutellen Graphen."
                             >Graph Properties</h4>
                             <nav class="nav flex-column" id="graphProps"></nav>
                         </div>
@@ -354,7 +339,7 @@ Links zu Tutorials, Sourcecodes und den Unterrichtsmaterialien finden sich im Me
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title" id="results-label"
-                                    data-toggle="tooltip" data-placement="auto" title="Feld, in dem die Ausgaben der verschiedenen Algorithmen in Textform dokumentiert werden."
+                                    data-toggle="tooltip" data-placement="auto" data-html="true" title="Feld, in dem die Ausgaben der verschiedenen Algorithmen in Textform dokumentiert werden."
                                     >Results</h4>
                                 </div>
                                 <div class="card-body">
