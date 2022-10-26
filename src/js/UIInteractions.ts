@@ -11,6 +11,7 @@ import * as languages from "./languages";
 
 interface AlgorithmI {
     name: string;
+    tooltip: string;
     directional?: boolean;
     weighted?: boolean;
     applyFunc: () => any;
@@ -504,6 +505,7 @@ export default class UIInteractions {
         return [
             {
                 name: languages.current.GraphColoringGreedy,
+                tooltip: "Färbt die Knoten des Graphen mithilfe des Greedy-Färbungsalgorithmus ein. Dabei können vier vorkonfigurierte Knotenreihenfolgen ausgewählt werden: \n a) alphabetisch aufsteigend nach Namen \n b) alphabetisch absteigend nach Namen \n c) von grossem zu kleinem Knotengrad \n d) von kleinem zu grossem Knotengrad.\n\nUnter 'Optionen' kann weiter eingestellt werden, ob eine Schritt-für-Schritt Ausgabe in Textform gewünscht wird.",
                 directional: false,
                 applyFunc: () => {
                     makeAndPrintGreedyColoring();
@@ -512,6 +514,7 @@ export default class UIInteractions {
             },
             {
                 name: languages.current.kColoringBruteForce,
+                tooltip: "Versucht die Knoten des Graphen mithilfe der vorgegebenen Anzahl Farben k einzufärben, indem alle möglichen Farbkombinationen für die Knoten ausprobiert werden (egal zulässig oder nicht). Das Resultat wird unter 'Resultate' im unteren Teil des Fensters ausgegeben. \n\nUnter 'Optionen' kann weiter eingestellt werden, ob die getesteten Farbkombinationen in Textform ausgegeben werden sollen. Im folgenden Menü kann gewählt werden, wie viele dieser Farbkombinationen aufgelistet werden sollen.",
                 directional: false,
                 applyFunc: () => {
                     makeAndPrintkColoringExact(0, false);
@@ -520,6 +523,7 @@ export default class UIInteractions {
             },
             {
                 name: languages.current.kColoringBacktracking,
+                tooltip: "Versucht die Knoten des Graphen mithilfe der vorgegebenen Anzahl Farben k einzufärben, indem Farbkombinationen mittels Backtracking-Algorithmus durchgetestet werden. Das Resultat wird unter 'Resultate' im unteren Teil des Fensters ausgegeben. \n\nUnter 'Optionen' kann weiter eingestellt werden, ob die getesteten Farbkombinationen in Textform ausgegeben werden sollen. Im folgenden Menü kann gewählt werden, wie viele dieser Farbkombinationen aufgelistet werden sollen.",
                 directional: false,
                 applyFunc: () => {
                     makeAndPrintkColoringExact(1, false);
@@ -528,6 +532,7 @@ export default class UIInteractions {
             },
             {
                 name: languages.current.kColoringConstrainedBacktracking,
+                tooltip: "Vor dem Start dieses Algorithmus können von Hand gewisse Knoten schon eingefärbt werden. Dann versucht der Algorithmus die verbleibenden Knoten mit der vorgegebenen Anzahl Farben k zulässig einzufärben. Die Vorgehensweise ist identisch zum Backtracking-Algorithmus. Das Resultat wird unter 'Resultate' im unteren Teil des Fensters ausgegeben. \n\nUnter 'Optionen' kann weiter eingestellt werden, ob die getesteten Farbkombinationen in Textform ausgegeben werden sollen. Im folgenden Menü kann gewählt werden, wie viele dieser Farbkombinationen aufgelistet werden sollen.",
                 directional: false,
                 applyFunc: () => {
                     makeAndPrintkColoringExact(1, true);
@@ -1341,6 +1346,10 @@ export default class UIInteractions {
             const navlink = document.createElement("a");
             navlink.classList.add("nav-link");
             navlink.setAttribute("href", "#");
+            navlink.setAttribute("data-toggle", "tooltip");
+            navlink.setAttribute("data-placement", "auto");
+            navlink.setAttribute("data-html","true");
+            navlink.title = alg.tooltip;
             navlink.innerText = alg.name;
             navlink.addEventListener("click", e => {
                 e.preventDefault();
