@@ -237,30 +237,53 @@ BEACHTE: Soll das Hintergrundbild wieder ausgeblendet werden, so ist der Menüpu
                         </div>
                     </li>
                     <li class="nav-item dropdown active">
-                        <a class="nav-link dropdown-toggle" href="#" id="fileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="fileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        data-toggle="tooltip" data-placement="auto" title="Erstelle Graphen können mit dieser Funktion als Dateien lokal auf dem Computer abgespeichert werden und später wieder in die Lernumgebung geladen werden."
+                        >
                             Import/Export
                         </a>
                         <div class="dropdown-menu" aria-labelledby="fileDropdown">
-                            <a id="import-file-link" class="dropdown-item" href="#">Import File</a>
-                            <a id="export-file-link" class="dropdown-item" href="#">Export To File</a>
+                            <a id="import-file-link" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Bei Auswahl dieses Menüpunkts öffnet sich das Menü, um eine Datei auszuwählen, in welcher ein Graph von vorigen Arbeiten abgespeichert wurde."
+                            >Import File</a>
+                            <a id="export-file-link" class="dropdown-item" href="#"
+                            data-toggle="tooltip" data-placement="auto" title="Der momentan gezeichnete Graph wird inkl. absoluter Positionierung der Knoten sowie Knotenfärbung in eine Datei des Formats JSON abgespeichert. Die Datei wird in den 'Downloads'-Bereich des Browsers heruntergeladen."
+                            >Export To File</a>
                         </div>
                     </li>
                     <li class="nav-item active">
-                        <a id="graph-options-link" class="nav-link" href="#">Options</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a id="help-link" class="nav-link" href="#"
-                        data-toggle="tooltip" data-placement="auto" title="Hilfe durch Tooltips"
-                        >Help</a>
+                        <a id="graph-options-link" class="nav-link" href="#"
+                        data-toggle="tooltip" data-placement="auto" title="In diesem Menü können Einstellungen zur Bedienung und zur Darstellung von Graphen konfiguriert werden:
+
+1.) Automatisch optimierte Darstellung: Die Knoten werden automatisch so platziert, dass die Länge aller Kanten möglichst minimal ist. Diese Platzierung geschieht bei jeder Veränderung des Graphen. Dadurch kann man durch Verschieben eines einzelnen Punktes erreichen, dass die Anordnung in eine gewünschte Richtung geht. In einigen Fällen funktioniert dies ganz gut, in anderen ist man mit manuellem Umherschieben der Knoten effizienter. BEACHTE: Diese Option muss deaktiviert sein, wenn sich die Darstellung nicht mehr verändern sollte.
+
+2.) Gerundete Kanten: Standardmässig sind die Kanten als Strecken gezeichnet. Durch Aktivieren dieser Option werden kannten automatisch angepasst auch gebogen dargestellt (Krümmung kann manuell nicht verändert werden).
+
+3.) Knotenfarbe durch Doppelklick ändern: Damit für das Ändern der Knotenfarbe nicht stets das Menü für den Knoten aufgerufen werden muss (via Doppelklick), erlaubt es diese Option, mittels Doppelklick auf den Knoten durch die sechs Standardfarben zu wechseln.
+
+4.) Schritt-für-Schritt Info: Für die implementierten Färbungsalgorithmen kann man sich detaillierte Infos im unteren Teil 'Resultate' ausgeben lassen. Wenn dies gewünscht ist, ist diese Box zu aktivieren.
+                        "
+                        >Options</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav mr-sm-2">
                     <li class="nav-item active">
-                        <a id="stop-allworker-link" class="nav-link" href="#">Stop Tasks</a>
+                        <a id="stop-allworker-link" class="nav-link" href="#"
+                        data-toggle="tooltip" data-placement="auto" title="Sollte ein gestarteter Prozess zu lange dauern, d.h., am unteren Ende des Fensters wird andauernd der blaue Balken angezeigt, dass ein Prozess noch laufe, so können durch Drücken dieses Buttons jegliche aktiven Prozesse gestoppt und abgebrochen werden."
+                        >Stop Tasks</a>
                     </li>
                     <li class="nav-item active">
-                        <a id="print-about-link" class="nav-link" href="#">About</a>
+                        <a id="print-about-link" class="nav-link" href="#"
+                        data-toggle="tooltip" data-placement="auto" title="Kurzhilfen werden angezeigt, wenn der Mauszeiger über Buttons gehalten wird.
+
+Links zu Tutorials, Sourcecodes und den Unterrichtsmaterialien finden sich im Menü, das sich durch Klicken auf diesen Button öffnet."
+                        >Help</a>
                     </li>
+                    <!-- <li class="nav-item active">
+                        <a id="help-link" class="nav-link" href="#"
+                        data-toggle="tooltip" data-placement="auto" title="Hilfe durch Tooltips"
+                        ><p style="color:red"><b>Help</b></p></a>
+                    </li> -->
                 </ul>
             </div>
         </nav>
@@ -274,16 +297,24 @@ BEACHTE: Soll das Hintergrundbild wieder ausgeblendet werden, so ist der Menüpu
                             data-toggle="tooltip" data-placement="auto" title="Verschiedene grundlegende Eigenschaften und Färbungswerkzeuge."
                             >Graph Tools</h4>
                             <nav class="nav flex-lg-column flex-row">
-                                <a id="load-default-color-link" class="nav-link" href="#">
+                                <a id="load-default-color-link" class="nav-link" href="#"
+                                data-toggle="tooltip" data-placement="auto" title="Knotenfarbe alle Knoten entfernen und auf 'ohne Farbe' stellen. Somit werden anschliessend alle Knoten weiss dargestellt."
+                                >
                                     Reset Node Color
                                 </a>
-                                <a id="new-graph-layout-link" class="nav-link" href="#">
+                                <a id="new-graph-layout-link" class="nav-link" href="#"
+                                data-toggle="tooltip" data-placement="auto" title="Die Knoten des Graphen auf eine neue Arte und Weise zufällig platzieren lassen. Durch mehrmaliges Ausprobieren findet sich häufig eine einigermassen gute Darstellung, ohne dass sich die Knoten und Kanten zu stark überdecken."
+                                >
                                     New Graph Layout
                                 </a>
-                                <a id="get-vertex-degrees-link" class="nav-link" href="#">
+                                <a id="get-vertex-degrees-link" class="nav-link" href="#"
+                                data-toggle="tooltip" data-placement="auto" title="Für alle Knoten den Knotengrad (Anzahl ein-/ausgehender Kanten) berechnen lassen. Die Resultate werden im unteren Teil 'Resultate' als Text ausgegeben."
+                                >
                                     Get Vertex Degrees
                                 </a>
-                                <a id="check-coloring-link" class="nav-link" href="#">
+                                <a id="check-coloring-link" class="nav-link" href="#"
+                                data-toggle="tooltip" data-placement="auto" title="Damit kann man überprüfen, ob die aktuelle Färbung der Knoten zulässig ist. Das Resultat und eventuelle Konflikte werden im unteren Teil 'Resultate' ausgegeben."
+                                >
                                     Check Coloring
                                 </a>
                             </nav>
@@ -292,14 +323,18 @@ BEACHTE: Soll das Hintergrundbild wieder ausgeblendet werden, so ist der Menüpu
                     <hr class="d-none d-lg-block"/>
                     <div class="row col">
                         <div class="card-body">
-                            <h4 id="algorithms-label">Algorithms</h4>
+                            <h4 id="algorithms-label"
+                            data-toggle="tooltip" data-placement="auto" title="Ausgewählte Algorithmen zur Färbung von Knoten stehen zur Auswahl."
+                            >Algorithms</h4>
                             <nav class="nav flex-lg-column flex-row" id="algorithms-pane"></nav>
                         </div>
                     </div>
                     <hr class="d-none d-lg-block"/>
                     <div class="row col">
                         <div class="card-body">
-                            <h4 id="graph-properties-label">Graph Properties</h4>
+                            <h4 id="graph-properties-label"
+                            data-toggle="tooltip" data-placement="auto" title="Anzeige der Anzahl von Knoten und Kanten des akutellen Graphen."
+                            >Graph Properties</h4>
                             <nav class="nav flex-column" id="graphProps"></nav>
                         </div>
                     </div>
@@ -318,7 +353,9 @@ BEACHTE: Soll das Hintergrundbild wieder ausgeblendet werden, so ist der Menüpu
                         <div class="col">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title" id="results-label">Results</h4>
+                                    <h4 class="card-title" id="results-label"
+                                    data-toggle="tooltip" data-placement="auto" title="Feld, in dem die Ausgaben der verschiedenen Algorithmen in Textform dokumentiert werden."
+                                    >Results</h4>
                                 </div>
                                 <div class="card-body">
                                     <div id="printout" style="white-space:pre-wrap; height: 60vh; overflow-y: scroll; resize: vertical"></div>

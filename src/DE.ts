@@ -108,8 +108,8 @@ export default {
     SinkNode: "Senke",
     Go: "Los",
     Help: "Hilfe",
-    AboutShort: "Über",
-    About: "Über Graph Coloring Playground",
+    AboutShort: "Hilfe",
+    About: "Hilfe und Infos zu Graph Coloring Playground",
     TaskAlreadyRunning: "Algorithmus läuft noch/schon",
     TaskAlreadyRunningBody: "$1 läuft noch/schon. Bitte zuerst warten, bis er fertig ist.",
     Options: "Optionen",
@@ -119,10 +119,12 @@ export default {
         "<a href='https://github.com/MikeDombo/graphPlayground' target='_blank'>GitHub repository</a>" +
         " für Anleitungen </h4> <h4>See <a href='https://github.com/MikeDombo/graphPlayground/issues' target='_blank'>" +
         "GitHub issues</a> um Fehler oder Vorschläge zu melden..</h4>",
-    AboutHTML: "<i>Elektronische Lernumgebung für Knotenfärbung basierend auf <a href='https://github.com/MikeDombo/graphPlayground' target='_blank'>GraphPlayground</a>" + 
-        " von Michael Dombrowski. Das dazugehörige Unterrichtsmaterial findet sich unter " +
-        "<a href='https://www.abz.inf.ethz.ch/maturitatsschulen/unterrichtsmaterialien/' target='_blank'>ABZ Webpage</a>. Kompletter Quellcode und Kontakt auf <a href='https://github.com/mhuberch/GraphColoringPlayground' target='_blank'>GitHub</a> </i>" +
-        " Martin Huber, 2022",
+    AboutHTML: "<b>Kurzhilfen</b>: Diese werden auf der Webpage angezeigt, wenn der Mauszeiger über eine Stelle gehalten wird. <br/><br/>" +
+    "<b>Tutorials</b>: Videos zur Bedienung sind verfügbar im <a href='https://www.youtube.com/channel/UCwkctIdhh65Smr5i8YDantQ' target='_blank'>Youtube Kanal</a> <br/><br/>" +
+    "<b>Unterrichtsmaterial:</b> Aufgaben und Begleitmaterialien für Gymnasien unter <a href='https://www.abz.inf.ethz.ch/maturitatsschulen/unterrichtsmaterialien/' target='_blank'>ABZ Webpage</a> <br/><br/>" +
+    "<b>Credits:</b> Webpage basierend auf <a href='https://github.com/MikeDombo/graphPlayground' target='_blank'>GraphPlayground</a> von Michael Dombrowski.<br/><br/>" +  
+    "<b>Quellcode:</b> Zur Weiterentwicklung und für Kontakt auf <a href='https://github.com/mhuberch/GraphColoringPlayground' target='_blank'>GitHub</a> <br/><br/>" + 
+        "<i>Martin Huber, 2022</i>",
     GraphPhysics: "Automatisch optimierte Darstellung",
     DiGraph: "Gerichteter Graph",
     WeightedGraph: "Gewichteter Graph",
